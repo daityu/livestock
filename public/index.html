@@ -1,0 +1,601 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta NAME="ROBOTS" CONTENT="NOINDEX,NOFOLLOW">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="cache-control" content="no-cache">
+  <meta http-equiv="expires" content="0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="format-detection" content="telephone=no">
+
+  <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-touch-fullscreen" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="家畜資産管理">
+  <!-- <link rel="apple-touch-icon" href="./images/android-chrome-152x152.png"> -->
+  <!-- CODELAB: Add meta theme-color -->
+  <meta name="theme-color" content="#2F3BA2" />
+  <style>
+    /*全体の文字の大きさ*/
+    .webix_el_box label,
+    .webix_el_box input,
+    .webix_cal_body .webix_cal_day_inner,
+    .webix_cal_body .webix_cal_block,
+    .webix_cal_month_name,
+    .webix_template {
+      font-size: 1.2em !important;
+      /* font-size: 2vmin !important; */
+    }
+
+    /*読取専用INPUT*/
+    input[readonly],
+    textarea[readonly],
+    select[readonly],
+    .webix_inp_static[aria-readonly] {
+      background-color: lightyellow !important;
+    }
+
+    .fusen_bl {
+      /*ブルー*/
+      text-decoration: none;
+      background: #f7f7f7;
+      border-left: solid 4px #283D70;
+      /*左線*/
+      color: #283D70;
+      /*文字色*/
+      font-weight: bold;
+      box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.29);
+      padding: 2px;
+    }
+
+    .fusen_rd {
+      /*レッド*/
+      text-decoration: none;
+      background: #f7f7f7;
+      border-left: solid 4px red;
+      /*左線*/
+      color: red;
+      /*文字色*/
+      font-weight: bold;
+      box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.29);
+      padding: 2px;
+    }
+
+    .fusen_gn {
+      /*緑*/
+      text-decoration: none;
+      background: #f7f7f7;
+      border-left: solid 4px #266233;
+      /*左線*/
+      color: #266233;
+      /*文字色*/
+      font-weight: bold;
+      box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.29);
+      padding: 2px;
+    }
+
+    .winmenu_weather span {
+      vertical-align: top;
+    }
+  </style>
+  <script type="text/javascript">
+    // CODELAB: Register service worker.
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker.register("service-worker.js")
+          .then((reg) => {
+            console.log("Service worker registered.", reg);
+          });
+      });
+    }
+  </script>
+  <link rel="shortcut icon" href="favicon.ico">
+  <script src="./libs/Common.js"></script>
+  <link rel="stylesheet" href="//cdn.webix.com/edge/skins/flat.min.css" type="text/css">
+  <link rel="stylesheet" href="//cdn.webix.com/materialdesignicons/5.8.95/css/materialdesignicons.min.css"
+    type="text/css" charset="utf-8">
+  <link rel="stylesheet" href="./libs/winmenu/winmenu.css" type="text/css">
+  <script src="//cdn.webix.com/edge/webix.min.js" type="text/javascript"></script>
+  <script src="./libs/winmenu/winmenu.js" type="text/javascript"></script>
+  <script src="./libs/qrcodejs/qrcode.min.js" type="text/javascript"></script>
+  <script src="//cdn.jsdelivr.net/npm/marked/marked.min.js" type="text/javascript"></script>
+  <title id="my-app-titile">自治会アプリ</title>
+  <link rel="manifest" id="my-manifest-placeholder">
+</head>
+
+<body>
+  <script type="module">
+    marked.setOptions({
+      fusen: info => {
+        return "<span class='fusen_rd'>{0}</fusen>".format(info).value;
+      }
+    });
+    let _url = new URL(location.href);
+    // console.log(_url);
+    var APP_NAME = _url.searchParams.get("APP_NAME") || "家畜資産管理アプリ";
+    var API_KEY = _url.searchParams.get("API_KEY") || "AKfycby2AZsy6Zx6jez5IfRW6PYLFKxd0nBcwf0gjWEPFodd74N8uCnvJWkhQhpNfwVLlSXNkg";//EACサンプル
+    var myDynamicManifest = {
+      "id": API_KEY,
+      "name": APP_NAME,
+      "short_name": APP_NAME,
+      "theme_color": "#2196f3",
+      "background_color": "#2196f3",
+      "display": "standalone",
+      "scope": location.origin + _url.pathname,
+      "start_url": location.href,
+      "orientation": "any",
+      "icons": [
+        {
+          "src": location.origin + location.pathname + "images/180.png",
+          "sizes": "180x180",
+          "type": "image/png"
+        },
+        {
+          "src": location.origin + location.pathname + "images/192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        },
+        {
+          "src": location.origin + location.pathname + "images/512.png",
+          "sizes": "512x512",
+          "type": "image/png"
+        }
+      ]
+    };
+    // console.log(myDynamicManifest);
+    const stringManifest = JSON.stringify(myDynamicManifest);
+    const blob = new Blob([stringManifest], { type: 'application/json' });
+    const manifestURL = URL.createObjectURL(blob);
+    document.querySelector('#my-manifest-placeholder').setAttribute('href', manifestURL);
+    // let reader = new FileReader();
+    // reader.readAsDataURL(blob);
+    // reader.onload = function(){
+    //   document.querySelector('#my-manifest-placeholder').setAttribute('href', reader.result);
+    // }
+    //メイン画面
+    //メイン画面メニューボタン部
+    const ui_menu_data = [
+      { id: "oshirase", value: "", color: "#7E2A6C", icon: "mdi-information", width: 2, height: 2, x: 1, y: 1 },
+      { id: "kairanban", value: "", color: "#283D70", icon: "mdi-clipboard-text", width: 2, height: 2, x: 1, y: 3 },
+      { id: "event", value: "", color: "#8D712B", icon: "mdi-calendar-month", height: 2, width: 2, x: 3, y: 1 },
+      { id: "moushikomi", value: "", color: "#266233", icon: "mdi-human-greeting", width: 2, height: 2, x: 3, y: 3 },
+      { id: "bousai", value: "防災情報", color: "#f22600", icon: "mdi-home-heart", width: 4, height: 2, x: 1, y: 5 },
+    ];
+    document.querySelector('#my-app-titile').textContent = APP_NAME;
+    const TENKI = { "100": ["100.svg", "500.svg", "100", "晴", "CLEAR"], "101": ["101.svg", "501.svg", "100", "晴時々曇", "PARTLY CLOUDY"], "102": ["102.svg", "502.svg", "300", "晴一時雨", "CLEAR,OCCASIONAL SCATTERED SHOWERS"], "103": ["102.svg", "502.svg", "300", "晴時々雨", "CLEAR,FREQUENT SCATTERED SHOWERS"], "104": ["104.svg", "504.svg", "400", "晴一時雪", "CLEAR,SNOW FLURRIES"], "105": ["104.svg", "504.svg", "400", "晴時々雪", "CLEAR,FREQUENT SNOW FLURRIES"], "106": ["102.svg", "502.svg", "300", "晴一時雨か雪", "CLEAR,OCCASIONAL SCATTERED SHOWERS OR SNOW FLURRIES"], "107": ["102.svg", "502.svg", "300", "晴時々雨か雪", "CLEAR,FREQUENT SCATTERED SHOWERS OR SNOW FLURRIES"], "108": ["102.svg", "502.svg", "300", "晴一時雨か雷雨", "CLEAR,OCCASIONAL SCATTERED SHOWERS AND/OR THUNDER"], "110": ["110.svg", "510.svg", "100", "晴後時々曇", "CLEAR,PARTLY CLOUDY LATER"], "111": ["110.svg", "510.svg", "100", "晴後曇", "CLEAR,CLOUDY LATER"], "112": ["112.svg", "512.svg", "300", "晴後一時雨", "CLEAR,OCCASIONAL SCATTERED SHOWERS LATER"], "113": ["112.svg", "512.svg", "300", "晴後時々雨", "CLEAR,FREQUENT SCATTERED SHOWERS LATER"], "114": ["112.svg", "512.svg", "300", "晴後雨", "CLEAR,RAIN LATER"], "115": ["115.svg", "515.svg", "400", "晴後一時雪", "CLEAR,OCCASIONAL SNOW FLURRIES LATER"], "116": ["115.svg", "515.svg", "400", "晴後時々雪", "CLEAR,FREQUENT SNOW FLURRIES LATER"], "117": ["115.svg", "515.svg", "400", "晴後雪", "CLEAR,SNOW LATER"], "118": ["112.svg", "512.svg", "300", "晴後雨か雪", "CLEAR,RAIN OR SNOW LATER"], "119": ["112.svg", "512.svg", "300", "晴後雨か雷雨", "CLEAR,RAIN AND/OR THUNDER LATER"], "120": ["102.svg", "502.svg", "300", "晴朝夕一時雨", "OCCASIONAL SCATTERED SHOWERS IN THE MORNING AND EVENING,CLEAR DURING THE DAY"], "121": ["102.svg", "502.svg", "300", "晴朝の内一時雨", "OCCASIONAL SCATTERED SHOWERS IN THE MORNING,CLEAR DURING THE DAY"], "122": ["112.svg", "512.svg", "300", "晴夕方一時雨", "CLEAR,OCCASIONAL SCATTERED SHOWERS IN THE EVENING"], "123": ["100.svg", "500.svg", "100", "晴山沿い雷雨", "CLEAR IN THE PLAINS,RAIN AND THUNDER NEAR MOUTAINOUS AREAS"], "124": ["100.svg", "500.svg", "100", "晴山沿い雪", "CLEAR IN THE PLAINS,SNOW NEAR MOUTAINOUS AREAS"], "125": ["112.svg", "512.svg", "300", "晴午後は雷雨", "CLEAR,RAIN AND THUNDER IN THE AFTERNOON"], "126": ["112.svg", "512.svg", "300", "晴昼頃から雨", "CLEAR,RAIN IN THE AFTERNOON"], "127": ["112.svg", "512.svg", "300", "晴夕方から雨", "CLEAR,RAIN IN THE EVENING"], "128": ["112.svg", "512.svg", "300", "晴夜は雨", "CLEAR,RAIN IN THE NIGHT"], "130": ["100.svg", "500.svg", "100", "朝の内霧後晴", "FOG IN THE MORNING,CLEAR LATER"], "131": ["100.svg", "500.svg", "100", "晴明け方霧", "FOG AROUND DAWN,CLEAR LATER"], "132": ["101.svg", "501.svg", "100", "晴朝夕曇", "CLOUDY IN THE MORNING AND EVENING,CLEAR DURING THE DAY"], "140": ["102.svg", "502.svg", "300", "晴時々雨で雷を伴う", "CLEAR,FREQUENT SCATTERED SHOWERS AND THUNDER"], "160": ["104.svg", "504.svg", "400", "晴一時雪か雨", "CLEAR,SNOW FLURRIES OR OCCASIONAL SCATTERED SHOWERS"], "170": ["104.svg", "504.svg", "400", "晴時々雪か雨", "CLEAR,FREQUENT SNOW FLURRIES OR SCATTERED SHOWERS"], "181": ["115.svg", "515.svg", "400", "晴後雪か雨", "CLEAR,SNOW OR RAIN LATER"], "200": ["200.svg", "200.svg", "200", "曇", "CLOUDY"], "201": ["201.svg", "601.svg", "200", "曇時々晴", "MOSTLY CLOUDY"], "202": ["202.svg", "202.svg", "300", "曇一時雨", "CLOUDY,OCCASIONAL SCATTERED SHOWERS"], "203": ["202.svg", "202.svg", "300", "曇時々雨", "CLOUDY,FREQUENT SCATTERED SHOWERS"], "204": ["204.svg", "204.svg", "400", "曇一時雪", "CLOUDY,OCCASIONAL SNOW FLURRIES"], "205": ["204.svg", "204.svg", "400", "曇時々雪", "CLOUDY FREQUENT SNOW FLURRIES"], "206": ["202.svg", "202.svg", "300", "曇一時雨か雪", "CLOUDY,OCCASIONAL SCATTERED SHOWERS OR SNOW FLURRIES"], "207": ["202.svg", "202.svg", "300", "曇時々雨か雪", "CLOUDY,FREQUENT SCCATERED SHOWERS OR SNOW FLURRIES"], "208": ["202.svg", "202.svg", "300", "曇一時雨か雷雨", "CLOUDY,OCCASIONAL SCATTERED SHOWERS AND/OR THUNDER"], "209": ["200.svg", "200.svg", "200", "霧", "FOG"], "210": ["210.svg", "610.svg", "200", "曇後時々晴", "CLOUDY,PARTLY CLOUDY LATER"], "211": ["210.svg", "610.svg", "200", "曇後晴", "CLOUDY,CLEAR LATER"], "212": ["212.svg", "212.svg", "300", "曇後一時雨", "CLOUDY,OCCASIONAL SCATTERED SHOWERS LATER"], "213": ["212.svg", "212.svg", "300", "曇後時々雨", "CLOUDY,FREQUENT SCATTERED SHOWERS LATER"], "214": ["212.svg", "212.svg", "300", "曇後雨", "CLOUDY,RAIN LATER"], "215": ["215.svg", "215.svg", "400", "曇後一時雪", "CLOUDY,SNOW FLURRIES LATER"], "216": ["215.svg", "215.svg", "400", "曇後時々雪", "CLOUDY,FREQUENT SNOW FLURRIES LATER"], "217": ["215.svg", "215.svg", "400", "曇後雪", "CLOUDY,SNOW LATER"], "218": ["212.svg", "212.svg", "300", "曇後雨か雪", "CLOUDY,RAIN OR SNOW LATER"], "219": ["212.svg", "212.svg", "300", "曇後雨か雷雨", "CLOUDY,RAIN AND/OR THUNDER LATER"], "220": ["202.svg", "202.svg", "300", "曇朝夕一時雨", "OCCASIONAL SCCATERED SHOWERS IN THE MORNING AND EVENING,CLOUDY DURING THE DAY"], "221": ["202.svg", "202.svg", "300", "曇朝の内一時雨", "CLOUDY OCCASIONAL SCCATERED SHOWERS IN THE MORNING"], "222": ["212.svg", "212.svg", "300", "曇夕方一時雨", "CLOUDY,OCCASIONAL SCCATERED SHOWERS IN THE EVENING"], "223": ["201.svg", "601.svg", "200", "曇日中時々晴", "CLOUDY IN THE MORNING AND EVENING,PARTLY CLOUDY DURING THE DAY,"], "224": ["212.svg", "212.svg", "300", "曇昼頃から雨", "CLOUDY,RAIN IN THE AFTERNOON"], "225": ["212.svg", "212.svg", "300", "曇夕方から雨", "CLOUDY,RAIN IN THE EVENING"], "226": ["212.svg", "212.svg", "300", "曇夜は雨", "CLOUDY,RAIN IN THE NIGHT"], "228": ["215.svg", "215.svg", "400", "曇昼頃から雪", "CLOUDY,SNOW IN THE AFTERNOON"], "229": ["215.svg", "215.svg", "400", "曇夕方から雪", "CLOUDY,SNOW IN THE EVENING"], "230": ["215.svg", "215.svg", "400", "曇夜は雪", "CLOUDY,SNOW IN THE NIGHT"], "231": ["200.svg", "200.svg", "200", "曇海上海岸は霧か霧雨", "CLOUDY,FOG OR DRIZZLING ON THE SEA AND NEAR SEASHORE"], "240": ["202.svg", "202.svg", "300", "曇時々雨で雷を伴う", "CLOUDY,FREQUENT SCCATERED SHOWERS AND THUNDER"], "250": ["204.svg", "204.svg", "400", "曇時々雪で雷を伴う", "CLOUDY,FREQUENT SNOW AND THUNDER"], "260": ["204.svg", "204.svg", "400", "曇一時雪か雨", "CLOUDY,SNOW FLURRIES OR OCCASIONAL SCATTERED SHOWERS"], "270": ["204.svg", "204.svg", "400", "曇時々雪か雨", "CLOUDY,FREQUENT SNOW FLURRIES OR SCATTERED SHOWERS"], "281": ["215.svg", "215.svg", "400", "曇後雪か雨", "CLOUDY,SNOW OR RAIN LATER"], "300": ["300.svg", "300.svg", "300", "雨", "RAIN"], "301": ["301.svg", "701.svg", "300", "雨時々晴", "RAIN,PARTLY CLOUDY"], "302": ["302.svg", "302.svg", "300", "雨時々止む", "SHOWERS THROUGHOUT THE DAY"], "303": ["303.svg", "303.svg", "400", "雨時々雪", "RAIN,FREQUENT SNOW FLURRIES"], "304": ["300.svg", "300.svg", "300", "雨か雪", "RAINORSNOW"], "306": ["300.svg", "300.svg", "300", "大雨", "HEAVYRAIN"], "308": ["308.svg", "308.svg", "300", "雨で暴風を伴う", "RAINSTORM"], "309": ["303.svg", "303.svg", "400", "雨一時雪", "RAIN,OCCASIONAL SNOW"], "311": ["311.svg", "711.svg", "300", "雨後晴", "RAIN,CLEAR LATER"], "313": ["313.svg", "313.svg", "300", "雨後曇", "RAIN,CLOUDY LATER"], "314": ["314.svg", "314.svg", "400", "雨後時々雪", "RAIN,FREQUENT SNOW FLURRIES LATER"], "315": ["314.svg", "314.svg", "400", "雨後雪", "RAIN,SNOW LATER"], "316": ["311.svg", "711.svg", "300", "雨か雪後晴", "RAIN OR SNOW,CLEAR LATER"], "317": ["313.svg", "313.svg", "300", "雨か雪後曇", "RAIN OR SNOW,CLOUDY LATER"], "320": ["311.svg", "711.svg", "300", "朝の内雨後晴", "RAIN IN THE MORNING,CLEAR LATER"], "321": ["313.svg", "313.svg", "300", "朝の内雨後曇", "RAIN IN THE MORNING,CLOUDY LATER"], "322": ["303.svg", "303.svg", "400", "雨朝晩一時雪", "OCCASIONAL SNOW IN THE MORNING AND EVENING,RAIN DURING THE DAY"], "323": ["311.svg", "711.svg", "300", "雨昼頃から晴", "RAIN,CLEAR IN THE AFTERNOON"], "324": ["311.svg", "711.svg", "300", "雨夕方から晴", "RAIN,CLEAR IN THE EVENING"], "325": ["311.svg", "711.svg", "300", "雨夜は晴", "RAIN,CLEAR IN THE NIGHT"], "326": ["314.svg", "314.svg", "400", "雨夕方から雪", "RAIN,SNOW IN THE EVENING"], "327": ["314.svg", "314.svg", "400", "雨夜は雪", "RAIN,SNOW IN THE NIGHT"], "328": ["300.svg", "300.svg", "300", "雨一時強く降る", "RAIN,EXPECT OCCASIONAL HEAVY RAINFALL"], "329": ["300.svg", "300.svg", "300", "雨一時みぞれ", "RAIN,OCCASIONAL SLEET"], "340": ["400.svg", "400.svg", "400", "雪か雨", "SNOWORRAIN"], "350": ["300.svg", "300.svg", "300", "雨で雷を伴う", "RAIN AND THUNDER"], "361": ["411.svg", "811.svg", "400", "雪か雨後晴", "SNOW OR RAIN,CLEAR LATER"], "371": ["413.svg", "413.svg", "400", "雪か雨後曇", "SNOW OR RAIN,CLOUDY LATER"], "400": ["400.svg", "400.svg", "400", "雪", "SNOW"], "401": ["401.svg", "801.svg", "400", "雪時々晴", "SNOW,FREQUENT CLEAR"], "402": ["402.svg", "402.svg", "400", "雪時々止む", "SNOWTHROUGHOUT THE DAY"], "403": ["403.svg", "403.svg", "400", "雪時々雨", "SNOW,FREQUENT SCCATERED SHOWERS"], "405": ["400.svg", "400.svg", "400", "大雪", "HEAVYSNOW"], "406": ["406.svg", "406.svg", "400", "風雪強い", "SNOWSTORM"], "407": ["406.svg", "406.svg", "400", "暴風雪", "HEAVYSNOWSTORM"], "409": ["403.svg", "403.svg", "400", "雪一時雨", "SNOW,OCCASIONAL SCCATERED SHOWERS"], "411": ["411.svg", "811.svg", "400", "雪後晴", "SNOW,CLEAR LATER"], "413": ["413.svg", "413.svg", "400", "雪後曇", "SNOW,CLOUDY LATER"], "414": ["414.svg", "414.svg", "400", "雪後雨", "SNOW,RAIN LATER"], "420": ["411.svg", "811.svg", "400", "朝の内雪後晴", "SNOW IN THE MORNING,CLEAR LATER"], "421": ["413.svg", "413.svg", "400", "朝の内雪後曇", "SNOW IN THE MORNING,CLOUDY LATER"], "422": ["414.svg", "414.svg", "400", "雪昼頃から雨", "SNOW,RAIN IN THE AFTERNOON"], "423": ["414.svg", "414.svg", "400", "雪夕方から雨", "SNOW,RAIN IN THE EVENING"], "425": ["400.svg", "400.svg", "400", "雪一時強く降る", "SNOW,EXPECT OCCASIONAL HEAVY SNOWFALL"], "426": ["400.svg", "400.svg", "400", "雪後みぞれ", "SNOW,SLEET LATER"], "427": ["400.svg", "400.svg", "400", "雪一時みぞれ", "SNOW,OCCASIONAL SLEET"], "450": ["400.svg", "400.svg", "400", "雪で雷を伴う", "SNOW AND THUNDER"] };
+    //メイン画面ロジック部
+    const ui_menu_logic = {
+      init: function () {
+        //サブ画面定義
+        webix.ui(ui_qrcode);
+        webix.ui(ui_oshirase);
+        webix.ui(ui_systemsetting);
+        webix.ui(ui_files);
+        $$("group_name").setValue("<img src='{1}' style='margin-right: 5px;' align='top' />{0}".format([COMMON_JSON.config.group_name, COMMON_JSON.config.group_logo]));//ヘッダー
+        if (COMMON_JSON.news) {//新着情報
+          let _n = COMMON_JSON.news.renketsu("name");
+          $$("winmenu_news").setHTML(marked.parse(_n));
+        }
+        //メニューボタン名変更
+        let _p = {
+          oshirase: COMMON_JSON.config.btn_oshirase || "お知らせ",
+          kairanban: COMMON_JSON.config.btn_kairan || "回覧板",
+          event: COMMON_JSON.config.btn_calendar || "カレンダー",
+          moushikomi: COMMON_JSON.config.btn_moushikomi || "各種申込",
+        };
+        Object.keys(_p).forEach(function (key) {
+          // console.log(key);
+          let _a = $$("winmenu_menu").getItem(key);
+          _a.value = _p[key];
+          // badge
+          let _badge = 0;
+          let _obj = COMMON_JSON[key] || [];
+          Object.keys(_obj).forEach(function (btnkey, index, arr) {
+            if (_obj[index]["info"] != "") {
+              _badge++;
+            }
+          });
+          _a.badge = _badge;
+        });
+        $$("winmenu_menu").refresh();
+      },
+      menuBtnClick: function (id) {
+        // webix.message(this.getItem(id).value);
+        switch (id) {
+          case "kairanban":
+            $$("ui_files").define("kubun", "kairanban");
+            $$("ui_files").show();
+            break;
+          case "event":
+            ui_menu_logic.newTabOpen(COMMON_JSON.config.calendar_url);
+            break;
+          case "bousai":
+            ui_menu_logic.newTabOpen(COMMON_JSON.config.anpi_url || "https://www.jma.go.jp/bosai/");
+            break;
+          case "moushikomi":
+            $$("ui_files").define("kubun", "moushikomi");
+            $$("ui_files").show();
+            break;
+          case "oshirase":
+            $$("ui_oshirase").show();
+            break;
+          default:
+            break;
+        }
+      },
+      newTabOpen: function (_url) {
+        window.open(_url);
+        // window.location = _url;
+      },
+      gdriveOpen: function (_url) {
+        window.open(_url);
+        // window.location = _url;
+        // window.open(_url, "_system", "location=yes,enableViewportScale=yes,hidden=no");
+      },
+      gdrive2url: function (gdurl) {
+        let _url = new URL(gdurl);
+        let _p = _url.pathname.split("/");
+        let _vid = "";
+        _p.forEach(element => {
+          _vid = (_vid.length > element.length) ? _vid : element;
+        });
+        return "{0}/uc?id={1}".format([_url.origin, _vid]);
+      },
+      gform2url: function (gform) {
+        let url = new URL(gform);
+        let params = url.searchParams;
+        let _ls = webix.storage.local.get("ui_setting_form") || {};
+        let _np = [];
+        params.forEach(function (value, key) {
+          _np.push(key + "=" + (_ls[value] || ""));
+        });
+        return encodeURI(url.origin + url.pathname + "?" + _np.join("&"));
+      },
+      getIconName: function (pathname) {
+        if (pathname.indexOf("/folders/") > -1) {//フォルダ
+          return "mdi-folder-google-drive";
+        } else if (pathname.indexOf("/file/") > -1) {//ファイル
+          return "mdi-file-outline";
+        } else {//リンク
+          return "mdi-link-variant";
+        }
+      },
+      sha256: async function (text) {
+        const uint8 = new TextEncoder().encode(text)
+        const digest = await crypto.subtle.digest('SHA-256', uint8)
+        return Array.from(new Uint8Array(digest)).map(v => v.toString(16).padStart(2, '0')).join('')
+      }
+    };
+    //メイン画面レイアウト
+    const ui_menu = {
+      id: "app",
+      rows: [
+        {
+          view: "toolbar", cols: [
+            { view: "label", id: "group_name", label: "" },
+            { view: "icon", icon: "mdi mdi-cog", popup: "ui_systemsetting" }
+          ]
+        },
+        {
+          cells: [
+            {
+              id: "winmenu", rows: [
+                { view: "template", id: "winmenu_weather", css: "winmenu_weather", scroll: false, height: 45 },
+                { view: "template", id: "winmenu_news", scroll: "auto", gravity: 4 },
+                {
+                  view: "winmenu", id: "winmenu_menu", data: ui_menu_data, xCount: 4, yCount: 6, scroll: "auto", minHeight: 160,
+                  on: { onItemClick: ui_menu_logic.menuBtnClick }, gravity: 5
+                }
+              ]
+            },
+            {
+              view: "form", id: "ui_setting_form", padding: 3,
+              elements: [
+                { template: "イベント申込みや安否確認時に必要になる項目を、あらかじめ入力することができます。", autoheight: true, borderless: true },
+                { view: "text", name: "name", label: "お名前" },
+                { view: "text", name: "email", label: "メール", type: "email", placeholder: "name@example.com" },
+                {
+                  cols: [
+                    { view: "text", name: "zipcode", label: "郵便便号", placeholder: "(半角数字のみ)", attributes: { maxlength: 7 }, width: 220 },
+                    {
+                      view: "button", label: "住所検索", width: 100,
+                      on: {
+                        onItemClick: function () {
+                          var _p = $$("ui_setting_form").getValues()["zipcode"] || "";
+                          if (!_p || _p.length != 7) return;
+                          webix.ajax().get("https://geoapi.heartrails.com/api/json?method=searchByPostal", { postal: _p }).then(function (data) {
+                            var _r = data.json();
+                            if (_r.response.error) {
+                              webix.message("郵便番号に該当する住所がありません");
+                              return;
+                            }
+                            var _addr = _r.response.location[0].city + _r.response.location[0].town;
+                            $$("ui_setting_form").setValues({ address: _addr }, true);
+                            $$("ui_setting_form").callEvent("onChange");
+                          });
+                        }
+                      }
+                    },
+                    {}
+                  ]
+                },
+                { view: "text", name: "address", label: "住所" },
+                { view: "text", name: "address2", label: "建物名等" },
+                { view: "text", name: "tel", label: "電話番号" },
+                { template: "出典:「位置参照情報」(国土交通省)の加工情報・「HeartRails Geo API」(HeartRails Inc.)", borderless: true },
+              ],
+              on: {
+                onChange: function () {
+                  var _v = $$("ui_setting_form").getValues({ hidden: false, disabled: false });
+                  webix.storage.local.put("ui_setting_form", _v);
+                },
+                onViewShow: function () {
+                  $$("ui_setting_form").setValues(webix.storage.local.get("ui_setting_form") || {});
+                }
+              }
+            },
+            {
+              view: "template", id: "ui_help", scroll: "auto",
+              on: {
+                onViewShow: function () {
+                  webix.ajax().get("./help.md").then(function (data) {
+                    $$("ui_help").setHTML(marked.parse(data.text()));
+                  });
+                }
+              }
+            }
+          ], borderless: true
+        },
+        {
+          view: "segmented", type: "bottom", multiview: true, css: "bottommenu", value: "winmenu", options: [
+            { value: "<span class='webix_icon mdi mdi-24px mdi-home'></span><br><span>ホーム</span>", id: "winmenu" },
+            { value: "<span class='webix_icon mdi mdi-24px mdi-account'></span><br><span>個人設定</span>", id: "ui_setting_form" },
+            { value: "<span class='webix_icon mdi mdi-24px mdi-help'></span><br><span>ヘルプ</span>", id: "ui_help" },
+            { value: "<span class='webix_icon mdi mdi-24px mdi-reload'></span><br><span>リロード</span>", id: "reload" }
+          ], height: 65, borderless: true,
+          on: {
+            onAfterTabClick: function (id) {
+              if (id == "reload") {
+                location.reload(true);
+              }
+            }
+          }
+        }
+      ]
+    };
+    //window設定
+    //googleDriveファイル一覧
+    const ui_files = {
+      view: "window", id: "ui_files", head: "ファイル一覧", css: "stripe", close: true, fullscreen: true, modal: true, kubun: "kairanban",
+      body: {
+        rows: [
+          {
+            view: "list", id: "ui_files_list", template: function (obj) {
+              let _css = ($$("ui_files").config.kubun == "kairanban") ? "fusen_bl" : "fusen_gn";
+              let _icon = ui_menu_logic.getIconName(obj.fileId);
+              let _info = (obj.info != "") ? "&nbsp;<span style='font-size:15px;vertical-align:super;' class='fusen_rd'>{0}</span>".format(obj.info) : "";
+              return "<div class='{0}' style='font-size:28px;'><span class='webix_icon mdi mdi-48px {1}'></span><span style='vertical-align:super'>　{2}</span>{3}</div>".format([_css, _icon, obj.name, _info]);
+            },
+            type: {
+              height: 60
+            },
+            select: true,
+            autowidth: true,
+            on: {
+              onItemClick: function (id, e, node) {
+                let _item = this.getItem(id);
+                if (!_item.fileId) {
+                  return;
+                }
+                if ($$("ui_files").config.kubun == "kairanban") {//googledriveを参照
+                  ui_menu_logic.gdriveOpen(_item.fileId);
+                } else {//googleformを参照
+                  ui_menu_logic.newTabOpen(ui_menu_logic.gform2url(_item.fileId));
+                }
+              }
+            }
+          },
+          { view: "button", height: 60, label: "閉じる", click: function (id, event) { this.getTopParentView().hide(); } }
+        ]
+      },
+      on: {
+        onShow: function () {
+          let _kubun = $$("ui_files").config.kubun;
+          let _data = webix.copy(COMMON_JSON[_kubun]);
+          $$("ui_files_list").clearAll();
+          $$("ui_files_list").parse(_data);
+          $$("ui_files_list").unselectAll();
+        },
+        onHide: function () {
+        }
+      }
+    };
+    //window設定
+    //windowお知らせ（markdownビューア）
+    const ui_oshirase = {
+      view: "window", id: "ui_oshirase", head: "お知らせ", close: true, fullscreen: true, modal: true,
+      body: {
+        rows: [
+          { view: "template", id: "ui_menu_oshirase", scroll: "auto" },
+          { view: "button", height: 60, label: "閉じる", click: function (id, event) { this.getTopParentView().hide(); } }
+        ]
+      },
+      on: {
+        onShow: function () {
+          let _html = "";
+          let _arr = COMMON_JSON.oshirase || [];
+          _arr.forEach(function (value, key) {
+            let _fusen = (value["info"] != "") ? "<span class='fusen_rd'>{0}</span>&nbsp;".format(value["info"]) : "";
+            _html += _fusen + value["name"] + "\n\n";
+          });
+          $$("ui_menu_oshirase").setHTML(marked.parse(_html));
+        },
+        onHide: function () {
+        }
+      }
+    };
+    //window設定
+    //システム設定
+    const ui_systemsetting = {
+      view: "window", id: "ui_systemsetting", head: "システム設定", close: true, fullscreen: true, modal: true,
+      body: {
+        rows: [
+          {
+            view: "form", id: "ui_systemsetting_form", elements: [
+              {
+                cols: [
+                  { view: "text", type: "password", label: "パスコード", name: "pass_code", value: "" },
+                  {
+                    view: "button", css: "webix_danger", label: "保存", width: 100, on: {
+                      onItemClick: function () {
+                        let _p = $$("ui_systemsetting_form").getValues();
+                        ui_menu_logic.sha256(_p.pass_code).then(hash => webix.storage.local.put("PC_{0}".format([API_KEY]), hash))
+                        webix.delay(function () {//再表示
+                          location.reload();
+                        });
+                      }
+                    }
+                  }
+                ]
+              },
+              { view: "textarea", label: "API_KEY", name: "API_KEY", value: "", readonly: true, height: 80 },
+              {
+                view: "button", css: "webix_danger", type: "icon", icon: "mdi mdi-qrcode-scan", label: "QRコードから設定する", hidden: true, on: {
+                  onItemClick: function () {
+                    $$("ui_qrcode").define("CB", function (m) {
+                      // var _u = new URL(m);
+                      // var _api_key
+                      // _u.searchParams.forEach(function (value, key) {
+                      //   if (key == "API_KEY") {
+                      //     _api_key = value;
+                      //   }
+                      // });
+                      // //TODO LS保存
+                      // if (_api_key) {
+                      //   webix.storage.local.put("API_KEY", _api_key);
+                      // }
+                      $$("ui_systemsetting_form").setValues({ API_KEY: m }, true);
+                      $$("ui_qrcode").hide();
+                      // $$("ui_systemsetting_form").setValues({ API_KEY: webix.storage.local.get("API_KEY") }, true);
+                    });
+                    $$("ui_qrcode").show();
+                  }
+                }
+              }
+            ], elementsConfig: { labelWidth: 100 }
+          },
+          { view: "label", label: "このアプリのQRコード" },
+          { template: "<div id='qrcode'></div>" },
+          { view: "button", height: 60, label: "閉じる", click: function (id, event) { this.getTopParentView().hide(); } }
+        ]
+      },
+      on: {
+        onShow: function () {
+          // $$("ui_systemsetting_form").setValues({ API_KEY: webix.storage.local.get("API_KEY") }, true);
+          $$("ui_systemsetting_form").setValues({ API_KEY: API_KEY }, true);
+          document.getElementById("qrcode").replaceChildren();
+          new QRCode(document.getElementById("qrcode"), location.href);
+        },
+        onHide: function () {
+        }
+      }
+    };
+    //windowQRCODE
+    import QrScanner from "./libs/qr-scanner/qr-scanner.min.js";
+    var qrScanner = null;
+    const ui_qrcode = {
+      view: "window", id: "ui_qrcode", head: "QRコードリーダー", close: true, fullscreen: true, modal: true, CB: null,
+      body: {
+        rows: [
+          { view: "video", id: "qr-video", controls: false },
+          { view: "text", id: "ui_qrcode_txt" },
+          { view: "button", height: 60, label: "閉じる", click: function (id, event) { this.getTopParentView().hide(); } }
+        ]
+      },
+      on: {
+        onShow: function () {
+          $$("ui_qrcode_txt").setValue("");
+          qrScanner = qrScanner || new QrScanner($$("qr-video").getVideo(), result => $$("ui_qrcode").config.CB(result.data),
+            {
+              highlightScanRegion: true,
+              highlightCodeOutline: true,
+            });
+          qrScanner.start();
+        },
+        onHide: function () {
+          qrScanner.stop();
+        }
+      }
+    };
+    //設定ファイル
+    var COMMON_JSON = {};
+    //メイン
+    webix.ready(function () {
+      //初期処理
+      webix.ui.fullScreen();
+      webix.i18n.setLocale("ja-JP");
+      //メイン画面
+      webix.ui(ui_menu);
+      webix.extend($$("app"), webix.ProgressBar);
+      //初回のみアクセス。再度取得する場合は、一度アプリを終了してください
+      COMMON_JSON = webix.storage.session.get("COMMON_JSON") || {};
+      // if (COMMON_JSON.config) {
+      //   ui_menu_logic.init();
+      //   return;
+      // }
+      // URLからAPIキーを取得する
+      // var _u = new URL(location.href);
+      // _u.searchParams.forEach(function (value, key) {
+      //   if (key == "API_KEY") {
+      //     API_KEY = value;
+      //   }
+      // });
+      // API_KEY = API_KEY || "AKfycby2AZsy6Zx6jez5IfRW6PYLFKxd0nBcwf0gjWEPFodd74N8uCnvJWkhQhpNfwVLlSXNkg"; //EACサンプル
+      //設定ファイル取得
+      $$("app").showProgress({
+        type: "top"
+      });
+      let _pc = webix.storage.local.get("PC_{0}".format([API_KEY]));
+      let _url = "https://script.google.com/macros/s/{0}/exec".format([API_KEY, _pc]);
+      webix.ajax().get(_url, { pc: _pc }).then(function (data) {
+        COMMON_JSON = data.json();
+        webix.storage.session.put("COMMON_JSON", COMMON_JSON);
+        if (!COMMON_JSON.config) {
+          webix.message({ type: "error", text: "パスコードが異なります。右側の「･･･」から設定してください" });
+        }
+      }).then(function () {
+        ui_menu_logic.init();
+      }).fail(function (err) {
+        // TODO GASでは同じIDの関数を作成すると、リダイレクトされてしまう
+        // webix.message({ type: "error", text: "API_KEYが間違っています" });
+      }).finally(function () {
+        $$("app").hideProgress();
+      });
+      //今日の天気
+      // https://www.jma.go.jp/bosai/common/const/area.json
+      // https://www.t3a.jp/blog/web-develop/weather-code-list/
+      // https://www.jma.go.jp/bosai/forecast/data/forecast/140000.json
+      // https://www.jma.go.jp/bosai/forecast/#area_type=class20s&area_code=1410000
+      webix.ajax().get("https://www.jma.go.jp/bosai/forecast/data/forecast/140000.json").then(function (data) {
+        let _r = data.json();
+        let _d = new Date(_r[0]["reportDatetime"]);
+        let _wt = _r[0]["timeSeries"][2]["areas"][0]["temps"];//気温最低
+        let _wtmin = (_wt[0] < _wt[1]) ? _wt[0] : _wt[1];//気温最低
+        let _wtmax = (_wt[0] < _wt[1]) ? _wt[1] : _wt[0];//気温最高
+        if (_wtmin == _wtmax) _wtmin = _wt[2] || "-";
+        let _wc = _r[0]["timeSeries"][0]["areas"][0]["weatherCodes"][0];//天気コード
+        let _wcicon = (_d.getHours() >= 17) ? TENKI[_wc][1] : TENKI[_wc][0];//17時で日変
+        let _ws = _r[0]["timeSeries"][0]["areas"][0]["weathers"][0];//天気文言
+        $$("winmenu_weather").setHTML(
+          "<span style='font-size:25px'>{0}</span><img draggable='false' src='https://www.jma.go.jp/bosai/forecast/img/{1}' height='40' width='40' /><span style='color:red;'>最高:{2}℃</span>&nbsp;<span style='color:blue;'>最低:{3}℃</span><a href='https://www.jma.go.jp/bosai/forecast/#area_type=class20s&area_code=1410000' target='_blank'><span class='webix_icon mdi mdi-24px mdi-web'></span></a>".format([_d.toLocaleDateString("ja-JP", { weekday: 'short', month: 'long', day: 'numeric' }), _wcicon, _wtmax, _wtmin, _ws])
+        );
+      });
+    });
+  </script>
+</body>
+
+</html>
