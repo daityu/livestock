@@ -391,9 +391,10 @@
           {
             view: "property", id: "sets", width: 300,
             elements: [
-              { label: "Editors", type: "label" },
+              { label: "名称", type: "text", id: "a1" },
+              { label: "代表", type: "text", id: "a2" },
+              { label: "meisuo", type: "label" },
               { label: "Password", type: "password", id: "a1", value: "pass" },
-              { label: "Text", type: "text", id: "a2", value: "pass" },
               { label: "Select", type: "select", id: "a3", value: "pass", options: colors },
               { label: "Rich Select", type: "text", id: "a4", value: "1", suggest: colors },
               // { label: "Multi Select", type: "multiselect", id: "a5", value: "1,3", options: colors },
@@ -406,6 +407,8 @@
       },
       on: {
         onShow: function () {
+          $$("sets").define("elements", COMMON_JSON.elements);
+          $$("sets").refresh();
         },
         onHide: function () {
         }
@@ -617,6 +620,7 @@
         // webix.message({ type: "error", text: "API_KEYが間違っています" });
       }).finally(function () {
         $$("app").hideProgress();
+        // COMMON_JSON = {"config":{"group_name":"資産管理アプリ（仮）","group_logo":"https://icongr.am/material/account-cowboy-hat.svg?size=48&color=ffffff","calendar_url":"https://calendar.google.com/calendar/embed?src=bvhaoohju0qc3r46fpktf6c9ms%40group.calendar.google.com&src=ja.japanese%23holiday%40group.v.calendar.google.com&ctz=Asia%2FTokyo","anpi_url":"","btn_oshirase":"告知情報","btn_calendar":"予定表","btn_kairan":"ファイル共有","btn_moushikomi":"フォーム入力","password":""},"elements":[{"label":"登録日","id":"date","name":"date","tani":"","type":"date","value":"","options":""},{"label":"名称","id":"kaisya","name":"kaisya","tani":"","type":"text","value":"","options":""},{"label":"代表","id":"daihyo","name":"daihyo","tani":"","type":"text","value":"","options":""},{"label":"連絡先","id":"kaisya_tel","name":"kaisya_tel","tani":"","type":"text","value":"","options":""},{"label":"労働者","id":"","name":"","tani":"","type":"label","value":"","options":""},{"label":"本人","id":"","name":"","tani":"名","type":"select","value":0,"options":[0,1]},{"label":"家族（配偶者）","id":"","name":"","tani":"名","type":"select","value":0,"options":[0,1]},{"label":"家族（他）","id":"","name":"","tani":"名","type":"select","value":0,"options":[0,1,2,3,4,5,6,7,8,9,10]},{"label":"外国人研修生","id":"","name":"","tani":"名","type":"select","value":0,"options":[0,1,2,3,4,5,6,7,8,9,10]},{"label":"アルバイト","id":"","name":"","tani":"名","type":"select","value":0,"options":[0,1,2,3,4,5,6,7,8,9,10]},{"label":"その他","id":"","name":"","tani":"名","type":"select","value":0,"options":[0,1,2,3,4,5,6,7,8,9,10]},{"label":"経産牛","id":"","name":"","tani":"","type":"label","value":"","options":""}],"news":[{"id":1,"name":"## ここに表示できます","fileId":"","info":""}]};
       });
       //今日の天気
       // https://www.jma.go.jp/bosai/common/const/area.json
