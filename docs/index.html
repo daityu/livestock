@@ -383,7 +383,7 @@
         rows: [
           {cols:[
             { view: "nproperty", id: "sets", nameWidth: 150, scroll:"y", elements: [] },
-            { view: "property", id: "sets2", nameWidth: 150, scroll:"y", elements: [], disabled:true },
+            // { view: "property", id: "sets2", nameWidth: 150, scroll:"y", elements: [], disabled:true },
           ]},
           { view: "button", height: 60, label: "閉じる", click: function (id, event) { this.getTopParentView().hide(); } }
         ]
@@ -392,8 +392,8 @@
         onShow: function () {
           $$("sets").define("elements", COMMON_JSON.elements.kihon);
           $$("sets").refresh();
-          $$("sets2").define("elements", COMMON_JSON.elements.kihon);
-          $$("sets2").refresh();
+          // $$("sets2").define("elements", COMMON_JSON.elements.kihon);
+          // $$("sets2").refresh();
         },
         onHide: function () {
         }
