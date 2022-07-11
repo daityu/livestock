@@ -81,6 +81,10 @@
     .winmenu_weather span {
       vertical-align: top;
     }
+    /* ラベル行 */
+    .nlabel > .webix_el_box {
+      border-bottom: double 5px #FFC778;
+    }
   </style>
   <script type="text/javascript">
     // CODELAB: Register service worker.
@@ -392,7 +396,7 @@
       view: "window", id: "ui_kihon", head: "基本情報", close: true, fullscreen: true, modal: true, kubun: "kairanban",
       body: {
         rows: [
-          { view: "form", id: "ui_kihon_sets", nameWidth: 150, scroll: "y", elements: [], elementsConfig: { labelWidth: 150 }, },
+          { view: "form", id: "ui_kihon_sets", nameWidth: 150, scroll: "y", elements: [], elementsConfig: { labelWidth: 150 } },
           { view: "button", height: 60, label: "閉じる", click: function (id, event) { this.getTopParentView().hide(); } }
         ]
       },
