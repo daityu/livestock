@@ -175,6 +175,9 @@
     const ui_menu_logic = {
       init: function () {
         //サブ画面定義
+        // console.log(COMMON_JSON.elements.kihon);
+        ui_kihon.body.rows[0].elements = COMMON_JSON.elements.kihon;
+        console.log(ui_kihon);
         webix.ui(ui_kihon);
         webix.ui(ui_income);
         webix.ui(ui_outgo);
@@ -385,20 +388,19 @@
     };
     //window設定
     //基本情報画面
-    const ui_kihon = {
+    var ui_kihon = {
       view: "window", id: "ui_kihon", head: "基本情報", close: true, fullscreen: true, modal: true, kubun: "kairanban",
       body: {
         rows: [
-          {cols:[
-            { view: "nproperty", id: "ui_kihon_sets", nameWidth: 150, scroll:"y", elements: [] },
-          ]},
+          { view: "form", id: "ui_kihon_sets", nameWidth: 150, scroll: "y", elements: [], elementsConfig: { labelWidth: 150 }, },
           { view: "button", height: 60, label: "閉じる", click: function (id, event) { this.getTopParentView().hide(); } }
         ]
       },
       on: {
         onShow: function () {
-          $$("ui_kihon_sets").define("elements", COMMON_JSON.elements.kihon);
-          $$("ui_kihon_sets").refresh();
+          // console.log(COMMON_JSON.elements.kihon);
+          // $$("ui_kihon_sets").define("elements", COMMON_JSON.elements.kihon);
+          // $$("ui_kihon_sets").refresh();
         },
         onHide: function () {
         }
@@ -408,9 +410,11 @@
       view: "window", id: "ui_income", head: "収入", close: true, fullscreen: true, modal: true, kubun: "kairanban",
       body: {
         rows: [
-          {cols:[
-            { view: "nproperty", id: "ui_income_sets", nameWidth: 150, scroll:"y", elements: [] },
-          ]},
+          {
+            cols: [
+              { view: "nproperty", id: "ui_income_sets", nameWidth: 150, scroll: "y", elements: [] },
+            ]
+          },
           { view: "button", height: 60, label: "閉じる", click: function (id, event) { this.getTopParentView().hide(); } }
         ]
       },
@@ -427,9 +431,11 @@
       view: "window", id: "ui_outgo", head: "支出", close: true, fullscreen: true, modal: true, kubun: "kairanban",
       body: {
         rows: [
-          {cols:[
-            { view: "nproperty", id: "ui_outgo_sets", nameWidth: 150, scroll:"y", elements: [] },
-          ]},
+          {
+            cols: [
+              { view: "nproperty", id: "ui_outgo_sets", nameWidth: 150, scroll: "y", elements: [] },
+            ]
+          },
           { view: "button", height: 60, label: "閉じる", click: function (id, event) { this.getTopParentView().hide(); } }
         ]
       },

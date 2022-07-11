@@ -4,7 +4,7 @@ webix.protoUI({
     defaults: {
     },
     $init: function (config) {
-        this.attachEvent("onAfterEditStart", function () {
+        this.attachEvent("onAfterEditStart", function () {//html5 type設定
             var hash = this.getEditor().config.attr;
             if (this.getEditor().config.attr != {}) {
                 Object.keys(hash).map(key => this.getEditor().getInputNode().setAttribute(key, hash[key]));
