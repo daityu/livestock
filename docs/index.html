@@ -85,7 +85,20 @@
     .nlabel > .webix_el_box {
       border-bottom: double 5px #FFC778;
     }
-  </style>
+    .fusen_bl > .webix_el_box {
+      /*ブルー*/
+      text-decoration: none;
+      background: #f7f7f7;
+      border-left: solid 4px #283D70;
+      /*左線*/
+      color: #283D70;
+      /*文字色*/
+      font-weight: bold;
+      box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.29);
+      padding: 2px;
+    }
+
+</style>
   <script type="text/javascript">
     // CODELAB: Register service worker.
     if ("serviceWorker" in navigator) {
@@ -162,11 +175,12 @@
     //   document.querySelector('#my-manifest-placeholder').setAttribute('href', reader.result);
     // }
     //メイン画面
-    //メイン画面メニューボタン部
+    //メイン画面メニューボタン部（https://pictogrammers.github.io/@mdi/font/5.8.55/）
     const ui_menu_data = [
       { id: "kihon", value: "基本情報", color: "#7E2A6C", icon: "mdi-information", width: 2, height: 2, x: 1, y: 1 },
-      { id: "income", value: "収入", color: "#283D70", icon: "mdi-clipboard-text", width: 2, height: 2, x: 1, y: 3 },
-      { id: "outgo", value: "支出", color: "#8D712B", icon: "mdi-calendar-month", width: 2, height: 2, x: 3, y: 3 },
+      { id: "income", value: "収入", color: "#283D70", icon: "mdi-plus-circle-outline", width: 2, height: 2, x: 3, y: 1 },
+      { id: "outgo", value: "支出", color: "#8D712B", icon: "mdi-minus-circle-outline", width: 2, height: 2, x: 3, y: 3 },
+      { id: "print", value: "帳票印刷", color: "#266233", icon: "mdi-printer", width: 2, height: 2, x: 1, y: 3 },
       // { id: "oshirase", value: "", color: "#7E2A6C", icon: "mdi-information", width: 2, height: 2, x: 1, y: 1 },
       // { id: "kairanban", value: "", color: "#283D70", icon: "mdi-clipboard-text", width: 2, height: 2, x: 1, y: 3 },
       // { id: "event", value: "", color: "#8D712B", icon: "mdi-calendar-month", height: 2, width: 2, x: 3, y: 1 },
@@ -181,9 +195,11 @@
         //サブ画面定義
         // console.log(COMMON_JSON.elements.kihon);
         ui_kihon.body.rows[0].elements = COMMON_JSON.elements.kihon;
-        console.log(ui_kihon);
+        // console.log(ui_kihon);
         webix.ui(ui_kihon);
+        ui_income.body.rows[0].elements = COMMON_JSON.elements.income;
         webix.ui(ui_income);
+        ui_outgo.body.rows[0].elements = COMMON_JSON.elements.outgo;
         webix.ui(ui_outgo);
         // webix.ui(ui_qrcode);
         // webix.ui(ui_oshirase);
@@ -393,7 +409,7 @@
     //window設定
     //基本情報画面
     var ui_kihon = {
-      view: "window", id: "ui_kihon", head: "基本情報", close: true, fullscreen: true, modal: true, kubun: "kairanban",
+      view: "window", id: "ui_kihon", head: "基本情報", close: true, modal: true, move:true, kubun: "kairanban", maxWidth:600, maxHeight:1000, position:"center",
       body: {
         rows: [
           { view: "form", id: "ui_kihon_sets", nameWidth: 150, scroll: "y", elements: [], elementsConfig: { labelWidth: 150 } },
@@ -411,42 +427,30 @@
       }
     };
     const ui_income = {
-      view: "window", id: "ui_income", head: "収入", close: true, fullscreen: true, modal: true, kubun: "kairanban",
+      view: "window", id: "ui_income", head: "収入", close: true, modal: true, move:true, kubun: "kairanban", maxWidth:600, maxHeight:1000, position:"center",
       body: {
         rows: [
-          {
-            cols: [
-              { view: "nproperty", id: "ui_income_sets", nameWidth: 150, scroll: "y", elements: [] },
-            ]
-          },
+          { view: "form", id: "ui_income_sets", nameWidth: 150, scroll: "y", elements: [], elementsConfig: { labelWidth: 150 } },
           { view: "button", height: 60, label: "閉じる", click: function (id, event) { this.getTopParentView().hide(); } }
         ]
       },
       on: {
         onShow: function () {
-          $$("ui_income_sets").define("elements", COMMON_JSON.elements.income);
-          $$("ui_income_sets").refresh();
         },
         onHide: function () {
         }
       }
     };
     const ui_outgo = {
-      view: "window", id: "ui_outgo", head: "支出", close: true, fullscreen: true, modal: true, kubun: "kairanban",
+      view: "window", id: "ui_outgo", head: "支出", close: true, modal: true, move:true, kubun: "kairanban", maxWidth:600, maxHeight:1000, position:"center",
       body: {
         rows: [
-          {
-            cols: [
-              { view: "nproperty", id: "ui_outgo_sets", nameWidth: 150, scroll: "y", elements: [] },
-            ]
-          },
+          { view: "form", id: "ui_outgo_sets", nameWidth: 150, scroll: "y", elements: [], elementsConfig: { labelWidth: 150 } },
           { view: "button", height: 60, label: "閉じる", click: function (id, event) { this.getTopParentView().hide(); } }
         ]
       },
       on: {
         onShow: function () {
-          $$("ui_outgo_sets").define("elements", COMMON_JSON.elements.outgo);
-          $$("ui_outgo_sets").refresh();
         },
         onHide: function () {
         }
