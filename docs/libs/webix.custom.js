@@ -12,3 +12,18 @@ webix.protoUI({
         });
     }
 }, webix.ui.property, webix.ValidateData);
+webix.protoUI({
+    name: "yen",
+    $cssName: "text",
+    defaults: {
+        format:"1,111",
+        attribute:{
+            type:"tel"
+        }
+    },
+    $init: function (config) {
+        this.attachEvent("onFocus", function () {//html5 type設定
+            this.getInputNode().select();
+        });
+    }
+}, webix.ui.text);
