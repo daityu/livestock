@@ -404,7 +404,7 @@
     //window設定
     //基本情報画面
     const ui_kihon = {
-      view: "window", id: "ui_kihon", head: "基本情報", close: true, move:true, maxWidth:600, maxHeight:1000, position:"center",
+      view: "window", id: "ui_kihon", head: "基本情報", fullscreen:webix.env.mobile ,close: true, move:true, maxWidth:600, maxHeight:1000, position:"center",
       body: {
         rows: [
           { view: "form", id: "ui_kihon_sets", nameWidth: 150, scroll: "y", elements: [], elementsConfig: { labelWidth: 150 } },
@@ -422,7 +422,7 @@
       }
     };
     const ui_income = {
-      view: "window", id: "ui_income", head: "収入", close: true, move:true, maxWidth:600, maxHeight:1000, position:"center",
+      view: "window", id: "ui_income", head: "収入", fullscreen:webix.env.mobile, close: true, move:true, maxWidth:600, maxHeight:1000, position:"center",
       body: {
         rows: [
           { view: "form", id: "ui_income_sets", nameWidth: 150, scroll: "y", elements: [], elementsConfig: { labelWidth: 150 } },
@@ -437,7 +437,7 @@
       }
     };
     const ui_outgo = {
-      view: "window", id: "ui_outgo", head: "支出", close: true, move:true, maxWidth:600, maxHeight:1000, position:"center",
+      view: "window", id: "ui_outgo", head: "支出", fullscreen:webix.env.mobile, close: true, move:true, maxWidth:600, maxHeight:1000, position:"center",
       body: {
         rows: [
           { view: "form", id: "ui_outgo_sets", nameWidth: 150, scroll: "y", elements: [], elementsConfig: { labelWidth: 150 } },

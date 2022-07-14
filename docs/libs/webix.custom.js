@@ -18,7 +18,7 @@ webix.protoUI({
     defaults: {
         format:"1,111",
         attribute:{
-            type:"tel"
+            type:"number"
         }
     },
     $init: function (config) {
