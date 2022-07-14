@@ -17,8 +17,9 @@ webix.protoUI({
     $cssName: "text",
     defaults: {
         format:"1,111",
-        attribute:{
-            type:"number"
+        attributes:{
+            type:"text",
+            inputmode:"tel"
         }
     },
     $init: function (config) {
