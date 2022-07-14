@@ -413,11 +413,12 @@
       },
       on: {
         onShow: function () {
-          // console.log(COMMON_JSON.elements.kihon);
-          // $$("ui_kihon_sets").define("elements", COMMON_JSON.elements.kihon);
-          // $$("ui_kihon_sets").refresh();
+          let _v = webix.storage.local.get("ui_kihon_sets") || {};
+          $$("ui_kihon_sets").setValues(_v);
         },
         onHide: function () {
+          let _v = $$("ui_kihon_sets").getValues();
+          webix.storage.local.put("ui_kihon_sets", _v);
         }
       }
     };
@@ -431,8 +432,12 @@
       },
       on: {
         onShow: function () {
+          let _v = webix.storage.local.get("ui_income_sets") || {};
+          $$("ui_income_sets").setValues(_v);
         },
         onHide: function () {
+          let _v = $$("ui_income_sets").getValues();
+          webix.storage.local.put("ui_income_sets", _v);
         }
       }
     };
@@ -446,8 +451,12 @@
       },
       on: {
         onShow: function () {
+          let _v = webix.storage.local.get("ui_outgo_sets") || {};
+          $$("ui_outgo_sets").setValues(_v);
         },
         onHide: function () {
+          let _v = $$("ui_outgo_sets").getValues();
+          webix.storage.local.put("ui_outgo_sets", _v);
         }
       }
     };
