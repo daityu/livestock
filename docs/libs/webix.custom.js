@@ -2,7 +2,7 @@ webix.protoUI({
     name: "ndatepicker",
     $cssName: "datepicker",
     defaults: {
-        stringResult:true
+        // stringResult: true
     },
 }, webix.ui.datepicker);
 // webix.protoUI({

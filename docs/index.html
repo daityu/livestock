@@ -81,11 +81,13 @@
     .winmenu_weather span {
       vertical-align: top;
     }
+
     /* ラベル行 */
-    .nlabel > .webix_el_box {
+    .nlabel>.webix_el_box {
       border-bottom: double 5px #FFC778;
     }
-    .fusen_bl > .webix_el_box {
+
+    .fusen_bl>.webix_el_box {
       /*ブルー*/
       text-decoration: none;
       background: #f7f7f7;
@@ -97,8 +99,7 @@
       box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.29);
       padding: 2px;
     }
-
-</style>
+  </style>
   <script type="text/javascript">
     // CODELAB: Register service worker.
     if ("serviceWorker" in navigator) {
@@ -406,11 +407,12 @@
     };
     //window設定
     //基本情報画面
+    const ui_form_elementsConfig = { labelPosition: "top" };
     const ui_kihon = {
-      view: "window", id: "ui_kihon", head: "", fullscreen:webix.env.mobile ,close: true, move:true, maxWidth:600, maxHeight:1000, position:"center",
+      view: "window", id: "ui_kihon", head: "", fullscreen: webix.env.mobile, close: true, move: true, maxWidth: 600, maxHeight: 1000, position: "center",
       body: {
         rows: [
-          { view: "form", id: "ui_kihon_sets", nameWidth: 150, scroll: "y", elements: [], elementsConfig: { labelWidth: 150 } },
+          { view: "form", id: "ui_kihon_sets", nameWidth: 150, scroll: "y", elements: [], elementsConfig: ui_form_elementsConfig },
           { view: "button", height: 60, label: "閉じる", click: function (id, event) { this.getTopParentView().hide(); } }
         ]
       },
@@ -426,10 +428,10 @@
       }
     };
     const ui_income = {
-      view: "window", id: "ui_income", head: "", fullscreen:webix.env.mobile, close: true, move:true, maxWidth:600, maxHeight:1000, position:"center",
+      view: "window", id: "ui_income", head: "", fullscreen: webix.env.mobile, close: true, move: true, maxWidth: 600, maxHeight: 1000, position: "center",
       body: {
         rows: [
-          { view: "form", id: "ui_income_sets", nameWidth: 150, scroll: "y", elements: [], elementsConfig: { labelWidth: 150 } },
+          { view: "form", id: "ui_income_sets", nameWidth: 150, scroll: "y", elements: [], elementsConfig: ui_form_elementsConfig },
           { view: "button", height: 60, label: "閉じる", click: function (id, event) { this.getTopParentView().hide(); } }
         ]
       },
@@ -445,10 +447,10 @@
       }
     };
     const ui_outgo = {
-      view: "window", id: "ui_outgo", head: "", fullscreen:webix.env.mobile, close: true, move:true, maxWidth:600, maxHeight:1000, position:"center",
+      view: "window", id: "ui_outgo", head: "", fullscreen: webix.env.mobile, close: true, move: true, maxWidth: 600, maxHeight: 1000, position: "center",
       body: {
         rows: [
-          { view: "form", id: "ui_outgo_sets", nameWidth: 150, scroll: "y", elements: [], elementsConfig: { labelWidth: 150 } },
+          { view: "form", id: "ui_outgo_sets", nameWidth: 150, scroll: "y", elements: [], elementsConfig: ui_form_elementsConfig },
           { view: "button", height: 60, label: "閉じる", click: function (id, event) { this.getTopParentView().hide(); } }
         ]
       },
