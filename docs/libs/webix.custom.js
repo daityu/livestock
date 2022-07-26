@@ -26,7 +26,7 @@ webix.protoUI({
         format: "1,111",
         attributes: {
             type: "text",
-            inputmode: "tel"
+            inputmode: "decimal"
         }
     },
     $init: function (config) {
