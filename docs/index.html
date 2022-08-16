@@ -99,6 +99,11 @@
       box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.29);
       padding: 2px;
     }
+
+    /*webix設定 datepickerフォントサイズ大*/
+    div.webix_el_datepicker.fsL>div>div {
+      font-size: 1.7em;
+    }
   </style>
   <script type="text/javascript">
     // CODELAB: Register service worker.
@@ -122,6 +127,7 @@
   <script src="./libs/winmenu/winmenu.js" type="text/javascript"></script>
   <script src="./libs/qrcodejs/qrcode.min.js" type="text/javascript"></script>
   <script src="//cdn.jsdelivr.net/npm/marked/marked.min.js" type="text/javascript"></script>
+  <script type="text/javascript" src="//www.gstatic.com/charts/loader.js"></script>
   <title id="my-app-titile"></title>
   <link rel="manifest" id="my-manifest-placeholder">
 </head>
@@ -203,10 +209,34 @@
         webix.ui(ui_systemsetting);
         // webix.ui(ui_files);
         $$("group_name").setValue("<img src='{1}' style='margin-right: 5px;' align='top' />{0}".format([COMMON_JSON.config.group_name, COMMON_JSON.config.group_logo]));//ヘッダー
-        if (COMMON_JSON.news) {//新着情報
-          let _n = COMMON_JSON.news.renketsu("name");
-          $$("winmenu_news").setHTML(marked.parse(_n));
-        }
+        // if (COMMON_JSON.news) {//新着情報
+        //   let _n = COMMON_JSON.news.renketsu("name");
+        //   $$("winmenu_news").setHTML(marked.parse(_n));
+        // }
+        google.charts.load('current', { 'packages': ['corechart'] });
+        google.charts.setOnLoadCallback(function () {
+          // Some raw data (not necessarily accurate)
+          var data = google.visualization.arrayToDataTable([
+            ['年月', '収入', '支出', '雑費', '比較A', '比較B', '頭数'],
+            ['2022/05', 965, 938, 522, 998, 450, 614.6],
+            ['2022/06', 1135, 1120, 599, 1268, 288, 682],
+            ['2022/07', 1157, 1167, 587, 807, 397, 623],
+            ['2022/08', 1119, 1110, 615, 968, 215, 609.4],
+            ['2022/09', 536, 691, 629, 1026, 366, 569.6]
+          ]);
+
+          var options = {
+            title: '収入／支出／雑費／頭数',
+            vAxis: { title: '金額' },
+            seriesType: 'bars',
+            series: { 5: { type: 'line' } }
+          };
+
+          var box = $$("winmenu_news").$view;
+          // console.log(box);
+          var chart = new google.visualization.ComboChart(box);
+          chart.draw(data, options);
+        });
         //メニューボタン名変更
         let _p = {
           b1: COMMON_JSON.config.b1 || "ボタン１",
@@ -323,7 +353,9 @@
             {
               id: "winmenu", rows: [
                 { view: "template", id: "winmenu_weather", css: "winmenu_weather", scroll: false, height: 45 },
-                { view: "template", id: "winmenu_news", scroll: "auto", gravity: 5 },
+                { view: "label", label: "登録月を指定してください" },
+                { view: "ndatepicker", id: "order_date", type: "month", format: "%Y年%m月", value: new Date() },
+                { view: "template", id: "winmenu_news", gravity: 5 },
                 {
                   view: "winmenu", id: "winmenu_menu", data: ui_menu_data, xCount: 4, yCount: 4, scroll: "auto", minHeight: 160,
                   on: { onItemClick: ui_menu_logic.menuBtnClick }, gravity: 4
@@ -584,6 +616,7 @@
     };
     //設定ファイル
     var COMMON_JSON = {};
+    var AREA_CODE = 140000;
     //メイン
     webix.ready(function () {
       //初期処理
@@ -628,11 +661,11 @@
         // COMMON_JSON = {"config":{"group_name":"資産管理アプリ（仮）","group_logo":"https://icongr.am/material/account-cowboy-hat.svg?size=48&color=ffffff","calendar_url":"https://calendar.google.com/calendar/embed?src=bvhaoohju0qc3r46fpktf6c9ms%40group.calendar.google.com&src=ja.japanese%23holiday%40group.v.calendar.google.com&ctz=Asia%2FTokyo","anpi_url":"","btn_oshirase":"告知情報","btn_calendar":"予定表","btn_kairan":"ファイル共有","btn_moushikomi":"フォーム入力","password":""},"elements":{"kihon":[{"label":"登録日","id":"date","name":"date","tani":"","type":"date","attr":{},"options":""},{"label":"名称","id":"kaisya","name":"kaisya","tani":"","type":"text","attr":{},"options":""},{"label":"代表","id":"daihyo","name":"daihyo","tani":"","type":"text","attr":{},"options":""},{"label":"連絡先","id":"kaisya_tel","name":"kaisya_tel","tani":"","type":"text","attr":{"type":"tel"},"options":""},{"label":"労働者","id":"","name":"","tani":"","type":"label","attr":{},"options":""},{"label":"本人","id":"","name":"","tani":"名","type":"select","attr":{},"options":["","1"]},{"label":"家族（配偶者）","id":"","name":"","tani":"名","type":"select","attr":{},"options":["","1"]},{"label":"家族（他）","id":"","name":"","tani":"名","type":"select","attr":{},"options":["","1","2","3","4","5","6","7","8","9","10"]},{"label":"外国人研修生","id":"","name":"","tani":"名","type":"select","attr":{},"options":["","1","2","3","4","5","6","7","8","9","10"]},{"label":"アルバイト","id":"","name":"","tani":"名","type":"select","attr":{},"options":["","1","2","3","4","5","6","7","8","9","10"]},{"label":"その他","id":"","name":"","tani":"名","type":"select","attr":{},"options":["","1","2","3","4","5","6","7","8","9","10"]},{"label":"経産牛","id":"","name":"","tani":"","type":"label","attr":{},"options":""},{"label":"搾乳","id":"","name":"","tani":"頭","type":"text","attr":{"type":"number"},"options":""},{"label":"乾乳","id":"","name":"","tani":"頭","type":"text","attr":{"type":"number"},"options":""},{"label":"仔牛","id":"","name":"","tani":"頭","type":"text","attr":{"type":"number"},"options":""},{"label":"育成牛","id":"","name":"","tani":"頭","type":"text","attr":{"type":"number"},"options":""},{"label":"牛舎","id":"","name":"","tani":"","type":"label","attr":{},"options":""},{"label":"No.1","id":"","name":"","tani":"","type":"text","attr":{},"options":""},{"label":"No.2","id":"","name":"","tani":"","type":"text","attr":{},"options":""},{"label":"No.3","id":"","name":"","tani":"","type":"text","attr":{},"options":""},{"label":"No.4","id":"","name":"","tani":"","type":"text","attr":{},"options":""},{"label":"No.5","id":"","name":"","tani":"","type":"text","attr":{},"options":""},{"label":"No.6","id":"","name":"","tani":"","type":"text","attr":{},"options":""},{"label":"No.7","id":"","name":"","tani":"","type":"text","attr":{},"options":""},{"label":"No.8","id":"","name":"","tani":"","type":"text","attr":{},"options":""},{"label":"No.9","id":"","name":"","tani":"","type":"text","attr":{},"options":""},{"label":"No.10","id":"","name":"","tani":"","type":"text","attr":{},"options":""},{"label":"搾乳器具","id":"","name":"","tani":"","type":"label","attr":{},"options":""},{"label":"No.1","id":"","name":"","tani":"","type":"text","attr":{},"options":""},{"label":"No.2","id":"","name":"","tani":"","type":"text","attr":{},"options":""},{"label":"No.3","id":"","name":"","tani":"","type":"text","attr":{},"options":""},{"label":"No.4","id":"","name":"","tani":"","type":"text","attr":{},"options":""},{"label":"No.5","id":"","name":"","tani":"","type":"text","attr":{},"options":""},{"label":"年間出荷量","id":"","name":"","tani":"トン","type":"text","attr":{"type":"number"},"options":""},{"label":"記録日","id":"","name":"","tani":"","type":"date","attr":{},"options":""},{"label":"年間売上高","id":"","name":"","tani":"万","type":"text","attr":{"type":"number"},"options":""},{"label":"（乳代）","id":"","name":"","tani":"万","type":"text","attr":{"type":"number"},"options":""},{"label":"（その他）","id":"","name":"","tani":"万","type":"text","attr":{"type":"number"},"options":""},{"label":"機械","id":"","name":"","tani":"","type":"label","attr":{},"options":""},{"label":"No.1","id":"","name":"","tani":"","type":"text","attr":{},"options":""},{"label":"No.1台数","id":"","name":"","tani":"","type":"select","attr":{},"options":["","1","2","3","4","5","6","7","8","9","10"]},{"label":"No.2","id":"","name":"","tani":"","type":"text","attr":{},"options":""},{"label":"No.2台数","id":"","name":"","tani":"","type":"select","attr":{},"options":["","1","2","3","4","5","6","7","8","9","10"]},{"label":"No.3","id":"","name":"","tani":"","type":"text","attr":{},"options":""},{"label":"No.3台数","id":"","name":"","tani":"","type":"select","attr":{},"options":["","1","2","3","4","5","6","7","8","9","10"]},{"label":"No.4","id":"","name":"","tani":"","type":"text","attr":{},"options":""},{"label":"No.4台数","id":"","name":"","tani":"","type":"select","attr":{},"options":["","1","2","3","4","5","6","7","8","9","10"]},{"label":"No.5","id":"","name":"","tani":"","type":"text","attr":{},"options":""},{"label":"No.5台数","id":"","name":"","tani":"","type":"select","attr":{},"options":["","1","2","3","4","5","6","7","8","9","10"]},{"label":"耕作面積","id":"","name":"","tani":"町歩","type":"text","attr":{"type":"number"},"options":""}],"income":[{"label":"登録日","id":"date","name":"date","tani":"","type":"date","attr":{},"options":""},{"label":"出荷乳量","id":"kaisya","name":"kaisya","tani":"","type":"text","attr":{"type":"number"},"options":""}],"outgo":[{"label":"登録日","id":"date","name":"date","tani":"","type":"date","attr":{},"options":""},{"label":"資料代","id":"kaisya","name":"kaisya","tani":"","type":"text","attr":{"type":"number"},"options":""}]},"news":[{"id":1,"name":"## ここに表示できます","fileId":"","info":""}]};
       });
       //今日の天気
-      // https://www.jma.go.jp/bosai/common/const/area.json
+      // 横浜＝140000 https://www.jma.go.jp/bosai/common/const/area.json
       // https://www.t3a.jp/blog/web-develop/weather-code-list/
       // https://www.jma.go.jp/bosai/forecast/data/forecast/140000.json
       // https://www.jma.go.jp/bosai/forecast/#area_type=class20s&area_code=1410000
-      webix.ajax().get("https://www.jma.go.jp/bosai/forecast/data/forecast/140000.json").then(function (data) {
+      webix.ajax().get("https://www.jma.go.jp/bosai/forecast/data/forecast/{0}.json".format(AREA_CODE)).then(function (data) {
         let _r = data.json();
         let _d = new Date(_r[0]["reportDatetime"]);
         let _wt = _r[0]["timeSeries"][2]["areas"][0]["temps"];//気温最低

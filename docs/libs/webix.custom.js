@@ -3,6 +3,7 @@ webix.protoUI({
     $cssName: "datepicker",
     defaults: {
         // stringResult: true
+        css:"fsL"
     },
 }, webix.ui.datepicker);
 // webix.protoUI({
