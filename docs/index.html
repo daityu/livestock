@@ -359,12 +359,13 @@
                         NCC.datepicker.addMonth("order_date", -1);
                       }, tooltip: "前月へ"
                     },
-                    { view: "ndatepicker", id: "order_date", type: "month", format: "%Y年%m月", value: new Date() },
+                    { view: "ndatepicker", id: "order_date", type: "month", format: "%Y年%m月", value: new Date(), width:200 },
                     {
                       view: "button", type: "icon", icon: "wxi-angle-right", width: 60, click: function (id, event) {
                         NCC.datepicker.addMonth("order_date", 1);
                       }, tooltip: "翌月へ"
-                    }
+                    },
+                    {}
                   ]
                 },
                 { view: "template", id: "winmenu_news", gravity: 5 },
