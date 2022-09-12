@@ -36,6 +36,6 @@ NCC.datepicker.monthLayout = function (_id, _param) {
       },
       {}
     ]
-  }
+  };
   return _obj;
-}
+};
