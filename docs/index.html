@@ -352,22 +352,7 @@
               id: "winmenu", rows: [
                 { view: "template", id: "winmenu_weather", css: "winmenu_weather", scroll: false, height: 45 },
                 { view: "label", label: "登録月を指定してください" },
-                {
-                  cols: [
-                    {
-                      view: "button", type: "icon", icon: "wxi-angle-left", width: 60, click: function (id, event) {
-                        NCC.datepicker.addMonth("order_date", -1);
-                      }, tooltip: "前月へ"
-                    },
-                    { view: "ndatepicker", id: "order_date", type: "month", format: "%Y年%m月", value: new Date(), width:200 },
-                    {
-                      view: "button", type: "icon", icon: "wxi-angle-right", width: 60, click: function (id, event) {
-                        NCC.datepicker.addMonth("order_date", 1);
-                      }, tooltip: "翌月へ"
-                    },
-                    {}
-                  ]
-                },
+                NCC.datepicker.monthLayout("order_date"),
                 { view: "template", id: "winmenu_news", gravity: 5 },
                 {
                   view: "winmenu", id: "winmenu_menu", data: ui_menu_data, xCount: 4, yCount: 4, scroll: "auto", minHeight: 160,
