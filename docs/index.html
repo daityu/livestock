@@ -210,6 +210,7 @@
         // webix.ui(ui_qrcode);
         // webix.ui(ui_oshirase);
         webix.ui(ui_systemsetting);
+        webix.ui(ui_cow);
         // webix.ui(ui_files);
         $$("group_name").setValue("<img src='{1}' style='margin-right: 5px;' align='top' />{0}".format([COMMON_JSON.config.group_name, COMMON_JSON.config.group_logo]));//ヘッダー
         google.charts.load('current', { 'packages': ['corechart'] });
@@ -273,6 +274,9 @@
             break;
           case "b4":
             $$("ui_outgo").show();
+            break;
+          case "b5":
+            $$("ui_cow").show();
             break;
           case "kairanban":
             $$("ui_files").define("kubun", "kairanban");
@@ -459,6 +463,8 @@
         }
       }
     };
+    //window設定
+    //収入
     const ui_income = {
       view: "window", id: "ui_income", head: "", fullscreen: webix.env.mobile, close: true, move: true, maxWidth: 600, maxHeight: 1000, position: "center",
       body: {
@@ -478,6 +484,8 @@
         }
       }
     };
+    //window設定
+    //支出
     const ui_outgo = {
       view: "window", id: "ui_outgo", head: "", fullscreen: webix.env.mobile, close: true, move: true, maxWidth: 600, maxHeight: 1000, position: "center",
       body: {
@@ -587,6 +595,28 @@
         }
       }
     };
+    //window設定
+    //肉牛
+    const ui_cow = {
+      view: "window", id: "ui_cow", head: "", fullscreen: webix.env.mobile, close: true, move: true, maxWidth: 600, maxHeight: 1000, position: "center",
+      body: {
+        rows: [
+          { view: "form", id: "ui_cow_sets", nameWidth: 150, scroll: "y", elements: [], elementsConfig: ui_form_elementsConfig },
+          { view: "button", height: 60, label: "閉じる", click: function (id, event) { this.getTopParentView().hide(); } }
+        ]
+      },
+      on: {
+        onShow: function () {
+          // let _v = webix.storage.local.get("ui_cow_sets") || {};
+          // $$("ui_cow_sets").setValues(_v);
+        },
+        onHide: function () {
+          // let _v = $$("ui_cow_sets").getValues();
+          // webix.storage.local.put("ui_cow_sets", _v);
+        }
+      }
+    };
+    //window設定
     //windowQRCODE
     import QrScanner from "./libs/qr-scanner/qr-scanner.min.js";
     var qrScanner = null;
