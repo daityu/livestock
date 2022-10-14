@@ -357,8 +357,7 @@
             {
               id: "winmenu", rows: [
                 { view: "template", id: "winmenu_weather", css: "winmenu_weather", scroll: false, height: 45 },
-                { view: "label", label: "登録月を指定してください" },
-                NCC.datepicker.monthLayout("order_date"),
+                NCC.datepicker.monthLayout("order_date", "登録月"),
                 { view: "template", id: "winmenu_news", gravity: 5 },
                 {
                   view: "winmenu", id: "winmenu_menu", data: ui_menu_data, xCount: 4, yCount: 4, scroll: "auto", minHeight: 160,
