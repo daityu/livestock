@@ -221,7 +221,9 @@
         // webix.ui(ui_oshirase);
         webix.ui(ui_systemsetting);
         webix.ui(ui_cow);
+        webix.ui(ui_cow_list);
         webix.ui(ui_cow_info);
+        $$('ui_cow_info_form').bind($$('ui_cow_list_datatable'));
         // webix.ui(ui_files);
         $$("group_name").setValue("<img src='{1}' style='margin-right: 5px;' align='top' />{0}".format([COMMON_JSON.config.group_name, COMMON_JSON.config.group_logo]));//ヘッダー
         google.charts.load('current', { 'packages': ['corechart'] });
@@ -638,6 +640,46 @@
             ],
             on: {
               onItemDblClick: function (id, e, node) {
+                $$("ui_cow_list").show();
+                console.log(id, e, node);
+              }
+            }
+          },
+          { view: "button", height: 60, label: "閉じる", click: function (id, event) { this.getTopParentView().hide(); } }
+        ]
+      },
+      on: {
+        onShow: function () {
+          // let _v = webix.storage.local.get("ui_cow_sets") || {};
+          // $$("ui_cow_sets").setValues(_v);
+        },
+        onHide: function () {
+          // let _v = $$("ui_cow_sets").getValues();
+          // webix.storage.local.put("ui_cow_sets", _v);
+        }
+      }
+    };
+    const ui_cow_list = {
+      view: "window", id: "ui_cow_list", head: "牛登録詳細", fullscreen: webix.env.mobile, close: true, move: true, maxWidth: 600, maxHeight: 1000, position: "center",
+      body: {
+        rows: [
+          {
+            view: "datatable", id:"ui_cow_list_datatable", select: "row", scroll: "x", leftSplit: 1, css: "nikugyu_count_info", columns: [
+              { id: "kb", header: "種別区分", width: 100 },
+              { id: "id", header: "個体識別番号", width: 130 },
+              { id: "name", header: "名前", width: 150 },
+              { id: "sex", header: "雌雄", width: 70 },
+              { id: "moonage", header: "月齢", width: 70, css: "center" },
+              { id: "memo", header: "メモ", width: 70 }
+            ],
+            data: [
+              { id: "1122334450", kb: "黒毛和種", name: "みどり１０１号", sex: "メス", moonage: "13", memo: "" },
+              { id: "1122334451", kb: "黒毛和種", name: "みどり１０２号", sex: "メス", moonage: "14", memo: "" },
+              { id: "1122334452", kb: "黒毛和種", name: "みどり１０３号", sex: "メス", moonage: "15", memo: "" },
+              { id: "1122334453", kb: "黒毛和種", name: "みどり１０４号", sex: "メス", moonage: "16", memo: "" },
+            ],
+            on: {
+              onItemDblClick: function (id, e, node) {
                 $$("ui_cow_info").show();
                 console.log(id, e, node);
               }
@@ -658,44 +700,28 @@
       }
     };
     const ui_cow_info = {
-      view: "window", id: "ui_cow_info", head: "牛登録詳細", fullscreen: webix.env.mobile, close: true, move: true, maxWidth: 600, maxHeight: 1000, position: "center",
+      view: "window", id: "ui_cow_info", head: "牛登録", fullscreen: webix.env.mobile, close: true, move: true, maxWidth: 600, maxHeight: 1000, position: "center",
       body: {
         rows: [
           {
-            view: "datatable", select: "row", scroll: "x", leftSplit: 1, css: "nikugyu_count_info", columns: [
-              { id: "CB", header: "", width: 40, template: "{common.checkbox()}" },
-              { id: "kb", header: "種別区分", width: 100 },
-              { id: "id", header: "個体識別番号", width: 130 },
-              { id: "name", header: "名前", width: 150 },
-              { id: "sex", header: "雌雄", width: 70 },
-              { id: "moonage", header: "月齢", width: 70, css: "center" },
-              { id: "memo", header: "メモ", width: 70 }
+            view: "form", id: "ui_cow_info_form", elements: [
+              { view: "text", name: "kb", label: "種別区分" },
+              { view: "text", name: "id", label: "個体識別番号" },
+              { view: "text", name: "name", label: "名前" },
+              { view: "text", name: "sex", label: "雌雄" },
+              { view: "text", name: "moonage", label: "月齢" },
+              { view: "textarea", name: "memo", label: "メモ" }
             ],
-            data: [
-              { id: "1122334450", kb: "黒毛和種", name:"みどり１０１号", sex:"メス", moonage:"15", memo:"" },
-              { id: "1122334451", kb: "黒毛和種", name:"みどり１０２号", sex:"メス", moonage:"15", memo:"" },
-              { id: "1122334452", kb: "黒毛和種", name:"みどり１０３号", sex:"メス", moonage:"15", memo:"" },
-              { id: "1122334453", kb: "黒毛和種", name:"みどり１０４号", sex:"メス", moonage:"15", memo:"" },
-            ],
-            on: {
-              onItemDblClick: function (id, e, node) {
-                console.log(id, e, node);
-              },
-              onCheck: NCC.datatable.cssChange,
-            }
           },
+          {
+            height: 80, cols: [
+              { view: "button", css: "webix_danger", label: "削除" },
+              { view: "button", css: "webix_primary", label: "保存" }
+            ]
+          },
+          {},
           { view: "button", height: 60, label: "閉じる", click: function (id, event) { this.getTopParentView().hide(); } }
         ]
-      },
-      on: {
-        onShow: function () {
-          // let _v = webix.storage.local.get("ui_cow_sets") || {};
-          // $$("ui_cow_sets").setValues(_v);
-        },
-        onHide: function () {
-          // let _v = $$("ui_cow_sets").getValues();
-          // webix.storage.local.put("ui_cow_sets", _v);
-        }
       }
     };
     //window設定
