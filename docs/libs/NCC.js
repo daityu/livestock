@@ -1,4 +1,13 @@
 var NCC = NCC || {};
+NCC.datatable = NCC.datatable || {};
+//【共通】左端チェックボックス時のスタイルシート変更
+NCC.datatable.cssChange  = function(row, col, val){
+  if(val){
+      this.addRowCss(row, "enabled");
+  } else {
+      this.removeRowCss(row, "enabled");
+  }
+};
 NCC.datepicker = NCC.datepicker || {};
 // datepickerの日付を加減算する
 // @param string datepickerId datepickerのID
