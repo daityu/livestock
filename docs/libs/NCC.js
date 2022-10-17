@@ -8,6 +8,13 @@ NCC.datatable.cssChange  = function(row, col, val){
       this.removeRowCss(row, "enabled");
   }
 };
+// 件数
+// @param string tblId datatableID
+// @param string dispId 出力先ID
+NCC.datatable.rowCount = function(tblId, dispId){
+  var items   = $$(tblId).count();
+  $$(dispId).setValue(items + "件");
+};
 NCC.datepicker = NCC.datepicker || {};
 // datepickerの日付を加減算する
 // @param string datepickerId datepickerのID

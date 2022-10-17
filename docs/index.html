@@ -660,16 +660,25 @@
       }
     };
     const ui_cow_list = {
-      view: "window", id: "ui_cow_list", head: "牛登録詳細", fullscreen: webix.env.mobile, close: true, move: true, maxWidth: 600, maxHeight: 1000, position: "center",
+      view: "window", id: "ui_cow_list", head: "牛登録詳細", fullscreen: webix.env.mobile, close: true, move: true, maxWidth: 600, maxHeight: 1200, position: "center",
       body: {
         rows: [
           {
-            view: "datatable", id:"ui_cow_list_datatable", select: "row", scroll: "x", leftSplit: 1, css: "nikugyu_count_info", columns: [
+            view: "toolbar", id: "ui_cow_list_toolbar", cols: [
+              { view: "text" },
+              { view: "label", id: "ui_cow_list_counter", align: "center" },
+              { view: "button", css: "webix_primary", width: 100, type: "icon", icon: "mdi mdi-plus-one", label: "追加" }
+            ]
+          },
+          {
+            view: "datatable", id: "ui_cow_list_datatable", select: "row", scroll: true, css: "nikugyu_count_info", columns: [
               { id: "kb", header: "種別区分", width: 100 },
               { id: "id", header: "個体識別番号", width: 130 },
               { id: "name", header: "名前", width: 150 },
               { id: "sex", header: "雌雄", width: 70 },
               { id: "moonage", header: "月齢", width: 70, css: "center" },
+              { id: "birth", header: "出生日", width: 70, format: webix.Date.dateToStr("%Y-%m"), css: "center" },
+              { id: "outgo", header: "出荷日", width: 70, format: webix.Date.dateToStr("%Y-%m"), css: "center" },
               { id: "memo", header: "メモ", width: 70 }
             ],
             data: [
@@ -682,7 +691,8 @@
               onItemDblClick: function (id, e, node) {
                 $$("ui_cow_info").show();
                 console.log(id, e, node);
-              }
+              },
+              onAfterRender: function () { NCC.datatable.rowCount("ui_cow_list_datatable", "ui_cow_list_counter") },
             }
           },
           { view: "button", height: 60, label: "閉じる", click: function (id, event) { this.getTopParentView().hide(); } }
@@ -710,18 +720,28 @@
               { view: "text", name: "name", label: "名前" },
               { view: "text", name: "sex", label: "雌雄" },
               { view: "text", name: "moonage", label: "月齢" },
+              { view: "ndatepicker", type: "month", name: "birth", format: "%Y年%m月", label: "出生日" },
+              { view: "ndatepicker", type: "month", name: "outgo", format: "%Y年%m月", label: "出荷日" },
               { view: "textarea", name: "memo", label: "メモ" }
             ],
           },
           {
             height: 80, cols: [
-              { view: "button", css: "webix_danger", label: "削除" },
-              { view: "button", css: "webix_primary", label: "保存" }
+              {},
+              { view: "button", css: "webix_danger", type: "icon", icon: "mdi mdi-trash-can-outline", label: "削除" },
+              {}
             ]
           },
           {},
           { view: "button", height: 60, label: "閉じる", click: function (id, event) { this.getTopParentView().hide(); } }
         ]
+      },
+      on: {
+        onShow: function () {
+        },
+        onHide: function () {
+          $$("ui_cow_info_form").save();
+        }
       }
     };
     //window設定
