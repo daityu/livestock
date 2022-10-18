@@ -696,7 +696,7 @@
               { view: "ndatepicker", type: "month", name: "date", format: "%y-%m-%d", label: "納品日" },
               { view: "yen", name: "dno", label: "伝票No" },
               {
-                view: "combo", options: C_BOKUSO, name: "scd", label: "商品名", on: {
+                view: "select", options: C_BOKUSO, name: "scd", label: "商品名", on: {
                   onChange: function (newValue, oldValue, config) {
                     let _v = Conversion.arrayGetValue(C_BOKUSO, newValue, "tani");
                     $$("ui_feed_info_form_tani").setValue(_v);
