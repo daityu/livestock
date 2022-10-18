@@ -132,6 +132,7 @@
     }
   </script>
   <link rel="shortcut icon" href="favicon.ico">
+  <script src="./libs/jquery-3.3.1.min.js" type="text/javascript"></script>
   <script src="./libs/Common.js"></script>
   <link rel="stylesheet" href="//cdn.webix.com/edge/skins/flat.min.css" type="text/css">
   <link rel="stylesheet" href="//cdn.webix.com/materialdesignicons/5.8.95/css/materialdesignicons.min.css"
@@ -624,12 +625,13 @@
     };
     //window設定
     //飼料
+    //このリストは農協に作っていただく
     const C_BOKUSO = [
-      { id: "11442", value: "11442 ジパング" },
-      { id: "11832", value: "11832 Ｓ酪とちクラウン７６" },
-      { id: "11059", value: "11059 全酪エクセルＴＭ１号" },
-      { id: "11192", value: "11192 かなは フィーダー車戸配" },
-      { id: "11833", value: "11833 Ｓ酪とちクラウン７６フィーダー車" },
+      { id: "11442", value: "11442 ジパング", tani: "1000" },
+      { id: "11832", value: "11832 Ｓ酪とちクラウン７６", tani: "1000" },
+      { id: "11059", value: "11059 全酪エクセルＴＭ１号", tani: "kg" },
+      { id: "11192", value: "11192 かなは フィーダー車戸配", tani: "kg" },
+      { id: "11833", value: "11833 Ｓ酪とちクラウン７６フィーダー車", tani: "kg" },
     ];
     const ui_feed = {
       view: "window", id: "ui_feed", head: "飼料", fullscreen: webix.env.mobile, close: true, move: true, maxWidth: 600, maxHeight: 1000, position: "center",
@@ -646,7 +648,7 @@
             view: "datatable", select: "row", scroll: "x", id: "ui_feed_datatable", columns: [
               { id: "date", header: "納品日", width: 80, format: webix.Date.dateToStr("%y-%m-%d"), css: "center" },
               { id: "dno", header: "伝票No.", width: 60, css: "center" },
-              { id: "scd", header: "商品コード", width: 170, options: C_BOKUSO, fillspace: true },
+              { id: "scd", header: "商品コード", minWidth: 170, options: C_BOKUSO, fillspace: true },
               { id: "tani", header: "単位", width: 60, css: "right" },
               { id: "quantity", header: "数量", width: 70, format: function (_v) { return webix.i18n.numberFormat(_v) }, css: "right" },
               { id: "money", header: "金額", width: 110, format: function (_v) { return webix.i18n.intFormat(_v) }, css: "right" },
@@ -693,8 +695,15 @@
             view: "form", id: "ui_feed_info_form", elements: [
               { view: "ndatepicker", type: "month", name: "date", format: "%y-%m-%d", label: "納品日" },
               { view: "yen", name: "dno", label: "伝票No" },
-              { view: "select", options: C_BOKUSO, name: "scd", label: "商品名" },
-              { view: "text", name: "tani", label: "単位" },
+              {
+                view: "select", options: C_BOKUSO, name: "scd", label: "商品名", on: {
+                  onChange: function (newValue, oldValue, config) {
+                    let _v = Conversion.arrayGetValue(C_BOKUSO, newValue, "tani");
+                    $$("ui_feed_info_form_tani").setValue(_v);
+                  }
+                }
+              },
+              { view: "text", id:"ui_feed_info_form_tani", name: "tani", label: "単位" },
               { view: "text", name: "quantity", label: "数量" },
               { view: "yen", name: "money", label: "金額" },
             ],

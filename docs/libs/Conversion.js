@@ -77,3 +77,24 @@ Conversion.arrColObj2 = function (arr, param) {
   });
   return _rtn;
 };
+/**
+ * arrayとIDを基に名称を取得
+ * @param  object  obj   配列（[{id,value}]が含まれる形式）
+ * @param  string  id    ID
+ * @param  string  rtnId 返却するＩＤ（デフォルト:value）
+ * @return string  value 名称
+ */
+ Conversion.arrayGetValue = function(obj, id, rtnId){
+  var rtn;
+  if(!obj) return "";
+  if(id===undefined || id===null || id==="") return "";
+  rtnId = rtnId || "value";
+  var rtn = "";
+  $.each(obj, function(index, val) {
+    if(id == val.id){
+      rtn=val[rtnId];
+      return false;
+    }
+  });
+  return rtn;
+};
