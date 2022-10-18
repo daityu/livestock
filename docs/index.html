@@ -110,6 +110,11 @@
       text-align: center;
     }
 
+    /* datatable  */
+    .right .webix_cell {
+      text-align: right;
+    }
+
     /*datatableチェックボックス選択行*/
     .webix_cell.enabled:not(.webix_row_select) {
       background-color: lightblue !important;
@@ -199,7 +204,8 @@
       { id: "b3", value: "", color: "#266233", icon: "mdi-printer", width: 2, height: 2, x: 1, y: 1 },
       { id: "b1", value: "", color: "#7E2A6C", icon: "mdi-information", width: 1, height: 2, x: 3, y: 1 },
       { id: "b5", value: "", color: "#7E2A6C", icon: "mdi-cow", width: 1, height: 2, x: 4, y: 1 },
-      { id: "b4", value: "", color: "#8D712B", icon: "mdi-minus-circle-outline", width: 2, height: 2, x: 1, y: 3 },
+      { id: "b4", value: "", color: "#8D712B", icon: "mdi-minus-circle-outline", width: 1, height: 2, x: 1, y: 3 },
+      { id: "b6", value: "", color: "#8D712B", icon: "mdi-grass", width: 1, height: 2, x: 2, y: 3 },
       { id: "b2", value: "", color: "#283D70", icon: "mdi-plus-circle-outline", width: 2, height: 2, x: 3, y: 3 },
     ];
     document.querySelector('#my-app-titile').textContent = APP_NAME;
@@ -220,10 +226,15 @@
         // webix.ui(ui_qrcode);
         // webix.ui(ui_oshirase);
         webix.ui(ui_systemsetting);
+        //肉牛
         webix.ui(ui_cow);
         webix.ui(ui_cow_list);
         webix.ui(ui_cow_info);
-        $$('ui_cow_info_form').bind($$('ui_cow_list_datatable'));
+        $$("ui_cow_info_form").bind($$("ui_cow_list_datatable"));
+        //飼料
+        webix.ui(ui_feed);
+        webix.ui(ui_feed_info);
+        $$("ui_feed_info_form").bind($$("ui_feed_datatable"));
         // webix.ui(ui_files);
         $$("group_name").setValue("<img src='{1}' style='margin-right: 5px;' align='top' />{0}".format([COMMON_JSON.config.group_name, COMMON_JSON.config.group_logo]));//ヘッダー
         google.charts.load('current', { 'packages': ['corechart'] });
@@ -257,6 +268,7 @@
           b3: COMMON_JSON.config.b3 || "ボタン３",
           b4: COMMON_JSON.config.b4 || "ボタン４",
           b5: COMMON_JSON.config.b5 || "ボタン５",
+          b6: COMMON_JSON.config.b6 || "飼料",
         };
         Object.keys(_p).forEach(function (key) {
           // console.log(key);
@@ -290,6 +302,9 @@
             break;
           case "b5":
             $$("ui_cow").show();
+            break;
+          case "b6":
+            $$("ui_feed").show();
             break;
           case "kairanban":
             $$("ui_files").define("kubun", "kairanban");
@@ -608,6 +623,103 @@
       }
     };
     //window設定
+    //飼料
+    const C_BOKUSO = [
+      { id: "11442", value: "11442 ジパング" },
+      { id: "11832", value: "11832 Ｓ酪とちクラウン７６" },
+      { id: "11059", value: "11059 全酪エクセルＴＭ１号" },
+      { id: "11192", value: "11192 かなは フィーダー車戸配" },
+      { id: "11833", value: "11833 Ｓ酪とちクラウン７６フィーダー車" },
+    ];
+    const ui_feed = {
+      view: "window", id: "ui_feed", head: "飼料", fullscreen: webix.env.mobile, close: true, move: true, maxWidth: 600, maxHeight: 1000, position: "center",
+      body: {
+        rows: [
+          {
+            view: "toolbar", id: "ui_feed_toolbar", cols: [
+              { view: "text" },
+              { view: "label", id: "ui_feed_counter", align: "center" },
+              { view: "button", css: "webix_primary", width: 100, type: "icon", icon: "mdi mdi-plus-one", label: "追加" }
+            ]
+          },
+          {
+            view: "datatable", select: "row", scroll: "x", id: "ui_feed_datatable", columns: [
+              { id: "date", header: "納品日", width: 80, format: webix.Date.dateToStr("%y-%m-%d"), css: "center" },
+              { id: "dno", header: "伝票No.", width: 60, css: "center" },
+              { id: "scd", header: "商品コード", width: 170, options: C_BOKUSO, fillspace: true },
+              { id: "tani", header: "単位", width: 60, css: "right" },
+              { id: "quantity", header: "数量", width: 70, format: function (_v) { return webix.i18n.numberFormat(_v) }, css: "right" },
+              { id: "money", header: "金額", width: 110, format: function (_v) { return webix.i18n.intFormat(_v) }, css: "right" },
+            ],
+            data: [
+              { date: "2022-10-1", id: "20220101", "dno": 16, "scd": "11442", "tani": "1000", "quantity": "3", "money": "252150" },
+              { date: "2022-10-2", id: "20220201", "dno": 275, "scd": "11832", "tani": "1000", "quantity": "3", "money": "258000" },
+              { date: "2022-10-3", id: "20220301", "dno": 225, "scd": "11059", "tani": "kg", "quantity": "2597", "money": "204644" },
+              { date: "2022-10-4", id: "20220401", "dno": 303, "scd": "11192", "tani": "kg", "quantity": "2100", "money": "197820" },
+              { date: "2022-10-5", id: "20220501", "dno": 303, "scd": "11833", "tani": "kg", "quantity": "7400", "money": "658600" },
+              { date: "2022-10-6", id: "20220601", "dno": 288, "scd": "11442", "tani": "1000", "quantity": "3", "money": "252150" },
+              { date: "2022-10-7", id: "20220701", "dno": 576, "scd": "11833", "tani": "kg", "quantity": "7240", "money": "644360" },
+              { date: "2022-10-8", id: "20220801", "dno": 576, "scd": "11192", "tani": "kg", "quantity": "2060", "money": "194050" },
+              { date: "2022-10-9", id: "20220901", "dno": 705, "scd": "11832", "tani": "1000", "quantity": "3", "money": "258000" },
+              { date: "2022-10-10", id: "20221001", "dno": 652, "scd": "11442", "tani": "1000", "quantity": "3", "money": "252150" },
+              { date: "2022-10-11", id: "20221101", "dno": 844, "scd": "11192", "tani": "kg", "quantity": "2200", "money": "207200" },
+              { date: "2022-10-12", id: "20221201", "dno": 844, "scd": "11833", "tani": "kg", "quantity": "7700", "money": "685300" },
+            ],
+            on: {
+              onItemDblClick: function (id, e, node) {
+                $$("ui_feed_info").show();
+              }
+            }
+          },
+          { view: "button", height: 60, label: "閉じる", click: function (id, event) { this.getTopParentView().hide(); } }
+        ]
+      },
+      on: {
+        onShow: function () {
+          // let _v = webix.storage.local.get("ui_cow_sets") || {};
+          // $$("ui_cow_sets").setValues(_v);
+        },
+        onHide: function () {
+          // let _v = $$("ui_cow_sets").getValues();
+          // webix.storage.local.put("ui_cow_sets", _v);
+        }
+      }
+    };
+    const ui_feed_info = {
+      view: "window", id: "ui_feed_info", head: "飼料登録", fullscreen: webix.env.mobile, close: true, move: true, maxWidth: 600, maxHeight: 1000, position: "center",
+      body: {
+        rows: [
+          {
+            view: "form", id: "ui_feed_info_form", elements: [
+              { view: "ndatepicker", type: "month", name: "date", format: "%y-%m-%d", label: "納品日" },
+              { view: "yen", name: "dno", label: "伝票No" },
+              { view: "select", options: C_BOKUSO, name: "scd", label: "商品名" },
+              { view: "text", name: "tani", label: "単位" },
+              { view: "text", name: "quantity", label: "数量" },
+              { view: "yen", name: "money", label: "金額" },
+            ],
+          },
+          {
+            height: 80, cols: [
+              {},
+              { view: "button", css: "webix_danger", type: "icon", icon: "mdi mdi-trash-can-outline", label: "削除" },
+              {}
+            ]
+          },
+          {},
+          { view: "button", height: 60, label: "閉じる", click: function (id, event) { this.getTopParentView().hide(); } }
+        ]
+      },
+      on: {
+        onShow: function () {
+        },
+        onHide: function () {
+          $$("ui_feed_info_form").save();
+        }
+      }
+    };
+
+    //window設定
     //肉牛
     const ui_cow = {
       view: "window", id: "ui_cow", head: "肉牛", fullscreen: webix.env.mobile, close: true, move: true, maxWidth: 600, maxHeight: 1000, position: "center",
@@ -677,8 +789,8 @@
               { id: "name", header: "名前", width: 150 },
               { id: "sex", header: "雌雄", width: 70 },
               { id: "moonage", header: "月齢", width: 70, css: "center" },
-              { id: "birth", header: "出生日", width: 70, format: webix.Date.dateToStr("%Y-%m"), css: "center" },
-              { id: "outgo", header: "出荷日", width: 70, format: webix.Date.dateToStr("%Y-%m"), css: "center" },
+              { id: "jyusei", header: "出生日", width: 70, format: webix.Date.dateToStr("%Y-%m"), css: "center" },
+              { id: "bunben", header: "出荷日", width: 70, format: webix.Date.dateToStr("%Y-%m"), css: "center" },
               { id: "memo", header: "メモ", width: 70 }
             ],
             data: [
@@ -715,13 +827,14 @@
         rows: [
           {
             view: "form", id: "ui_cow_info_form", elements: [
+              //親牛
               { view: "text", name: "id", label: "個体識別番号" },
-              { view: "text", name: "kb", label: "種別区分" },
               { view: "text", name: "name", label: "名前" },
-              { view: "text", name: "sex", label: "雌雄" },
-              { view: "text", name: "moonage", label: "月齢" },
-              { view: "ndatepicker", type: "month", name: "birth", format: "%Y年%m月", label: "出生日" },
-              { view: "ndatepicker", type: "month", name: "outgo", format: "%Y年%m月", label: "出荷日" },
+              // { view: "text", name: "moonage", label: "月齢" },
+              //繁殖情報
+              { view: "text", name: "kb", label: "XX区分" },
+              { view: "ndatepicker", type: "month", name: "jyusei", format: "%Y年%m月", label: "授精日" },
+              { view: "ndatepicker", type: "month", name: "bunben", format: "%Y年%m月", label: "分娩予定日" },
               { view: "textarea", name: "memo", label: "メモ" }
             ],
           },
