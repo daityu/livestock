@@ -119,6 +119,7 @@
     .webix_cell.enabled:not(.webix_row_select) {
       background-color: lightblue !important;
     }
+
     .bg_pink {
       background-color: pink;
     }
@@ -476,7 +477,7 @@
     //基本情報画面
     const ui_form_elementsConfig = { labelPosition: "top" };
     const ui_kihon = {
-      view: "window", id: "ui_kihon", head: "", fullscreen: webix.env.mobile, close: true, move: true, maxWidth: 600, maxHeight: 1000, position: "center",
+      view: "window", id: "ui_kihon", head: "", fullscreen: webix.env.mobile, close: true, move: true, maxWidth: 800, maxHeight: 1000, position: "center",
       body: {
         rows: [
           { view: "form", id: "ui_kihon_sets", nameWidth: 150, scroll: "y", elements: [], elementsConfig: ui_form_elementsConfig },
@@ -497,7 +498,7 @@
     //window設定
     //収入
     const ui_income = {
-      view: "window", id: "ui_income", head: "", fullscreen: webix.env.mobile, close: true, move: true, maxWidth: 600, maxHeight: 1000, position: "center",
+      view: "window", id: "ui_income", head: "", fullscreen: webix.env.mobile, close: true, move: true, maxWidth: 800, maxHeight: 1000, position: "center",
       body: {
         rows: [
           { view: "form", id: "ui_income_sets", nameWidth: 150, scroll: "y", elements: [], elementsConfig: ui_form_elementsConfig },
@@ -518,7 +519,7 @@
     //window設定
     //支出
     const ui_outgo = {
-      view: "window", id: "ui_outgo", head: "", fullscreen: webix.env.mobile, close: true, move: true, maxWidth: 600, maxHeight: 1000, position: "center",
+      view: "window", id: "ui_outgo", head: "", fullscreen: webix.env.mobile, close: true, move: true, maxWidth: 800, maxHeight: 1000, position: "center",
       body: {
         rows: [
           { view: "form", id: "ui_outgo_sets", nameWidth: 150, scroll: "y", elements: [], elementsConfig: ui_form_elementsConfig },
@@ -637,7 +638,7 @@
       { id: "11833", value: "11833 Ｓ酪とちクラウン７６フィーダー車", tani: "kg" },
     ];
     const ui_feed = {
-      view: "window", id: "ui_feed", head: "飼料", fullscreen: webix.env.mobile, close: true, move: true, maxWidth: 600, maxHeight: 1000, position: "center",
+      view: "window", id: "ui_feed", head: "飼料", fullscreen: webix.env.mobile, close: true, move: true, maxWidth: 800, maxHeight: 1000, position: "center",
       body: {
         rows: [
           {
@@ -692,7 +693,7 @@
       }
     };
     const ui_feed_info = {
-      view: "window", id: "ui_feed_info", head: "飼料登録", fullscreen: webix.env.mobile, close: true, move: true, maxWidth: 600, maxHeight: 1000, position: "center",
+      view: "window", id: "ui_feed_info", head: "飼料登録", fullscreen: webix.env.mobile, close: true, move: true, maxWidth: 800, maxHeight: 1000, position: "center",
       body: {
         rows: [
           {
@@ -729,11 +730,11 @@
     //window設定
     //分娩予定頭数
     const ui_cow = {
-      view: "window", id: "ui_cow", head: "分娩予定頭数", fullscreen: webix.env.mobile, close: true, move: true, maxWidth: 600, maxHeight: 1000, position: "center",
+      view: "window", id: "ui_cow", head: "分娩予定頭数", fullscreen: webix.env.mobile, close: true, move: true, maxWidth: 800, maxHeight: 1000, position: "center",
       body: {
         rows: [
           {
-            view: "datatable", select: "cell", scroll: "x", leftSplit: 1, math: true, css: "nikugyu_count", columns: [
+            view: "datatable", select: "cell", scroll: "x", leftSplit: 2, math: true, css: "nikugyu_count", columns: [
               { id: "ym", header: "年月", width: 80, css: "center", sort: "date" },
               { id: "sum", header: "合計", width: 80, css: "center bg_pink", math: "[$r,C1] + [$r,C2] + [$r,C3] + [$r,C4] + [$r,C5] + [$r,C6] + [$r,C7]", sort: "int" },
               { id: "C1", header: "H♀", width: 70, css: "center" },
@@ -783,7 +784,7 @@
       }
     };
     const ui_cow_list = {
-      view: "window", id: "ui_cow_list", head: "分娩予定詳細", fullscreen: webix.env.mobile, close: true, move: true, maxWidth: 600, maxHeight: 1200, position: "center",
+      view: "window", id: "ui_cow_list", head: "分娩予定詳細", fullscreen: webix.env.mobile, close: true, move: true, maxWidth: 800, maxHeight: 1200, position: "center",
       body: {
         rows: [
           {
@@ -795,21 +796,26 @@
           },
           {
             view: "datatable", id: "ui_cow_list_datatable", select: "row", scroll: true, css: "nikugyu_count_info", columns: [
-              { id: "id", header: "個体識別番号", width: 130 },
-              { id: "kb", header: "種別区分", width: 100 },
-              { id: "name", header: "名前", width: 150 },
-              { id: "sex", header: "雌雄", width: 70 },
+              {
+                id: "id", header: "個体識別番号", format: function (_v) {
+                  _v = (_v + "") || "";
+                  return _v.substr(0, 5) + " " + _v.substr(5, 4) + " " + _v.substr(9, 1);
+                }, width: 130
+              },
+              { id: "kb", header: "分類名", width: 100 },
+              { id: "bunbenDate", header: "分娩日", format: webix.Date.dateToStr("%y-%m-%d"), width: 80, },
+              { id: "bunbenDay", header: "分娩後日数", width: 70, css: "center" },
+              { id: "bull", header: "種牛", width: 100, css: "center" },
               { id: "moonage", header: "月齢", width: 70, css: "center" },
-              { id: "jyusei", header: "出生日", width: 70, format: webix.Date.dateToStr("%Y-%m"), css: "center" },
-              { id: "bunben", header: "出荷日", width: 70, format: webix.Date.dateToStr("%Y-%m"), css: "center" },
-              { id: "memo", header: "メモ", width: 70 },
+              { id: "kannyuDate", header: "乾乳日", width: 80, format: webix.Date.dateToStr("%y-%m-%d"), css: "center" },
+              { id: "yoteiDate", header: "分娩予定日", width: 80, format: webix.Date.dateToStr("%y-%m-%d"), css: "center" },
               { id: "trash", header: "", width: 50, template: "{common.trashIcon()}" }
             ],
             data: [
-              { id: "1122334450", kb: "黒毛和種", name: "みどり１０１号", sex: "メス", moonage: "13", memo: "" },
-              { id: "1122334451", kb: "黒毛和種", name: "みどり１０２号", sex: "メス", moonage: "14", memo: "" },
-              { id: "1122334452", kb: "黒毛和種", name: "みどり１０３号", sex: "メス", moonage: "15", memo: "" },
-              { id: "1122334453", kb: "黒毛和種", name: "みどり１０４号", sex: "メス", moonage: "16", memo: "" },
+              { id: "1570780668", kb: "乾乳牛", bunbenDate: "2021-08-01", bull:"ＡＧ－２８", bunbenDay: "410", moonage: "49", kannyuDate: "2022-07-03", yoteiDate: "2022-08-03" },
+              { id: "1602883015", kb: "乾乳牛", bunbenDate: "2021-06-21", bull:"ＩＶＦ福之姫", bunbenDay: "451", moonage: "37", kannyuDate: "2022-07-13", yoteiDate: "2022-08-05" },
+              { id: "1602883053", kb: "乾乳牛", bunbenDate: "2021-06-28", bull:"勝早桜生", bunbenDay: "444", moonage: "36", kannyuDate: "2022-07-03", yoteiDate: "2022-08-07" },
+              { id: "1619184051", kb: "妊娠牛", bunbenDate: "", bunbenDay: "0", bull:"PB876", moonage: "30", kannyuDate: "", yoteiDate: "2022-08-09" },
             ],
             on: {
               onItemDblClick: function (id, e, node) {
@@ -834,20 +840,20 @@
       }
     };
     const ui_cow_info = {
-      view: "window", id: "ui_cow_info", head: "分娩予定", fullscreen: webix.env.mobile, close: true, move: true, maxWidth: 600, maxHeight: 1000, position: "center",
+      view: "window", id: "ui_cow_info", head: "分娩予定", fullscreen: webix.env.mobile, close: true, move: true, maxWidth: 800, maxHeight: 1000, position: "center",
       body: {
         rows: [
           {
             view: "form", id: "ui_cow_info_form", elements: [
               //親牛
               { view: "numtext", name: "id", label: "個体識別番号" },
-              { view: "text", name: "name", label: "名前" },
-              // { view: "text", name: "moonage", label: "月齢" },
-              //繁殖情報
-              { view: "text", name: "kb", label: "XX区分" },
-              { view: "ndatepicker", type: "month", name: "jyusei", format: "%Y年%m月", label: "授精日" },
-              { view: "ndatepicker", type: "month", name: "bunben", format: "%Y年%m月", label: "分娩予定日" },
-              { view: "textarea", name: "memo", label: "メモ" }
+              { view: "text", name: "kb", label: "分類名" },
+              { view: "ndatepicker", name: "bunbenDate", label: "分娩日" },
+              { view: "text", name: "bunbenDay", label: "分娩後日数" },
+              { view: "text", name: "bull", label: "種牛" },
+              { view: "text", name: "moonage", label: "月齢" },
+              { view: "ndatepicker", name: "kannyuDate", label: "乾乳日" },
+              { view: "ndatepicker", name: "yoteiDate", label: "分娩予定日" },
             ],
           },
           { view: "button", css: "webix_danger", height: 60, label: "保存" },
