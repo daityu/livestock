@@ -20,7 +20,7 @@ webix.protoUI({
 //         });
 //     }
 // }, webix.ui.property, webix.ValidateData);
-webix.protoUI({
+webix.protoUI({//金額（整数）専用
     name: "yen",
     $cssName: "text",
     defaults: {
@@ -41,3 +41,15 @@ webix.protoUI({
         });
     }
 }, webix.ui.text);
+webix.protoUI({//数値（小数点以下）専用
+    name: "num",
+    defaults: {
+        format: "1,111.00"
+    },
+}, webix.ui.yen);
+webix.protoUI({//数字専用
+    name: "numtext",
+    defaults: {
+        format: "1111"
+    },
+}, webix.ui.yen);
