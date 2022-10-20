@@ -648,13 +648,13 @@
             ]
           },
           {
-            view: "datatable", select: "row", scroll: "x", id: "ui_feed_datatable", columns: [
+            view: "datatable", select: "row", scroll: "x", id: "ui_feed_datatable", footer: true, columns: [
               { id: "date", header: "納品日", width: 80, format: webix.Date.dateToStr("%y-%m-%d"), css: "center", sort: "date" },
               { id: "dno", header: "伝票No.", width: 60, css: "center", sort: "int" },
               { id: "scd", header: "商品コード", minWidth: 170, options: C_BOKUSO, fillspace: true, sort: "string" },
               { id: "tani", header: "単位", width: 60, css: "right", sort: "string" },
               { id: "quantity", header: "数量", width: 70, format: function (_v) { return webix.i18n.numberFormat(_v) }, css: "right", sort: "int" },
-              { id: "money", header: "金額", width: 110, format: function (_v) { return webix.i18n.intFormat(_v) }, css: "right", sort: "int" },
+              { id: "money", header: "金額", footer: { content: "summColumn", css: { "text-align": "right" } }, width: 110, format: function (_v) { return webix.i18n.intFormat(_v) }, css: "right", sort: "int" },
               { id: "trash", header: "", width: 50, template: "{common.trashIcon()}" }
             ],
             data: [
