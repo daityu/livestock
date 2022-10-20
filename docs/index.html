@@ -737,7 +737,7 @@
               {
                 header: "月別予定頭数", body:
                 {
-                  view: "datatable", id: "ui_cow_datatable", select: "cell", scroll: "x", leftSplit: 2, math: true, css: "nikugyu_count", columns: [
+                  view: "datatable", id: "ui_cow_datatable", select: "row", scroll: "x", leftSplit: 2, math: true, css: "nikugyu_count", columns: [
                     { id: "ym", header: "年月", width: 80, css: "center", sort: "date" },
                     { id: "sum", header: "合計", width: 80, css: "center bg_pink", math: "[$r,C1] + [$r,C2] + [$r,C3] + [$r,C4] + [$r,C5] + [$r,C6] + [$r,C7]", sort: "int" },
                     { id: "C1", header: "H♀", width: 70, css: "center" },
@@ -764,11 +764,7 @@
                   ],
                   on: {
                     onItemDblClick: function (id, e, node) {
-                      console.log(id, e, node);
-                      if ($.inArray(id.column, ["C1", "C2", "C3", "C4", "C5", "C6", "C7"]) < 0) {
-                        return;
-                      }
-                      // $$("ui_cow_list").show();
+                      $$("ui_cow_tabs").setValue("ui_cow_tabs_2");
                     }
                   }
                 }
