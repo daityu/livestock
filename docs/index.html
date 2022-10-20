@@ -728,6 +728,20 @@
 
     //window設定
     //分娩予定頭数
+    const C_NENGETSU = [
+      { value: "22年1月", id: "20220101" },
+      { value: "22年2月", id: "20220201" },
+      { value: "22年3月", id: "20220301" },
+      { value: "22年4月", id: "20220401" },
+      { value: "22年5月", id: "20220501" },
+      { value: "22年6月", id: "20220601" },
+      { value: "22年7月", id: "20220701" },
+      { value: "22年8月", id: "20220801" },
+      { value: "22年9月", id: "20220901" },
+      { value: "22年10月", id: "20221001" },
+      { value: "22年11月", id: "20221101" },
+      { value: "22年12月", id: "20221201" }
+    ];
     const ui_cow = {
       view: "window", id: "ui_cow", head: "分娩予定", fullscreen: webix.env.mobile, close: true, move: true, maxWidth: 800, maxHeight: 1000, position: "center",
       body: {
@@ -764,6 +778,9 @@
                   ],
                   on: {
                     onItemDblClick: function (id, e, node) {
+                      var _item = this.getItem(id);
+                      console.log(_item, id);
+                      $$("ui_cow_list_toolbar_date").setValue(_item.id);
                       $$("ui_cow_tabs").setValue("ui_cow_tabs_2");
                     }
                   }
@@ -774,7 +791,7 @@
                   id: "ui_cow_tabs_2", rows: [
                     {
                       view: "toolbar", id: "ui_cow_list_toolbar", cols: [
-                        { view: "text" },
+                        { view: "select", id:"ui_cow_list_toolbar_date", options: C_NENGETSU },
                         { view: "label", id: "ui_cow_list_counter", align: "center" },
                         { view: "button", css: "webix_primary", width: 100, type: "icon", icon: "mdi mdi-plus-one", label: "追加" }
                       ]
