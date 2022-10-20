@@ -791,7 +791,7 @@
                   id: "ui_cow_tabs_2", rows: [
                     {
                       view: "toolbar", id: "ui_cow_list_toolbar", cols: [
-                        { view: "select", id:"ui_cow_list_toolbar_date", options: C_NENGETSU },
+                        { view: "select", id: "ui_cow_list_toolbar_date", options: C_NENGETSU },
                         { view: "label", id: "ui_cow_list_counter", align: "center" },
                         { view: "button", css: "webix_primary", width: 100, type: "icon", icon: "mdi mdi-plus-one", label: "追加" }
                       ]
@@ -832,7 +832,16 @@
               }
             ]
           },
-          { view: "button", height: 60, label: "閉じる", click: function (id, event) { this.getTopParentView().hide(); } }
+          {
+            view: "button", height: 60, label: "閉じる", click: function (id, event) {
+              var _id = $$("ui_cow_tabs").getValue();
+              if (_id == "ui_cow_tabs_2") {
+                $$("ui_cow_tabs").setValue("ui_cow_datatable");
+                return;
+              }
+              this.getTopParentView().hide();
+            }
+          }
         ]
       },
       on: {
