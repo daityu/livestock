@@ -804,12 +804,21 @@
                             return _v.substr(0, 5) + " " + _v.substr(5, 4) + " " + _v.substr(9, 1);
                           }, width: 130
                         },
+                        { id: "barth", header: "生年月日" },
+                        { id: "kenteiNo", header: "検定番号" },
+                        { id: "sanjiNo", header: "産次" },
                         { id: "kb", header: "分類名", width: 100 },
                         { id: "bunbenDate", header: "分娩日", format: webix.Date.dateToStr("%y-%m-%d"), width: 80, },
                         { id: "bunbenDay", header: "分娩後日数", width: 70, css: "center" },
+                        { id: "bunbenJyoutai", header: "分娩状態" },
+                        { id: "jyuseiDateS", header: "初回授精日", width: 80, format: webix.Date.dateToStr("%y-%m-%d"), css: "center" },
+                        { id: "jyuseiDateE", header: "最終授精日", width: 80, format: webix.Date.dateToStr("%y-%m-%d"), css: "center" },
+                        { id: "jyuseiNo", header: "授精" },
                         { id: "bull", header: "種牛", width: 100, css: "center" },
                         { id: "moonage", header: "月齢", width: 70, css: "center" },
                         { id: "kannyuDate", header: "乾乳日", width: 80, format: webix.Date.dateToStr("%y-%m-%d"), css: "center" },
+                        { id: "ninkanYoteiDate", header: "妊鑑予定日", width: 80, format: webix.Date.dateToStr("%y-%m-%d"), css: "center" },
+                        { id: "kannyuYoteiDate", header: "乾乳予定日", width: 80, format: webix.Date.dateToStr("%y-%m-%d"), css: "center" },
                         { id: "yoteiDate", header: "分娩予定日", width: 80, format: webix.Date.dateToStr("%y-%m-%d"), css: "center" },
                         { id: "trash", header: "", width: 50, template: "{common.trashIcon()}" }
                       ],
@@ -860,20 +869,28 @@
       body: {
         rows: [
           {
-            view: "form", id: "ui_cow_info_form", elements: [
+            view: "form", id: "ui_cow_info_form", scroll: "auto", elements: [
               //親牛
+              { view: "ndatepicker", name: "barth", label: "生年月日" },
+              { view: "numtext", name: "kenteiNo", label: "検定番号" },
+              { view: "numtext", name: "sanjiNo", label: "産次" },
               { view: "numtext", name: "id", label: "個体識別番号" },
               { view: "text", name: "kb", label: "分類名" },
               { view: "ndatepicker", name: "bunbenDate", label: "分娩日" },
-              { view: "text", name: "bunbenDay", label: "分娩後日数" },
+              { view: "numtext", name: "bunbenDay", label: "分娩後日数" },
+              { view: "text", id: "bunbenJyoutai", label: "分娩状態" },
+              { view: "ndatepicker", id: "jyuseiDateS", label: "初回授精日" },
+              { view: "ndatepicker", id: "jyuseiDateE", label: "最終授精日" },
+              { view: "numtext", id: "jyuseiNo", label: "授精" },
               { view: "text", name: "bull", label: "種牛" },
-              { view: "text", name: "moonage", label: "月齢" },
+              { view: "numtext", name: "moonage", label: "月齢" },
               { view: "ndatepicker", name: "kannyuDate", label: "乾乳日" },
+              { view: "ndatepicker", id: "ninkanYoteiDate", label: "妊鑑予定日" },
+              { view: "ndatepicker", id: "kannyuYoteiDate", label: "乾乳予定日" },
               { view: "ndatepicker", name: "yoteiDate", label: "分娩予定日" },
             ],
           },
           { view: "button", css: "webix_danger", height: 60, label: "保存" },
-          {},
           { view: "button", height: 60, label: "閉じる", click: function (id, event) { this.getTopParentView().hide(); } }
         ]
       },
