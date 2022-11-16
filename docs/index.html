@@ -244,26 +244,42 @@
         google.charts.load('current', { 'packages': ['corechart'] });
         google.charts.setOnLoadCallback(function () {
           // Some raw data (not necessarily accurate)
-          var data = google.visualization.arrayToDataTable([
-            ['年月', '収入', '支出', '雑費', '比較A', '比較B', '頭数'],
-            ['2022/05', 965, 938, 522, 998, 450, 614.6],
-            ['2022/06', 1135, 1120, 599, 1268, 288, 682],
-            ['2022/07', 1157, 1167, 587, 807, 397, 623],
-            ['2022/08', 1119, 1110, 615, 968, 215, 609.4],
-            ['2022/09', 536, 691, 629, 1026, 366, 569.6]
+          //chart1
+          var data1 = google.visualization.arrayToDataTable([
+            ['年月', '収入', '支出', '飼料'],
+            ['2022/05', 965, 938, 522],
+            ['2022/06', 1135, 1120, 599],
+            ['2022/07', 1157, 1167, 587],
+            ['2022/08', 1119, 1110, 615],
+            ['2022/09', 536, 691, 629]
           ]);
-
-          var options = {
-            title: '収入／支出／雑費／頭数',
+          var options1 = {
+            // title: '収入／支出／飼料／頭数',
             // vAxis: { title: '金額' },
             seriesType: 'bars',
-            series: { 5: { type: 'line' } }
+            // series: { 3: { type: 'line' } }
           };
-
-          var box = $$("winmenu_news").$view;
-          // console.log(box);
-          var chart = new google.visualization.ComboChart(box);
-          chart.draw(data, options);
+          var box1 = $$("winmenu_chart1").$view;
+          var chart1 = new google.visualization.ComboChart(box1);
+          chart1.draw(data1, options1);
+          //chart2(TODO サイズ)
+          var data2 = google.visualization.arrayToDataTable([
+            ['年月', 'H♀', 'H', 'HET', 'F1', 'IF', 'IVF', 'OPU'],
+            ['2022/05', 1,2,3,4,5,6,7],
+            ['2022/06', 1,2,3,4,5,6,7 ],
+            ['2022/07', 1,2,3,4,5,6,7 ],
+            ['2022/08', 1,2,3,4,5,6,7 ],
+            ['2022/09', 1,2,3,4,5,6,7 ]
+          ]);
+          var options2 = {
+            // title: '収入／支出／飼料／頭数',
+            // vAxis: { title: '金額' },
+            seriesType: 'bars',
+            // series: { 5: { type: 'line' } }
+          };
+          var box2 = $$("winmenu_chart2").$view;
+          var chart2 = new google.visualization.ComboChart(box2);
+          chart2.draw(data2, options2);
         });
         //メニューボタン名変更
         let _p = {
@@ -390,7 +406,12 @@
               id: "winmenu", rows: [
                 { view: "template", id: "winmenu_weather", css: "winmenu_weather", scroll: false, height: 45 },
                 NCC.datepicker.monthLayout("order_date", "登録月"),
-                { view: "template", id: "winmenu_news", gravity: 5 },
+                {
+                  view: "tabview", value: "winmenu_chart1", cells: [
+                    { header: "収入／支出／飼料", body: { view: "template", id: "winmenu_chart1" } },
+                    { header: "頭数", body: { view: "template", id: "winmenu_chart2" } }
+                  ], gravity: 5
+                },
                 {
                   view: "winmenu", id: "winmenu_menu", data: ui_menu_data, xCount: 4, yCount: 4, scroll: "auto", minHeight: 160,
                   on: { onItemClick: ui_menu_logic.menuBtnClick }, gravity: 4
@@ -742,6 +763,13 @@
       { value: "22年11月", id: "20221101" },
       { value: "22年12月", id: "20221201" }
     ];
+    //繁殖リスト
+    const DATA_HANSYOKU = [
+      { id: "1570780668", kb: "乾乳牛", bunbenDate: "2021-08-01", bull: "ＡＧ－２８", bunbenDay: "410", moonage: "49", kannyuDate: "2022-07-03", yoteiDate: "2022-08-03" },
+      { id: "1602883015", kb: "乾乳牛", bunbenDate: "2021-06-21", bull: "ＩＶＦ福之姫", bunbenDay: "451", moonage: "37", kannyuDate: "2022-07-13", yoteiDate: "2022-08-05" },
+      { id: "1602883053", kb: "乾乳牛", bunbenDate: "2021-06-28", bull: "勝早桜生", bunbenDay: "444", moonage: "36", kannyuDate: "2022-07-03", yoteiDate: "2022-08-07" },
+      { id: "1619184051", kb: "妊娠牛", bunbenDate: "", bunbenDay: "0", bull: "PB876", moonage: "30", kannyuDate: "", yoteiDate: "2022-08-09" },
+    ];
     const ui_cow = {
       view: "window", id: "ui_cow", head: "分娩予定", fullscreen: webix.env.mobile, close: true, move: true, maxWidth: 800, maxHeight: 1000, position: "center",
       body: {
@@ -822,12 +850,7 @@
                         { id: "yoteiDate", header: "分娩予定日", width: 80, format: webix.Date.dateToStr("%y-%m-%d"), css: "center" },
                         { id: "trash", header: "", width: 50, template: "{common.trashIcon()}" }
                       ],
-                      data: [
-                        { id: "1570780668", kb: "乾乳牛", bunbenDate: "2021-08-01", bull: "ＡＧ－２８", bunbenDay: "410", moonage: "49", kannyuDate: "2022-07-03", yoteiDate: "2022-08-03" },
-                        { id: "1602883015", kb: "乾乳牛", bunbenDate: "2021-06-21", bull: "ＩＶＦ福之姫", bunbenDay: "451", moonage: "37", kannyuDate: "2022-07-13", yoteiDate: "2022-08-05" },
-                        { id: "1602883053", kb: "乾乳牛", bunbenDate: "2021-06-28", bull: "勝早桜生", bunbenDay: "444", moonage: "36", kannyuDate: "2022-07-03", yoteiDate: "2022-08-07" },
-                        { id: "1619184051", kb: "妊娠牛", bunbenDate: "", bunbenDay: "0", bull: "PB876", moonage: "30", kannyuDate: "", yoteiDate: "2022-08-09" },
-                      ],
+                      data: DATA_HANSYOKU,
                       on: {
                         onItemDblClick: function (id, e, node) {
                           $$("ui_cow_info").show();
