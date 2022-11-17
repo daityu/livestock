@@ -265,11 +265,11 @@
           //chart2(TODO サイズ)
           var data2 = google.visualization.arrayToDataTable([
             ['年月', 'H♀', 'H', 'HET', 'F1', 'IF', 'IVF', 'OPU'],
-            ['2022/05', 1,2,3,4,5,6,7],
-            ['2022/06', 1,2,3,4,5,6,7 ],
-            ['2022/07', 1,2,3,4,5,6,7 ],
-            ['2022/08', 1,2,3,4,5,6,7 ],
-            ['2022/09', 1,2,3,4,5,6,7 ]
+            ['2022/05', 1, 2, 3, 4, 5, 6, 7],
+            ['2022/06', 1, 2, 3, 4, 5, 6, 7],
+            ['2022/07', 1, 2, 3, 4, 5, 6, 7],
+            ['2022/08', 1, 2, 3, 4, 5, 6, 7],
+            ['2022/09', 1, 2, 3, 4, 5, 6, 7]
           ]);
           var options2 = {
             // title: '収入／支出／飼料／頭数',
@@ -765,10 +765,13 @@
     ];
     //繁殖リスト
     const DATA_HANSYOKU = [
-      { id: "1570780668", kb: "乾乳牛", bunbenDate: "2021-08-01", bull: "ＡＧ－２８", bunbenDay: "410", moonage: "49", kannyuDate: "2022-07-03", yoteiDate: "2022-08-03" },
-      { id: "1602883015", kb: "乾乳牛", bunbenDate: "2021-06-21", bull: "ＩＶＦ福之姫", bunbenDay: "451", moonage: "37", kannyuDate: "2022-07-13", yoteiDate: "2022-08-05" },
-      { id: "1602883053", kb: "乾乳牛", bunbenDate: "2021-06-28", bull: "勝早桜生", bunbenDay: "444", moonage: "36", kannyuDate: "2022-07-03", yoteiDate: "2022-08-07" },
-      { id: "1619184051", kb: "妊娠牛", bunbenDate: "", bunbenDay: "0", bull: "PB876", moonage: "30", kannyuDate: "", yoteiDate: "2022-08-09" },
+      { id: 1570780477, barth: "2018/6/30", kenteiNo: 838, sanjiNo: 2, kb: "妊娠牛", bunbenDate: "2021/12/3", bunbenDay: 316, bunbenJyoutai: "正常", jyuseiDateS: "2022/2/22", jyuseiDateE: "2022/2/22", jyuseiNo: 1, bull: "PB878", moonage: 52, kannyuDate: "", ninkanYoteiDate: "", kannyuYoteiDate: "2022/9/30", yoteiDate: "2022/11/29" },
+      { id: 1602883213, barth: "2019/11/26", kenteiNo: 914, sanjiNo: 1, kb: "妊娠牛", bunbenDate: "2021/11/2", bunbenDay: 347, bunbenJyoutai: "正常", jyuseiDateS: "2022/2/25", jyuseiDateE: "2022/2/25", jyuseiNo: 1, bull: "629H18803", moonage: 35, kannyuDate: "", ninkanYoteiDate: "", kannyuYoteiDate: "2022/10/3", yoteiDate: "2022/12/2" },
+      { id: 1570730997, barth: "2018/12/29", kenteiNo: 860, sanjiNo: 2, kb: "妊娠牛", bunbenDate: "2021/12/16", bunbenDay: 303, bunbenJyoutai: "正常", jyuseiDateS: "2022/2/28", jyuseiDateE: "2022/2/28", jyuseiNo: 1, bull: "629H18803", moonage: 46, kannyuDate: "", ninkanYoteiDate: "", kannyuYoteiDate: "2022/10/6", yoteiDate: "2022/12/5" },
+      { id: 1510177350, barth: "2016/7/13", kenteiNo: 733, sanjiNo: 3, kb: "妊娠牛", bunbenDate: "2021/10/9", bunbenDay: 371, bunbenJyoutai: "正常", jyuseiDateS: "2022/3/3", jyuseiDateE: "2022/3/3", jyuseiNo: 1, bull: "629H18803", moonage: 75, kannyuDate: "", ninkanYoteiDate: "", kannyuYoteiDate: "2022/10/9", yoteiDate: "2022/12/8" },
+      { id: 1570780880, barth: "2018/12/28", kenteiNo: 852, sanjiNo: 2, kb: "妊娠牛", bunbenDate: "2021/11/22", bunbenDay: 327, bunbenJyoutai: "正常", jyuseiDateS: "2022/3/8", jyuseiDateE: "2022/3/8", jyuseiNo: 1, bull: "629H18803", moonage: 46, kannyuDate: "", ninkanYoteiDate: "", kannyuYoteiDate: "2022/10/14", yoteiDate: "2022/12/13" },
+      { id: 1557280051, barth: "2017/10/13", kenteiNo: 792, sanjiNo: 3, kb: "乾乳牛", bunbenDate: "2021/10/22", bunbenDay: 358, bunbenJyoutai: "流産", jyuseiDateS: "2022/1/13", jyuseiDateE: "2022/3/9", jyuseiNo: 3, bull: "TW-43", moonage: 60, kannyuDate: "2022/6/27", ninkanYoteiDate: "", kannyuYoteiDate: "", yoteiDate: "2022/12/14" },
+      { id: 1570780705, barth: "2018/10/6", kenteiNo: 853, sanjiNo: 2, kb: "妊娠牛", bunbenDate: "2021/12/6", bunbenDay: 313, bunbenJyoutai: "正常", jyuseiDateS: "2022/2/14", jyuseiDateE: "2022/3/9", jyuseiNo: 2, bull: "TW-43", moonage: 48, kannyuDate: "", ninkanYoteiDate: "", kannyuYoteiDate: "2022/10/15", yoteiDate: "2022/12/14" },
     ];
     const ui_cow = {
       view: "window", id: "ui_cow", head: "分娩予定", fullscreen: webix.env.mobile, close: true, move: true, maxWidth: 800, maxHeight: 1000, position: "center",
@@ -832,7 +835,7 @@
                             return _v.substr(0, 5) + " " + _v.substr(5, 4) + " " + _v.substr(9, 1);
                           }, width: 130
                         },
-                        { id: "barth", header: "生年月日" },
+                        { id: "barth", header: "生年月日", width: 80, format: webix.Date.dateToStr("%y-%m-%d"), css: "center" },
                         { id: "kenteiNo", header: "検定番号" },
                         { id: "sanjiNo", header: "産次" },
                         { id: "kb", header: "分類名", width: 100 },
@@ -901,17 +904,18 @@
               { view: "text", name: "kb", label: "分類名" },
               { view: "ndatepicker", name: "bunbenDate", label: "分娩日" },
               { view: "numtext", name: "bunbenDay", label: "分娩後日数" },
-              { view: "text", id: "bunbenJyoutai", label: "分娩状態" },
-              { view: "ndatepicker", id: "jyuseiDateS", label: "初回授精日" },
-              { view: "ndatepicker", id: "jyuseiDateE", label: "最終授精日" },
-              { view: "numtext", id: "jyuseiNo", label: "授精" },
+              { view: "select", name: "bunbenJyoutai", label: "分娩状態", options: ["", "正常", "流産", "死産"] },
+              { view: "ndatepicker", name: "jyuseiDateS", label: "初回授精日" },
+              { view: "ndatepicker", name: "jyuseiDateE", label: "最終授精日" },
+              { view: "numtext", name: "jyuseiNo", label: "授精" },
               { view: "text", name: "bull", label: "種牛" },
               { view: "numtext", name: "moonage", label: "月齢" },
               { view: "ndatepicker", name: "kannyuDate", label: "乾乳日" },
-              { view: "ndatepicker", id: "ninkanYoteiDate", label: "妊鑑予定日" },
-              { view: "ndatepicker", id: "kannyuYoteiDate", label: "乾乳予定日" },
+              { view: "ndatepicker", name: "ninkanYoteiDate", label: "妊鑑予定日" },
+              { view: "ndatepicker", name: "kannyuYoteiDate", label: "乾乳予定日" },
               { view: "ndatepicker", name: "yoteiDate", label: "分娩予定日" },
             ],
+            elementsConfig: { labelWidth: 120 }
           },
           { view: "button", css: "webix_danger", height: 60, label: "保存" },
           { view: "button", height: 60, label: "閉じる", click: function (id, event) { this.getTopParentView().hide(); } }
