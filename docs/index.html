@@ -265,11 +265,13 @@
           //chart2(TODO サイズ)
           var data2 = google.visualization.arrayToDataTable([
             ['年月', 'H♀', 'H', 'HET', 'F1', 'IF', 'IVF', 'OPU'],
-            ['2022/05', 1, 2, 3, 4, 5, 6, 7],
-            ['2022/06', 1, 2, 3, 4, 5, 6, 7],
-            ['2022/07', 1, 2, 3, 4, 5, 6, 7],
-            ['2022/08', 1, 2, 3, 4, 5, 6, 7],
-            ['2022/09', 1, 2, 3, 4, 5, 6, 7]
+            ['2022/10', 8, 7, 0, 8, 0, 1, 0],
+            ['2022/11', 7, 2, 0, 12, 0, 4, 0],
+            ['2022/12', 6, 7, 0, 10, 0, 0, 0],
+            ['2023/01', 6, 1, 0, 13, 0, 2, 0],
+            ['2023/02', 3, 1, 0, 1, 0, 1, 1],
+            ['2023/03', 1, 0, 0, 2, 2, 2, 3],
+            ['2023/04', 0, 0, 0, 4, 0, 0, 1],
           ]);
           var options2 = {
             // title: '収入／支出／飼料／頭数',
@@ -847,13 +849,13 @@
                         { id: "bunbenJyoutai", header: "分娩状態", sort: "string" },
                         { id: "jyuseiDateS", header: "初回授精日", width: 80, format: webix.Date.dateToStr("%y-%m-%d"), css: "center", sort: "date" },
                         { id: "jyuseiDateE", header: "最終授精日", width: 80, format: webix.Date.dateToStr("%y-%m-%d"), css: "center", sort: "date" },
-                        { id: "jyuseiNo", header: "授精" , sort: "int"},
+                        { id: "jyuseiNo", header: "授精", sort: "int" },
                         { id: "bull", header: "種牛", width: 100, css: "center", sort: "string" },
                         { id: "moonage", header: "月齢", width: 70, css: "center", sort: "int" },
                         { id: "kannyuDate", header: "乾乳日", width: 80, format: webix.Date.dateToStr("%y-%m-%d"), css: "center", sort: "date" },
                         { id: "ninkanYoteiDate", header: "妊鑑予定日", width: 80, format: webix.Date.dateToStr("%y-%m-%d"), css: "center", sort: "date" },
                         { id: "kannyuYoteiDate", header: "乾乳予定日", width: 80, format: webix.Date.dateToStr("%y-%m-%d"), css: "center", sort: "date" },
-                        { id: "yoteiDate", header: "分娩予定日", width: 80, format: webix.Date.dateToStr("%y-%m-%d"), css: "center" , sort: "date"},
+                        { id: "yoteiDate", header: "分娩予定日", width: 80, format: webix.Date.dateToStr("%y-%m-%d"), css: "center", sort: "date" },
                         { id: "trash", header: "", width: 50, template: "{common.trashIcon()}" }
                       ],
                       data: DATA_HANSYOKU,
