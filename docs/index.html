@@ -260,7 +260,8 @@
             // series: { 3: { type: 'line' } }
           };
           var box1 = $$("winmenu_chart1").$view;
-          var chart1 = new google.visualization.ComboChart(box1);
+          // var chart1 = new google.visualization.ComboChart(box1);
+          var chart1 = new google.visualization.ColumnChart(box1);
           chart1.draw(data1, options1);
           //chart2(TODO サイズ)
           var data2 = google.visualization.arrayToDataTable([
@@ -280,7 +281,7 @@
             // series: { 5: { type: 'line' } }
           };
           var box2 = $$("winmenu_chart2").$view;
-          var chart2 = new google.visualization.ComboChart(box2);
+          var chart2 = new google.visualization.ColumnChart(box2);
           chart2.draw(data2, options2);
         });
         //メニューボタン名変更
