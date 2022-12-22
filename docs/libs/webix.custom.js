@@ -53,3 +53,12 @@ webix.protoUI({//数字専用
         format: "1111"
     },
 }, webix.ui.yen);
+webix.protoUI({//html5日付専用
+    name: "html5date",
+    defaults: {
+        attributes: {
+            type: "date",
+            inputmode: "decimal"
+        }
+    },
+}, webix.ui.text);

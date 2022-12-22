@@ -20,10 +20,11 @@
   <!-- CODELAB: Add meta theme-color -->
   <meta name="theme-color" content="#2F3BA2" />
   <style>
-    body{
+    body {
       overscroll-behavior-y: contain;
       touch-action: none;
     }
+
     /*全体の文字の大きさ*/
     .webix_el_box label,
     .webix_el_box input,
@@ -43,7 +44,8 @@
       background-color: lightyellow !important;
     }
 
-    .fusen_bl {
+    .fusen_bl,
+    .fusen_bl>.webix_el_box {
       /*ブルー*/
       text-decoration: none;
       background: #f7f7f7;
@@ -56,7 +58,8 @@
       padding: 2px;
     }
 
-    .fusen_rd {
+    .fusen_rd,
+    .fusen_rd>.webix_el_box {
       /*レッド*/
       text-decoration: none;
       background: #f7f7f7;
@@ -69,7 +72,8 @@
       padding: 2px;
     }
 
-    .fusen_gn {
+    .fusen_gn,
+    .fusen_gn>.webix_el_box {
       /*緑*/
       text-decoration: none;
       background: #f7f7f7;
@@ -89,19 +93,6 @@
     /* ラベル行 */
     .nlabel>.webix_el_box {
       border-bottom: double 5px #FFC778;
-    }
-
-    .fusen_bl>.webix_el_box {
-      /*ブルー*/
-      text-decoration: none;
-      background: #f7f7f7;
-      border-left: solid 4px #283D70;
-      /*左線*/
-      color: #283D70;
-      /*文字色*/
-      font-weight: bold;
-      box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.29);
-      padding: 2px;
     }
 
     /*webix設定 datepickerフォントサイズ大*/
@@ -528,7 +519,10 @@
       view: "window", id: "ui_income", head: "", fullscreen: webix.env.mobile, close: true, move: true, maxWidth: 800, maxHeight: 1000, position: "center",
       body: {
         rows: [
-          { view: "form", id: "ui_income_sets", nameWidth: 150, scroll: "y", elements: [], elementsConfig: ui_form_elementsConfig },
+          {
+            view: "form", id: "ui_income_sets", nameWidth: 150, scroll: "y", elements: [
+            ], elementsConfig: ui_form_elementsConfig
+          },
           { view: "button", height: 60, label: "閉じる", click: function (id, event) { this.getTopParentView().hide(); } }
         ]
       },
