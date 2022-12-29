@@ -837,36 +837,42 @@
                               var file = upload.file;
                               var reader = new FileReader();
                               reader.onload = function (event) {
-                                // var _data = event.target.result.replaceAll("/", "-");
                                 var delimiter = {
                                   rows: "\r\n",
                                   cols: ","
                                 };
                                 var _data = webix.csv.parse(event.target.result.replaceAll("/", "-"), delimiter);
                                 console.log(_data);
+                                var allColumns = $$("ui_cow_list_datatable").getColumns(true);//columns取得
                                 var _arr = [];
                                 $.each(_data, function (indexInArray, valueOfElement) {
                                   if (indexInArray == 0) return;
-                                  _arr.push({
-                                    id: valueOfElement[0],
-                                    barth: valueOfElement[1],
-                                    kenteiNo: valueOfElement[2],
-                                    sanjiNo: valueOfElement[3],
-                                    kb: valueOfElement[4],
-                                    bunbenDate: valueOfElement[5],
-                                    bunbenDay: valueOfElement[6],
-                                    bunbenJyoutai: valueOfElement[7],
-                                    jyuseiDateS: valueOfElement[8],
-                                    jyuseiDateE: valueOfElement[9],
-                                    jyuseiNo: valueOfElement[10],
-                                    bull: valueOfElement[11],
-                                    moonage: valueOfElement[12],
-                                    kannyuDate: valueOfElement[13],
-                                    ninkanYoteiDate: valueOfElement[14],
-                                    kannyuYoteiDate: valueOfElement[15],
-                                    yoteiDate: valueOfElement[16],
-                                    trash: valueOfElement[17],
+                                  var _w = {};
+                                  //KVS形式に変換
+                                  $.each(valueOfElement, function (indexInArrayItem, valueOfElementItem) {
+                                    _w[allColumns[indexInArrayItem].id] = valueOfElementItem;
                                   });
+                                  _arr.push(_w);
+                                  // _arr.push({
+                                  //   id: valueOfElement[0],
+                                  //   barth: valueOfElement[1],
+                                  //   kenteiNo: valueOfElement[2],
+                                  //   sanjiNo: valueOfElement[3],
+                                  //   kb: valueOfElement[4],
+                                  //   bunbenDate: valueOfElement[5],
+                                  //   bunbenDay: valueOfElement[6],
+                                  //   bunbenJyoutai: valueOfElement[7],
+                                  //   jyuseiDateS: valueOfElement[8],
+                                  //   jyuseiDateE: valueOfElement[9],
+                                  //   jyuseiNo: valueOfElement[10],
+                                  //   bull: valueOfElement[11],
+                                  //   moonage: valueOfElement[12],
+                                  //   kannyuDate: valueOfElement[13],
+                                  //   ninkanYoteiDate: valueOfElement[14],
+                                  //   kannyuYoteiDate: valueOfElement[15],
+                                  //   yoteiDate: valueOfElement[16],
+                                  //   trash: valueOfElement[17],
+                                  // });
                                 });
                                 $$("ui_cow_list_datatable").parse(_arr);
                               };
