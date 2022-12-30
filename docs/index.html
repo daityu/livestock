@@ -226,11 +226,11 @@
         ui_kihon.body.rows[0].elements = COMMON_JSON.elements.kihon;
         ui_kihon.head = COMMON_JSON.config.b1;
         webix.ui(ui_kihon);
-        ui_income.body.rows[0].elements = COMMON_JSON.elements.income;
-        ui_income.head = COMMON_JSON.config.b2;
+        // ui_income.body.rows[0].elements = COMMON_JSON.elements.income;
+        // ui_income.head = COMMON_JSON.config.b2;
+        console.log(COMMON_JSON.elements.income);
         webix.ui(ui_income);
         // ui_outgo.body.rows[0].elements = COMMON_JSON.elements.outgo;
-        console.log(COMMON_JSON.elements.outgo);
         // ui_outgo.head = COMMON_JSON.config.b4;
         webix.ui(ui_outgo);
         // webix.ui(ui_qrcode);
@@ -526,11 +526,40 @@
     //window設定
     //収入
     const ui_income = {
-      view: "window", id: "ui_income", head: "", fullscreen: webix.env.mobile, close: true, move: true, maxWidth: 800, maxHeight: 1000, position: "center",
+      view: "window", id: "ui_income", head: "収入", fullscreen: webix.env.mobile, close: true, move: true, maxWidth: 800, maxHeight: 1000, position: "center",
       body: {
         rows: [
           {
             view: "form", id: "ui_income_sets", nameWidth: 150, scroll: "y", elements: [
+              { view: "label", label: "出荷乳量", css: "fusen_bl" },
+              {
+                cols: [
+                  { view: "yen", label: "出荷乳量（kg）", name: "i1" },
+                  { view: "yen", label: "搾乳頭数（頭）", name: "i2" },
+                  { view: "yen", label: "ＤＲＹ", name: "i3" }
+                ]
+              },
+              { view: "yen", label: "売上（円）", name: "i4" },
+              { view: "label", label: "乳代", css: "fusen_bl" },
+              {
+                cols: [
+                  { view: "yen", label: "乳代（円）", name: "i5" },
+                  { view: "yen", label: "うち格差金（円）", name: "i6" },
+                  { view: "yen", label: "円／kg", name: "i7" }
+                ]
+              },
+              { view: "label", label: "仔牛販売", css: "fusen_bl" },
+              { view: "yen", label: "仔牛販売（円）", name: "i8" },
+              {
+                cols: [
+                  { view: "yen", label: "Ｈ♂（頭）", name: "i9" },
+                  { view: "yen", label: "Ｆ１（頭）", name: "i10" },
+                  { view: "yen", label: "和牛（頭）", name: "i11" }
+                ]
+              },
+              { view: "yen", label: "個体販売（円）", name: "i12" },
+              { view: "yen", label: "共済金（円）", name: "i13" },
+              { view: "yen", label: "その他（円）", name: "i14" }
             ], elementsConfig: ui_form_elementsConfig
           },
           { view: "button", height: 60, label: "閉じる", click: function (id, event) { this.getTopParentView().hide(); } }
