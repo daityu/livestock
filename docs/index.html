@@ -555,45 +555,45 @@
         rows: [
           {
             view: "form", id: "ui_outgo_sets", nameWidth: 150, scroll: "y", elements: [
-              { view: "yen", label: "支出（円）", name: "o1"},
+              { view: "yen", label: "支出（円）", name: "o1" },
               { view: "label", label: "飼料代", css: "fusen_rd" },
               {
                 cols: [
-                  { view: "yen", label: "飼料代（円）", name: "o2"},
-                  { view: "yen", label: "うち成牛（円）", name: "o3"},
-                  { view: "yen", label: "うち仔牛（円）", name: "o4"}
+                  { view: "yen", label: "飼料代（円）", name: "o2" },
+                  { view: "yen", label: "うち成牛（円）", name: "o3" },
+                  { view: "yen", label: "うち仔牛（円）", name: "o4" }
                 ]
               },
               { view: "label", label: "預託代", css: "fusen_rd" },
               {
                 cols: [
-                  { view: "yen", label: "預託代（円）", name: "o5"},
-                  { view: "yen", label: "うち成牛（円）", name: "o6"},
-                  { view: "yen", label: "うち仔牛（円）", name: "o7"}
+                  { view: "yen", label: "預託代（円）", name: "o5" },
+                  { view: "yen", label: "うち成牛（円）", name: "o6" },
+                  { view: "yen", label: "うち仔牛（円）", name: "o7" }
                 ]
               },
-              { view: "yen", label: "電気代（円）", name: "o8"},
-              { view: "yen", label: "燃料代（円）", name: "o9"},
+              { view: "yen", label: "電気代（円）", name: "o8" },
+              { view: "yen", label: "燃料代（円）", name: "o9" },
               { view: "label", label: "人件費", css: "fusen_rd" },
               {
                 cols: [
-                  { view: "yen", label: "人件費（円）", name: "o10"},
-                  { view: "yen", label: "人数（円）", name: "o11", bottomLabel: "人" }
+                  { view: "yen", label: "人件費（円）", name: "o10" },
+                  { view: "yen", label: "人数（人）", name: "o11" }
                 ]
               },
               { view: "label", label: "精液・受精卵", css: "fusen_rd" },
               {
                 cols: [
-                  { view: "yen", label: "精液・受精卵（円）", name: "o12"},
-                  { view: "yen", label: "うち精液（円）", name: "o13"},
-                  { view: "yen", label: "うち受精卵（円）", name: "o14"}
+                  { view: "yen", label: "精液・受精卵（円）", name: "o12" },
+                  { view: "yen", label: "うち精液（円）", name: "o13" },
+                  { view: "yen", label: "うち受精卵（円）", name: "o14" }
                 ]
               },
-              { view: "yen", label: "衛生費（円）", name: "o15"},
-              { view: "yen", label: "薬品代（円）", name: "o16"},
-              { view: "yen", label: "修繕費（円）", name: "o17"},
-              { view: "yen", label: "返済金（円）", name: "o18"},
-              { view: "yen", label: "他（円）", name: "o19"}
+              { view: "yen", label: "衛生費（円）", name: "o15" },
+              { view: "yen", label: "薬品代（円）", name: "o16" },
+              { view: "yen", label: "修繕費（円）", name: "o17" },
+              { view: "yen", label: "返済金（円）", name: "o18" },
+              { view: "yen", label: "他（円）", name: "o19" }
             ], elementsConfig: ui_form_elementsConfig
           },
           { view: "button", height: 60, label: "閉じる", click: function (id, event) { this.getTopParentView().hide(); } }
