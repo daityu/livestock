@@ -666,7 +666,40 @@
             view: "toolbar", id: "ui_feed_toolbar", cols: [
               { view: "text" },
               { view: "label", id: "ui_feed_counter", align: "center" },
-              { view: "button", css: "webix_primary", width: 100, type: "icon", icon: "mdi mdi-plus-one", label: "追加" }
+              {
+                view: "uploader", inputWidth: 110,
+                type: "icon", icon: "mdi mdi-application-import", label: "CSV読込",
+                accept: "text/csv", autosend: false, multiple: false,
+                on: {
+                  onBeforeFileAdd: function (upload) {
+                    var file = upload.file;
+                    var reader = new FileReader();
+                    reader.onload = function (event) {
+                      var delimiter = {
+                        rows: "\r\n",
+                        cols: ","
+                      };
+                      var _data = webix.csv.parse(event.target.result.replaceAll("/", "-"), delimiter);//日付対応
+                      console.log(_data);
+                      var _allColumns = $$("ui_feed_datatable").getColumns(true);//columns取得
+                      var _arr = [];
+                      $.each(_data, function (indexInArray, valueOfElement) {
+                        if (indexInArray == 0) return;
+                        var _w = {};
+                        //KVS形式に変換
+                        $.each(valueOfElement, function (indexInArrayItem, valueOfElementItem) {
+                          _w[_allColumns[indexInArrayItem].id] = valueOfElementItem;
+                        });
+                        _arr.push(_w);
+                      });
+                      $$("ui_feed_datatable").parse(_arr);
+                    };
+                    reader.readAsText(file);//テキストとして読込。https://developer.mozilla.org/ja/docs/Web/API/FileReader
+                    return false;
+                  }
+                }
+              },
+              { view: "button", css: "webix_primary", width: 90, type: "icon", icon: "mdi mdi-plus-one", label: "追加" }
             ]
           },
           {
@@ -829,7 +862,7 @@
                         { view: "select", id: "ui_cow_list_toolbar_date", options: C_NENGETSU, width: 120 },
                         { view: "label", id: "ui_cow_list_counter", align: "center" },
                         {
-                          view: "uploader", inputWidth: 130,
+                          view: "uploader", inputWidth: 110,
                           type: "icon", icon: "mdi mdi-application-import", label: "CSV読込",
                           accept: "text/csv", autosend: false, multiple: false,
                           on: {
@@ -841,16 +874,16 @@
                                   rows: "\r\n",
                                   cols: ","
                                 };
-                                var _data = webix.csv.parse(event.target.result.replaceAll("/", "-"), delimiter);
+                                var _data = webix.csv.parse(event.target.result.replaceAll("/", "-"), delimiter);//日付対応
                                 console.log(_data);
-                                var allColumns = $$("ui_cow_list_datatable").getColumns(true);//columns取得
+                                var _allColumns = $$("ui_cow_list_datatable").getColumns(true);//columns取得
                                 var _arr = [];
                                 $.each(_data, function (indexInArray, valueOfElement) {
                                   if (indexInArray == 0) return;
                                   var _w = {};
                                   //KVS形式に変換
                                   $.each(valueOfElement, function (indexInArrayItem, valueOfElementItem) {
-                                    _w[allColumns[indexInArrayItem].id] = valueOfElementItem;
+                                    _w[_allColumns[indexInArrayItem].id] = valueOfElementItem;
                                   });
                                   _arr.push(_w);
                                   // _arr.push({
@@ -881,7 +914,7 @@
                             }
                           }
                         },
-                        { view: "button", css: "webix_primary", width: 100, type: "icon", icon: "mdi mdi-plus-one", label: "追加" }
+                        { view: "button", css: "webix_primary", width: 90, type: "icon", icon: "mdi mdi-plus-one", label: "追加" }
                       ]
                     },
                     {
