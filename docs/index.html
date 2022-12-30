@@ -680,14 +680,15 @@
                         cols: ","
                       };
                       var _data = webix.csv.parse(event.target.result.replaceAll("/", "-"), delimiter);//日付対応
-                      console.log(_data);
                       var _allColumns = $$("ui_feed_datatable").getColumns(true);//columns取得
+                      console.log(_allColumns);
                       var _arr = [];
                       $.each(_data, function (indexInArray, valueOfElement) {
                         if (indexInArray == 0) return;
                         var _w = {};
                         //KVS形式に変換
                         $.each(valueOfElement, function (indexInArrayItem, valueOfElementItem) {
+                          if (!_allColumns[indexInArrayItem]) return false;
                           _w[_allColumns[indexInArrayItem].id] = valueOfElementItem;
                         });
                         _arr.push(_w);
@@ -883,6 +884,7 @@
                                   var _w = {};
                                   //KVS形式に変換
                                   $.each(valueOfElement, function (indexInArrayItem, valueOfElementItem) {
+                                    if (!_allColumns[indexInArrayItem]) return false;
                                     _w[_allColumns[indexInArrayItem].id] = valueOfElementItem;
                                   });
                                   _arr.push(_w);
