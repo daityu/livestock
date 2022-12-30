@@ -229,8 +229,9 @@
         ui_income.body.rows[0].elements = COMMON_JSON.elements.income;
         ui_income.head = COMMON_JSON.config.b2;
         webix.ui(ui_income);
-        ui_outgo.body.rows[0].elements = COMMON_JSON.elements.outgo;
-        ui_outgo.head = COMMON_JSON.config.b4;
+        // ui_outgo.body.rows[0].elements = COMMON_JSON.elements.outgo;
+        console.log(COMMON_JSON.elements.outgo);
+        // ui_outgo.head = COMMON_JSON.config.b4;
         webix.ui(ui_outgo);
         // webix.ui(ui_qrcode);
         // webix.ui(ui_oshirase);
@@ -549,10 +550,52 @@
     //window設定
     //支出
     const ui_outgo = {
-      view: "window", id: "ui_outgo", head: "", fullscreen: webix.env.mobile, close: true, move: true, maxWidth: 800, maxHeight: 1000, position: "center",
+      view: "window", id: "ui_outgo", head: "支出", fullscreen: webix.env.mobile, close: true, move: true, maxWidth: 800, maxHeight: 1000, position: "center",
       body: {
         rows: [
-          { view: "form", id: "ui_outgo_sets", nameWidth: 150, scroll: "y", elements: [], elementsConfig: ui_form_elementsConfig },
+          {
+            view: "form", id: "ui_outgo_sets", nameWidth: 150, scroll: "y", elements: [
+              { view: "yen", label: "支出", name: "o1", bottomLabel: "円" },
+              { view: "label", label: "飼料代", css: "fusen_rd" },
+              {
+                cols: [
+                  { view: "yen", label: "飼料代", name: "o2", bottomLabel: "円" },
+                  { view: "yen", label: "（成牛）", name: "o3", bottomLabel: "円" },
+                  { view: "yen", label: "（仔牛）", name: "o4", bottomLabel: "円" }
+                ]
+              },
+              { view: "label", label: "預託代", css: "fusen_rd" },
+              {
+                cols: [
+                  { view: "yen", label: "預託代", name: "o5", bottomLabel: "円" },
+                  { view: "yen", label: "（成牛）", name: "o6", bottomLabel: "円" },
+                  { view: "yen", label: "（仔牛）", name: "o7", bottomLabel: "円" }
+                ]
+              },
+              { view: "yen", label: "電気代", name: "o8", bottomLabel: "円" },
+              { view: "yen", label: "燃料代", name: "o9", bottomLabel: "円" },
+              { view: "label", label: "人件費", css: "fusen_rd" },
+              {
+                cols: [
+                  { view: "yen", label: "人件費", name: "o10", bottomLabel: "円" },
+                  { view: "yen", label: "人数", name: "o11", bottomLabel: "人" }
+                ]
+              },
+              { view: "label", label: "精液・受精卵", css: "fusen_rd" },
+              {
+                cols: [
+                  { view: "yen", label: "精液・受精卵", name: "o12", bottomLabel: "円" },
+                  { view: "yen", label: "（精液）", name: "o13", bottomLabel: "円" },
+                  { view: "yen", label: "（受精卵）", name: "o14", bottomLabel: "円" }
+                ]
+              },
+              { view: "yen", label: "衛生費", name: "o15", bottomLabel: "円" },
+              { view: "yen", label: "薬品代", name: "o16", bottomLabel: "円" },
+              { view: "yen", label: "修繕費", name: "o17", bottomLabel: "円" },
+              { view: "yen", label: "返済金", name: "o18", bottomLabel: "円" },
+              { view: "yen", label: "他", name: "o19", bottomLabel: "円" }
+            ], elementsConfig: ui_form_elementsConfig
+          },
           { view: "button", height: 60, label: "閉じる", click: function (id, event) { this.getTopParentView().hide(); } }
         ]
       },
@@ -792,21 +835,6 @@
     };
 
     //window設定
-    //分娩予定頭数
-    const C_NENGETSU = [
-      { value: "22年1月", id: "20220101" },
-      { value: "22年2月", id: "20220201" },
-      { value: "22年3月", id: "20220301" },
-      { value: "22年4月", id: "20220401" },
-      { value: "22年5月", id: "20220501" },
-      { value: "22年6月", id: "20220601" },
-      { value: "22年7月", id: "20220701" },
-      { value: "22年8月", id: "20220801" },
-      { value: "22年9月", id: "20220901" },
-      { value: "22年10月", id: "20221001" },
-      { value: "22年11月", id: "20221101" },
-      { value: "22年12月", id: "20221201" }
-    ];
     //繁殖リスト
     const DATA_HANSYOKU = [
       { id: 1570780477, barth: "2018/6/30", kenteiNo: 838, sanjiNo: 2, kb: "妊娠牛", bunbenDate: "2021/12/3", bunbenDay: 316, bunbenJyoutai: "正常", jyuseiDateS: "2022/2/22", jyuseiDateE: "2022/2/22", jyuseiNo: 1, bull: "PB878", moonage: 52, kannyuDate: "", ninkanYoteiDate: "", kannyuYoteiDate: "2022/9/30", yoteiDate: "2022/11/29" },
@@ -869,7 +897,6 @@
                   id: "ui_cow_tabs_2", rows: [
                     {
                       view: "toolbar", id: "ui_cow_list_toolbar", cols: [
-                        { view: "select", id: "ui_cow_list_toolbar_date", options: C_NENGETSU, width: 120 },
                         { view: "label", id: "ui_cow_list_counter", align: "center" },
                         {
                           view: "uploader", inputWidth: 110,
