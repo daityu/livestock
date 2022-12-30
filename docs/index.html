@@ -36,6 +36,15 @@
       /* font-size: 2vmin !important; */
     }
 
+    /*データテーブル行 偶数行のみ縞々 背景色白(.cell_bg_4)は含む (使用方法)css:"stripe"*/
+    .stripe .webix_column:not(.weekC6):not(.weekC0)>div[aria-rowindex$="2"]:not(.cellColor_LightGray):not(.cell_Edit):not(.cell_bg_warning):not(.cell_bg_1):not(.cell_bg_2),
+    .stripe .webix_column:not(.weekC6):not(.weekC0)>div[aria-rowindex$="4"]:not(.cellColor_LightGray):not(.cell_Edit):not(.cell_bg_warning):not(.cell_bg_1):not(.cell_bg_2),
+    .stripe .webix_column:not(.weekC6):not(.weekC0)>div[aria-rowindex$="6"]:not(.cellColor_LightGray):not(.cell_Edit):not(.cell_bg_warning):not(.cell_bg_1):not(.cell_bg_2),
+    .stripe .webix_column:not(.weekC6):not(.weekC0)>div[aria-rowindex$="8"]:not(.cellColor_LightGray):not(.cell_Edit):not(.cell_bg_warning):not(.cell_bg_1):not(.cell_bg_2),
+    .stripe .webix_column:not(.weekC6):not(.weekC0)>div[aria-rowindex$="0"]:not(.cellColor_LightGray):not(.cell_Edit):not(.cell_bg_warning):not(.cell_bg_1):not(.cell_bg_2) {
+      background-color: #fffacd;
+    }
+
     /*読取専用INPUT*/
     input[readonly],
     textarea[readonly],
@@ -704,7 +713,7 @@
             ]
           },
           {
-            view: "datatable", select: "row", scroll: "x", id: "ui_feed_datatable", footer: true, columns: [
+            view: "datatable", select: "row", scroll: "x", id: "ui_feed_datatable", css: "stripe", footer: true, columns: [
               { id: "date", header: "納品日", width: 80, format: webix.Date.dateToStr("%y-%m-%d"), css: "center", sort: "date" },
               { id: "dno", header: "伝票No.", width: 60, css: "center", sort: "int" },
               { id: "scd", header: "商品コード", minWidth: 170, options: C_BOKUSO, fillspace: true, sort: "string" },
@@ -920,7 +929,7 @@
                       ]
                     },
                     {
-                      view: "datatable", id: "ui_cow_list_datatable", select: "row", scroll: true, sort: true, css: "nikugyu_count_info", columns: [
+                      view: "datatable", id: "ui_cow_list_datatable", select: "row", scroll: true, sort: true, css: "stripe", columns: [
                         {
                           id: "id", header: "個体識別番号", format: function (_v) {
                             _v = (_v + "") || "";
