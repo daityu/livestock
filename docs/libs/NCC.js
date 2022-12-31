@@ -15,6 +15,19 @@ NCC.datatable.rowCount = function(tblId, dispId){
   var items   = $$(tblId).count();
   $$(dispId).setValue(items + "件");
 };
+// すべてのレコードを取得
+// @param string tblId datatableID
+// @param boolean isHideSend true:非表示項目を取得する ※tabviewで消えている項目は非表示になっているため、trueにする必要がある。
+// @return array
+NCC.datatable.getItemAll = function(tblId, isHideSend){//未定義データもcolumnsに合わせて持っていきます
+  var _result = [];
+  isHideSend = isHideSend || false;
+  if(!$$(tblId).isVisible() && !isHideSend) return _result;
+  $$(tblId).data.each(function(obj){
+      _result.push(obj);
+  }, this, true);
+  return _result;
+};
 NCC.datepicker = NCC.datepicker || {};
 // datepickerの日付を加減算する
 // @param string datepickerId datepickerのID

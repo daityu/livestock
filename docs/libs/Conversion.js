@@ -100,7 +100,7 @@ Conversion.arrayGetValue = function (obj, id, rtnId) {
 };
 /**
  * 文字列からdateオブジェクトへ変換
- * @param  string/date  日付
+ * @param  string/date dateA 日付
  * @return dateオブジェクト
  */
 Conversion.toDate = function (dateA) {
@@ -115,8 +115,8 @@ Conversion.toDate = function (dateA) {
 }
 /**
  * AB日付の差
- * @param  string/date  日付A
- * @param  string/date  日付B
+ * @param  string/date dateA 日付A
+ * @param  string/date dateB 日付B
  * @return int  AB日付の差
  */
 Conversion.diffDay = function (dateA, dateB) {
@@ -129,10 +129,43 @@ Conversion.diffDay = function (dateA, dateB) {
 };
 /**
  * AB日付の差（月齢）
- * @param  string/date  日付A
- * @param  string/date  日付B
+ * @param  string/date dateA 日付A
+ * @param  string/date dateB 日付B
  * @return int  AB日付の差（月齢）
  */
 Conversion.diffMonth = function (dateA, dateB) {
   return parseInt(Conversion.diffDay(dateA, dateB) / (365 / 12));
+};
+/**
+ * 月別予定頭数
+ *   分娩日＜現在日付 ：分娩日を月別集計
+ *   上記以外：分娩予定日を月別集計
+ * @param  array arr 分娩一覧
+ * @return int  AB日付の差（月齢）
+ */
+Conversion.yoteibikeisan = function (arr) {
+  var work = {};
+  //初期化
+  $.each(arr, function (indexInArray, valueOfElement) {
+    var _m1 = Conversion.formatDate(valueOfElement.yoteiDate, "YYYY-MM-01");
+    var _m2 = Conversion.formatDate(valueOfElement.bunbenDate, "YYYY-MM-01");
+    work[_m1] = { id: _m1, ym: _m1, C1: 0 };
+    work[_m2] = { id: _m2, ym: _m2, C1: 0 };
+  });
+  $.each(arr, function (indexInArray, valueOfElement) {
+    var _m1 = Conversion.formatDate(valueOfElement.yoteiDate, "YYYY-MM-01");
+    var _m2 = Conversion.formatDate(valueOfElement.bunbenDate, "YYYY-MM-01");
+    work[_m1].C1 += 1;
+    work[_m2].C1 += 1;
+  });
+  var result = [];
+  $.each(work, function (indexInArray, valueOfElement) {
+    result.push(valueOfElement);
+  });
+  result.sort((a, b) => {
+    if (a.id < b.id) return -1;
+    else if (a.id > b.id) return 1;
+    return 0;
+  });
+  return result;
 };

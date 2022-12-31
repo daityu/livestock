@@ -223,12 +223,12 @@
     const ui_menu_logic = {
       init: function () {
         //サブ画面定義
-        ui_kihon.body.rows[0].elements = COMMON_JSON.elements.kihon;
-        ui_kihon.head = COMMON_JSON.config.b1;
+        // ui_kihon.body.rows[0].elements = COMMON_JSON.elements.kihon;
+        // ui_kihon.head = COMMON_JSON.config.b1;
+        console.log(COMMON_JSON.elements.kihon);
         webix.ui(ui_kihon);
         // ui_income.body.rows[0].elements = COMMON_JSON.elements.income;
         // ui_income.head = COMMON_JSON.config.b2;
-        console.log(COMMON_JSON.elements.income);
         webix.ui(ui_income);
         // ui_outgo.body.rows[0].elements = COMMON_JSON.elements.outgo;
         // ui_outgo.head = COMMON_JSON.config.b4;
@@ -505,10 +505,14 @@
     //基本情報画面
     const ui_form_elementsConfig = { labelPosition: "top" };
     const ui_kihon = {
-      view: "window", id: "ui_kihon", head: "", fullscreen: webix.env.mobile, close: true, move: true, maxWidth: 800, maxHeight: 1000, position: "center",
+      view: "window", id: "ui_kihon", head: "基本", fullscreen: webix.env.mobile, close: true, move: true, maxWidth: 800, maxHeight: 1000, position: "center",
       body: {
         rows: [
-          { view: "form", id: "ui_kihon_sets", nameWidth: 150, scroll: "y", elements: [], elementsConfig: ui_form_elementsConfig },
+          {
+            view: "form", id: "ui_kihon_sets", nameWidth: 150, scroll: "y", elements: [
+              { view: "text", label: "会社名", name: "k1" }
+            ], elementsConfig: ui_form_elementsConfig
+          },
           { view: "button", height: 60, label: "閉じる", click: function (id, event) { this.getTopParentView().hide(); } }
         ]
       },
@@ -887,30 +891,17 @@
                 header: "月別予定頭数", body:
                 {
                   view: "datatable", id: "ui_cow_datatable", select: "row", scroll: "x", leftSplit: 2, math: true, css: "nikugyu_count", columns: [
-                    { id: "ym", header: "年月", width: 70, css: "center", sort: "date" },
+                    { id: "ym", header: "年月", width: 70, format: webix.Date.dateToStr("%y-%m"), css: "center", sort: "date" },
                     { id: "sum", header: "合計", width: 70, css: "center bg_pink", math: "[$r,C1] + [$r,C2] + [$r,C3] + [$r,C4] + [$r,C5] + [$r,C6] + [$r,C7]", sort: "int" },
                     { id: "C1", header: "H♀", width: 60, css: "center" },
-                    { id: "C2", header: "H", width: 60, css: "center" },
+                    { id: "C2", header: "H♂", width: 60, css: "center" },
                     { id: "C3", header: "HET", width: 60, css: "center" },
                     { id: "C4", header: "F1", width: 60, css: "center" },
                     { id: "C5", header: "IF", width: 60, css: "center" },
                     { id: "C6", header: "IVF", width: 60, css: "center" },
                     { id: "C7", header: "OPU", width: 60, css: "center" }
                   ],
-                  data: [
-                    { ym: "22年1月", id: "20220101", "C1": 1, "C2": "1", "C3": "1", "C4": "1", "C5": "1", "C6": "1", "C7": 1 },
-                    { ym: "22年2月", id: "20220201", "C1": 1, "C2": "1", "C3": "1", "C4": "1", "C5": "1", "C6": "1", "C7": 1 },
-                    { ym: "22年3月", id: "20220301", "C1": 1, "C2": "1", "C3": "1", "C4": "1", "C5": "1", "C6": "1", "C7": 1 },
-                    { ym: "22年4月", id: "20220401", "C1": 1, "C2": "1", "C3": "1", "C4": "1", "C5": "1", "C6": "1", "C7": 1 },
-                    { ym: "22年5月", id: "20220501", "C1": 1, "C2": "1", "C3": "1", "C4": "1", "C5": "1", "C6": "1", "C7": 1 },
-                    { ym: "22年6月", id: "20220601", "C1": 1, "C2": "1", "C3": "1", "C4": "1", "C5": "1", "C6": "1", "C7": 1 },
-                    { ym: "22年7月", id: "20220701", "C1": 1, "C2": "1", "C3": "1", "C4": "1", "C5": "1", "C6": "1", "C7": 1 },
-                    { ym: "22年8月", id: "20220801", "C1": 1, "C2": "1", "C3": "1", "C4": "1", "C5": "1", "C6": "1", "C7": 1 },
-                    { ym: "22年9月", id: "20220901", "C1": 1, "C2": "1", "C3": "1", "C4": "1", "C5": "1", "C6": "1", "C7": 1 },
-                    { ym: "22年10月", id: "20221001", "C1": 1, "C2": "1", "C3": "1", "C4": "1", "C5": "1", "C6": "1", "C7": 1 },
-                    { ym: "22年11月", id: "20221101", "C1": 1, "C2": "1", "C3": "1", "C4": "1", "C5": "1", "C6": "1", "C7": 1 },
-                    { ym: "22年12月", id: "20221201", "C1": 1, "C2": "1", "C3": "1", "C4": "1", "C5": "1", "C6": "1", "C7": 1 },
-                  ],
+                  data: Conversion.yoteibikeisan(DATA_HANSYOKU),
                   on: {
                     onItemDblClick: function (id, e, node) {
                       var _item = this.getItem(id);
@@ -975,6 +966,9 @@
                                   // });
                                 });
                                 $$("ui_cow_list_datatable").parse(_arr);
+                                var _d = Conversion.yoteibikeisan(_arr);
+                                $$("ui_cow_datatable").clearAll();
+                                $$("ui_cow_datatable").parse(_d);
                               };
                               reader.readAsText(file);//テキストとして読込。https://developer.mozilla.org/ja/docs/Web/API/FileReader
                               return false;
@@ -997,17 +991,21 @@
                         { id: "sanjiNo", header: "産次", width: 60, sort: "int" },
                         { id: "kb", header: "分類名", width: 100, sort: "string" },
                         { id: "bunbenDate", header: "分娩日", format: webix.Date.dateToStr("%y-%m-%d"), width: 80, sort: "date" },
-                        { id: "bunbenDay", header: "分娩後日数", width: 70, css: "center", sort: "int", template:function(obj){
-                          return Conversion.diffDay(obj.bunbenDate, "");
-                        } },
+                        {
+                          id: "bunbenDay", header: "分娩後日数", width: 70, css: "center", sort: "int", template: function (obj) {
+                            return Conversion.diffDay(obj.bunbenDate, "");
+                          }
+                        },
                         { id: "bunbenJyoutai", header: "分娩状態", sort: "string" },
                         { id: "jyuseiDateS", header: "初回授精日", width: 80, format: webix.Date.dateToStr("%y-%m-%d"), css: "center", sort: "date" },
                         { id: "jyuseiDateE", header: "最終授精日", width: 80, format: webix.Date.dateToStr("%y-%m-%d"), css: "center", sort: "date" },
                         { id: "jyuseiNo", header: "授精", sort: "int" },
                         { id: "bull", header: "種牛", width: 100, css: "center", sort: "string" },
-                        { id: "moonage", header: "月齢", width: 70, css: "center", sort: "int", template:function(obj){
-                          return Conversion.diffMonth(obj.barth, "");
-                        } },
+                        {
+                          id: "moonage", header: "月齢", width: 70, css: "center", sort: "int", template: function (obj) {
+                            return Conversion.diffMonth(obj.barth, "");
+                          }
+                        },
                         { id: "kannyuDate", header: "乾乳日", width: 80, format: webix.Date.dateToStr("%y-%m-%d"), css: "center", sort: "date" },
                         { id: "ninkanYoteiDate", header: "妊鑑予定日", width: 80, format: webix.Date.dateToStr("%y-%m-%d"), css: "center", sort: "date" },
                         { id: "kannyuYoteiDate", header: "乾乳予定日", width: 80, format: webix.Date.dateToStr("%y-%m-%d"), css: "center", sort: "date" },
@@ -1020,7 +1018,9 @@
                           $$("ui_cow_info").show();
                           console.log(id, e, node);
                         },
-                        onAfterRender: function () { NCC.datatable.rowCount("ui_cow_list_datatable", "ui_cow_list_counter") },
+                        onAfterRender: function () {
+                          NCC.datatable.rowCount("ui_cow_list_datatable", "ui_cow_list_counter");
+                        },
                       }
                     }
                   ]
@@ -1042,6 +1042,7 @@
       },
       on: {
         onShow: function () {
+          console.log(Conversion.yoteibikeisan(DATA_HANSYOKU));
           // let _v = webix.storage.local.get("ui_cow_sets") || {};
           // $$("ui_cow_sets").setValues(_v);
         },
