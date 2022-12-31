@@ -1010,6 +1010,7 @@
                         { id: "ninkanYoteiDate", header: "妊鑑予定日", width: 80, format: webix.Date.dateToStr("%y-%m-%d"), css: "center", sort: "date" },
                         { id: "kannyuYoteiDate", header: "乾乳予定日", width: 80, format: webix.Date.dateToStr("%y-%m-%d"), css: "center", sort: "date" },
                         { id: "yoteiDate", header: "分娩予定日", width: 80, format: webix.Date.dateToStr("%y-%m-%d"), css: "center", sort: "date" },
+                        { id: "tochiku", header: "と畜日", width: 80, format: webix.Date.dateToStr("%y-%m-%d"), css: "center", sort: "date" },
                         { id: "trash", header: "", width: 50, template: "{common.trashIcon()}" }
                       ],
                       data: DATA_HANSYOKU,
@@ -1076,6 +1077,7 @@
               { view: "ndatepicker", name: "ninkanYoteiDate", label: "妊鑑予定日" },
               { view: "ndatepicker", name: "kannyuYoteiDate", label: "乾乳予定日" },
               { view: "ndatepicker", name: "yoteiDate", label: "分娩予定日" },
+              { view: "ndatepicker", name: "tochiku", label: "と畜日" },
             ],
             elementsConfig: { labelWidth: 120 }
           },
