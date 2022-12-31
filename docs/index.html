@@ -1005,7 +1005,9 @@
                         { id: "jyuseiDateE", header: "最終授精日", width: 80, format: webix.Date.dateToStr("%y-%m-%d"), css: "center", sort: "date" },
                         { id: "jyuseiNo", header: "授精", sort: "int" },
                         { id: "bull", header: "種牛", width: 100, css: "center", sort: "string" },
-                        { id: "moonage", header: "月齢", width: 70, css: "center", sort: "int" },
+                        { id: "moonage", header: "月齢", width: 70, css: "center", sort: "int", template:function(obj){
+                          return Conversion.diffMonth(obj.barth, "");
+                        } },
                         { id: "kannyuDate", header: "乾乳日", width: 80, format: webix.Date.dateToStr("%y-%m-%d"), css: "center", sort: "date" },
                         { id: "ninkanYoteiDate", header: "妊鑑予定日", width: 80, format: webix.Date.dateToStr("%y-%m-%d"), css: "center", sort: "date" },
                         { id: "kannyuYoteiDate", header: "乾乳予定日", width: 80, format: webix.Date.dateToStr("%y-%m-%d"), css: "center", sort: "date" },
@@ -1062,13 +1064,13 @@
               { view: "numtext", name: "sanjiNo", label: "産次" },
               { view: "select", name: "kb", label: "分類名", options: ["", "妊娠牛", "乾乳牛", "未種牛", "妊鑑牛"] },
               { view: "ndatepicker", name: "bunbenDate", label: "分娩日" },
-              { view: "numtext", name: "bunbenDay", label: "分娩後日数" },
+              // { view: "numtext", name: "bunbenDay", label: "分娩後日数" },//計算式
               { view: "select", name: "bunbenJyoutai", label: "分娩状態", options: ["", "正常", "流産", "死産"] },
               { view: "ndatepicker", name: "jyuseiDateS", label: "初回授精日" },
               { view: "ndatepicker", name: "jyuseiDateE", label: "最終授精日" },
               { view: "numtext", name: "jyuseiNo", label: "授精" },
               { view: "text", name: "bull", label: "種牛" },
-              { view: "numtext", name: "moonage", label: "月齢" },
+              // { view: "numtext", name: "moonage", label: "月齢" },//計算式
               { view: "ndatepicker", name: "kannyuDate", label: "乾乳日" },
               { view: "ndatepicker", name: "ninkanYoteiDate", label: "妊鑑予定日" },
               { view: "ndatepicker", name: "kannyuYoteiDate", label: "乾乳予定日" },

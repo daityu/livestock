@@ -117,7 +117,7 @@ Conversion.toDate = function (dateA) {
  * AB日付の差
  * @param  string/date  日付A
  * @param  string/date  日付B
- * @return int  日付ABの差
+ * @return int  AB日付の差
  */
 Conversion.diffDay = function (dateA, dateB) {
   var d1 = Conversion.toDate(dateA);
@@ -126,4 +126,13 @@ Conversion.diffDay = function (dateA, dateB) {
   var diffDay = Math.floor(diffTime / (1000 * 60 * 60 * 24));
   console.log(d1, d2, diffDay);
   return diffDay;
+};
+/**
+ * AB日付の差（月齢）
+ * @param  string/date  日付A
+ * @param  string/date  日付B
+ * @return int  AB日付の差（月齢）
+ */
+Conversion.diffMonth = function (dateA, dateB) {
+  return parseInt(Conversion.diffDay(dateA, dateB) / (365 / 12));
 };
