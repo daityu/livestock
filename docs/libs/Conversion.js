@@ -84,17 +84,46 @@ Conversion.arrColObj2 = function (arr, param) {
  * @param  string  rtnId 返却するＩＤ（デフォルト:value）
  * @return string  value 名称
  */
- Conversion.arrayGetValue = function(obj, id, rtnId){
+Conversion.arrayGetValue = function (obj, id, rtnId) {
   var rtn;
-  if(!obj) return "";
-  if(id===undefined || id===null || id==="") return "";
+  if (!obj) return "";
+  if (id === undefined || id === null || id === "") return "";
   rtnId = rtnId || "value";
   var rtn = "";
-  $.each(obj, function(index, val) {
-    if(id == val.id){
-      rtn=val[rtnId];
+  $.each(obj, function (index, val) {
+    if (id == val.id) {
+      rtn = val[rtnId];
       return false;
     }
   });
   return rtn;
+};
+/**
+ * 文字列からdateオブジェクトへ変換
+ * @param  string/date  日付
+ * @return dateオブジェクト
+ */
+Conversion.toDate = function (dateA) {
+  if (is("String", dateA) && dateA.length > 0) {
+    var d1 = new Date(dateA.replaceAll("-", "/"));
+  } else if (is("Date", dateA)) {
+    var d1 = dateA;
+  } else {
+    var d1 = new Date();
+  }
+  return d1;
+}
+/**
+ * AB日付の差
+ * @param  string/date  日付A
+ * @param  string/date  日付B
+ * @return int  日付ABの差
+ */
+Conversion.diffDay = function (dateA, dateB) {
+  var d1 = Conversion.toDate(dateA);
+  var d2 = Conversion.toDate(dateB);
+  var diffTime = Math.abs(d2.getTime() - d1.getTime());
+  var diffDay = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+  console.log(d1, d2, diffDay);
+  return diffDay;
 };

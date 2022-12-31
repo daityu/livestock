@@ -997,7 +997,9 @@
                         { id: "sanjiNo", header: "産次", width: 60, sort: "int" },
                         { id: "kb", header: "分類名", width: 100, sort: "string" },
                         { id: "bunbenDate", header: "分娩日", format: webix.Date.dateToStr("%y-%m-%d"), width: 80, sort: "date" },
-                        { id: "bunbenDay", header: "分娩後日数", width: 70, css: "center", sort: "int" },
+                        { id: "bunbenDay", header: "分娩後日数", width: 70, css: "center", sort: "int", template:function(obj){
+                          return Conversion.diffDay(obj.bunbenDate, "");
+                        } },
                         { id: "bunbenJyoutai", header: "分娩状態", sort: "string" },
                         { id: "jyuseiDateS", header: "初回授精日", width: 80, format: webix.Date.dateToStr("%y-%m-%d"), css: "center", sort: "date" },
                         { id: "jyuseiDateE", header: "最終授精日", width: 80, format: webix.Date.dateToStr("%y-%m-%d"), css: "center", sort: "date" },
