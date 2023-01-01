@@ -1,32 +1,108 @@
 var NCC = NCC || {};
 NCC.datatable = NCC.datatable || {};
 //【共通】左端チェックボックス時のスタイルシート変更
-NCC.datatable.cssChange  = function(row, col, val){
-  if(val){
-      this.addRowCss(row, "enabled");
+NCC.datatable.cssChange = function (row, col, val) {
+  if (val) {
+    this.addRowCss(row, "enabled");
   } else {
-      this.removeRowCss(row, "enabled");
+    this.removeRowCss(row, "enabled");
   }
 };
 // 件数
 // @param string tblId datatableID
 // @param string dispId 出力先ID
-NCC.datatable.rowCount = function(tblId, dispId){
-  var items   = $$(tblId).count();
+NCC.datatable.rowCount = function (tblId, dispId) {
+  var items = $$(tblId).count();
   $$(dispId).setValue(items + "件");
 };
 // すべてのレコードを取得
 // @param string tblId datatableID
 // @param boolean isHideSend true:非表示項目を取得する ※tabviewで消えている項目は非表示になっているため、trueにする必要がある。
 // @return array
-NCC.datatable.getItemAll = function(tblId, isHideSend){//未定義データもcolumnsに合わせて持っていきます
+NCC.datatable.getItemAll = function (tblId, isHideSend) {//未定義データもcolumnsに合わせて持っていきます
   var _result = [];
   isHideSend = isHideSend || false;
-  if(!$$(tblId).isVisible() && !isHideSend) return _result;
-  $$(tblId).data.each(function(obj){
-      _result.push(obj);
+  if (!$$(tblId).isVisible() && !isHideSend) return _result;
+  $$(tblId).data.each(function (obj) {
+    _result.push(obj);
   }, this, true);
   return _result;
+};
+// SQLライクなフィルター
+// @param string tblId datatableID
+// @param array  param [["カラムID", "=", "値"]...] ※AND条件
+//  第1引数:カラムID
+//  第2引数:"="完全一致を抽出 "<>"不一致を抽出 "regex"正規表現で抽出
+// @param objectまたはboolean オブジェクトの中身がある。または、trueの時のみ抽出判定を行う
+NCC.datatable.filter = function (tblId, param, object) {
+  if (arguments.length != 3) alert("NCC.datatable.filter指定エラー");
+  var _state = $$(tblId).getState();
+  $$(tblId).filter(function (obj) {
+    var rtn = true;
+    $.each(param, function (index, val) {
+      var c = val[0];//カラム
+      var o = val[1];//符号
+      var v = val[2];//比較値
+      switch (o) {
+        case "="://完全一致
+          var value = obj[c] + "";
+          if (value != v) {
+            rtn = false;
+            return false;
+          }
+          break;
+        case "<>"://不一致
+          var value = obj[c] + "";
+          if (value == v) {
+            rtn = false;
+            return false;
+          }
+          break;
+        case "regex"://正規表現
+          if (c != "*") {
+            var value = obj[c] + "";
+          } else {
+            var _arr = [];
+            $.each(obj, function (index, val) {
+              if (is("String", val) && ($.inArray(index, _state.hidden) == -1)) _arr.push(val);
+            });
+            var value = _arr.join("|");
+          }
+          var regexp = new RegExp(v);
+          if (!value.match(regexp)) {
+            rtn = false;
+            return false;
+          }
+          break;
+        case "IN"://含む
+          var value = obj[c] + "";
+          var _l_rtn = false;
+          $.each(v, function (index, val) {
+            if (value == val) {//含む
+              _l_rtn = true;
+              return false;
+            }
+          });
+          if (!_l_rtn) rtn = false;
+          break;
+        case "NOTIN"://含まない
+        case "NOT IN":
+          var value = obj[c] + "";
+          $.each(v, function (index, val) {
+            if (value == val) {
+              rtn = false;
+              return false;
+            }
+          });
+          break;
+        default:
+          alert("NCC.datatable.filterの指定が異なります");
+          break;
+      }
+    });
+    var flg = (($.type(object) === "boolean" && object) || object && (!$.isEmptyObject(object))) && rtn;
+    return flg;
+  });
 };
 NCC.datepicker = NCC.datepicker || {};
 // datepickerの日付を加減算する
@@ -54,7 +130,7 @@ NCC.datepicker.monthLayout = function (_id, _label, _param) {
   _param = _param || {};
   var _obj = {
     cols: [
-      { view: "label", label: _label, width:_labelWidth, align:"right" },
+      { view: "label", label: _label, width: _labelWidth, align: "right" },
       {
         view: "button", type: "icon", icon: "wxi-angle-left", width: 45, click: function (id, event) {
           NCC.datepicker.addMonth(_id, -1);

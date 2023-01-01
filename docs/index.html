@@ -538,7 +538,7 @@
               {
                 cols: [
                   { view: "text", name: "corp", readonly: true },
-                  { view: "ndatepicker", name: "date", format: "%Y年%m月", label: "登録月", readonly: true, width: 200 }
+                  { view: "ndatepicker", name: "date", format: "%Y年%m月", icon: "", readonly: true, width: 180 }
                 ]
               },
               { view: "label", label: "出荷乳量", css: "fusen_bl" },
@@ -599,7 +599,7 @@
               {
                 cols: [
                   { view: "text", name: "corp", readonly: true },
-                  { view: "ndatepicker", name: "date", format: "%Y年%m月", label: "登録月", readonly: true, width: 200 }
+                  { view: "ndatepicker", name: "date", format: "%Y年%m月", icon: "", readonly: true, width: 180 }
                 ]
               },
               { view: "yen", label: "支出（円）", name: "o1" },
@@ -765,7 +765,15 @@
         rows: [
           {
             view: "toolbar", id: "ui_feed_toolbar", cols: [
-              { view: "text" },
+              {
+                view: "text", placeholder: "Type to filter films by titles",
+                on: {
+                  onTimedKeyPress() {
+                    var filter = this.getValue().replace(/\|/g, "");
+                    NCC.datatable.filter("ui_feed_datatable", [["*", "regex", filter]], true);
+                  }
+                }
+              },
               { view: "label", id: "ui_feed_counter", align: "center" },
               {
                 view: "uploader", inputWidth: 110,
