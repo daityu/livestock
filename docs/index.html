@@ -766,7 +766,7 @@
           {
             view: "toolbar", id: "ui_feed_toolbar", cols: [
               {
-                view: "text", placeholder: "Type to filter films by titles",
+                view: "text", placeholder: "検索...",
                 on: {
                   onTimedKeyPress() {
                     var filter = this.getValue().replace(/\|/g, "");
@@ -774,9 +774,9 @@
                   }
                 }
               },
-              { view: "label", id: "ui_feed_counter", align: "center" },
+              { view: "label", id: "ui_feed_counter", align: "center", width: 100 },
               {
-                view: "uploader", inputWidth: 110,
+                view: "uploader", width: 110,
                 type: "icon", icon: "mdi mdi-application-import", label: "CSV読込",
                 accept: "text/csv", autosend: false, multiple: false,
                 on: {
@@ -839,6 +839,9 @@
             on: {
               onItemDblClick: function (id, e, node) {
                 $$("ui_feed_info").show();
+              },
+              onAfterRender: function () {
+                NCC.datatable.rowCount("ui_feed_datatable", "ui_feed_counter");
               }
             }
           },
@@ -941,9 +944,18 @@
                   id: "ui_cow_tabs_2", rows: [
                     {
                       view: "toolbar", id: "ui_cow_list_toolbar", cols: [
-                        { view: "label", id: "ui_cow_list_counter", align: "center" },
                         {
-                          view: "uploader", inputWidth: 110,
+                          view: "text", placeholder: "検索...",
+                          on: {
+                            onTimedKeyPress() {
+                              var filter = this.getValue().replace(/\|/g, "");
+                              NCC.datatable.filter("ui_cow_list_datatable", [["*", "regex", filter]], true);
+                            }
+                          }
+                        },
+                        { view: "label", id: "ui_cow_list_counter", align: "center", width: 100 },
+                        {
+                          view: "uploader", width: 110,
                           type: "icon", icon: "mdi mdi-application-import", label: "CSV読込",
                           accept: "text/csv", autosend: false, multiple: false,
                           on: {
@@ -956,7 +968,7 @@
                                   cols: ","
                                 };
                                 var _data = webix.csv.parse(event.target.result.replaceAll("/", "-"), delimiter);//日付対応
-                                console.log(_data);
+                                // console.log(_data);
                                 var _allColumns = $$("ui_cow_list_datatable").getColumns(true);//columns取得
                                 var _arr = [];
                                 $.each(_data, function (indexInArray, valueOfElement) {
@@ -1045,7 +1057,7 @@
                         },
                         onAfterRender: function () {
                           NCC.datatable.rowCount("ui_cow_list_datatable", "ui_cow_list_counter");
-                        },
+                        }
                       }
                     }
                   ]
