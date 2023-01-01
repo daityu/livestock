@@ -210,11 +210,11 @@
     //メイン画面
     //メイン画面メニューボタン部（https://pictogrammers.github.io/@mdi/font/5.8.55/）
     const ui_menu_data = [
-      { id: "b3", value: "", color: "#266233", icon: "mdi-printer", width: 2, height: 2, x: 1, y: 1 },
-      { id: "b1", value: "", color: "#7E2A6C", icon: "mdi-information", width: 1, height: 2, x: 3, y: 1 },
+      { id: "b3", value: "", color: "#266233", icon: "mdi-printer", width: 1, height: 2, x: 1, y: 1 },
+      { id: "b1", value: "", color: "#7E2A6C", icon: "mdi-information", width: 1, height: 2, x: 2, y: 1 },
       { id: "b5", value: "", color: "#7E2A6C", icon: "mdi-cow", width: 1, height: 2, x: 4, y: 1 },
-      { id: "b4", value: "", color: "#8D712B", icon: "mdi-minus-circle-outline", width: 1, height: 2, x: 1, y: 3 },
-      { id: "b6", value: "", color: "#8D712B", icon: "mdi-grass", width: 1, height: 2, x: 2, y: 3 },
+      { id: "b4", value: "", color: "#8D712B", icon: "mdi-minus-circle-outline", width: 2, height: 2, x: 1, y: 3 },
+      { id: "b6", value: "", color: "#8D712B", icon: "mdi-grass", width: 1, height: 2, x: 3, y: 1 },
       { id: "b2", value: "", color: "#283D70", icon: "mdi-plus-circle-outline", width: 2, height: 2, x: 3, y: 3 },
     ];
     document.querySelector('#my-app-titile').textContent = APP_NAME;
@@ -1077,7 +1077,7 @@
               { view: "ndatepicker", name: "ninkanYoteiDate", label: "妊鑑予定日" },
               { view: "ndatepicker", name: "kannyuYoteiDate", label: "乾乳予定日" },
               { view: "ndatepicker", name: "yoteiDate", label: "分娩予定日" },
-              { view: "ndatepicker", name: "tochiku", label: "と畜日" },
+              { view: "ndatepicker", name: "tochiku", label: "と畜日" },//新規
             ],
             elementsConfig: { labelWidth: 120 }
           },
