@@ -211,9 +211,9 @@
     //メイン画面メニューボタン部（https://pictogrammers.github.io/@mdi/font/5.8.55/）
     const ui_menu_data = [
       { id: "b3", value: "", color: "#266233", icon: "mdi-printer", width: 1, height: 2, x: 1, y: 1 },
-      { id: "b1", value: "", color: "#7E2A6C", icon: "mdi-information", width: 1, height: 2, x: 2, y: 1 },
+      { id: "b1", value: "", color: "#266233", icon: "mdi-information", width: 1, height: 2, x: 2, y: 1 },
       { id: "b5", value: "", color: "#7E2A6C", icon: "mdi-cow", width: 1, height: 2, x: 4, y: 1 },
-      { id: "b4", value: "", color: "#8D712B", icon: "mdi-minus-circle-outline", width: 2, height: 2, x: 1, y: 3 },
+      { id: "b4", value: "", color: "#A4005B", icon: "mdi-minus-circle-outline", width: 2, height: 2, x: 1, y: 3 },
       { id: "b6", value: "", color: "#8D712B", icon: "mdi-grass", width: 1, height: 2, x: 3, y: 1 },
       { id: "b2", value: "", color: "#283D70", icon: "mdi-plus-circle-outline", width: 2, height: 2, x: 3, y: 3 },
     ];
@@ -225,7 +225,7 @@
         //サブ画面定義
         // ui_kihon.body.rows[0].elements = COMMON_JSON.elements.kihon;
         // ui_kihon.head = COMMON_JSON.config.b1;
-        console.log(COMMON_JSON.elements.kihon);
+        // console.log(COMMON_JSON.elements.kihon);
         webix.ui(ui_kihon);
         // ui_income.body.rows[0].elements = COMMON_JSON.elements.income;
         // ui_income.head = COMMON_JSON.config.b2;
@@ -510,7 +510,7 @@
         rows: [
           {
             view: "form", id: "ui_kihon_sets", nameWidth: 150, scroll: "y", elements: [
-              { view: "text", label: "会社名", name: "k1" }
+              { view: "text", label: "会社名", name: "corp" }
             ], elementsConfig: ui_form_elementsConfig
           },
           { view: "button", height: 60, label: "閉じる", click: function (id, event) { this.getTopParentView().hide(); } }
@@ -535,6 +535,12 @@
         rows: [
           {
             view: "form", id: "ui_income_sets", nameWidth: 150, scroll: "y", elements: [
+              {
+                cols: [
+                  { view: "text", name: "corp", readonly: true },
+                  { view: "ndatepicker", name: "date", format: "%Y年%m月", label: "登録月", readonly: true, width: 200 }
+                ]
+              },
               { view: "label", label: "出荷乳量", css: "fusen_bl" },
               {
                 cols: [
@@ -572,6 +578,8 @@
       on: {
         onShow: function () {
           let _v = webix.storage.local.get("ui_income_sets") || {};
+          let _kihon = webix.storage.local.get("ui_kihon_sets") || {};
+          $.extend(_v, _kihon, { date: $$("order_date").getValue() });
           $$("ui_income_sets").setValues(_v);
         },
         onHide: function () {
@@ -588,6 +596,12 @@
         rows: [
           {
             view: "form", id: "ui_outgo_sets", nameWidth: 150, scroll: "y", elements: [
+              {
+                cols: [
+                  { view: "text", name: "corp", readonly: true },
+                  { view: "ndatepicker", name: "date", format: "%Y年%m月", label: "登録月", readonly: true, width: 200 }
+                ]
+              },
               { view: "yen", label: "支出（円）", name: "o1" },
               { view: "label", label: "飼料代", css: "fusen_rd" },
               {
@@ -635,6 +649,8 @@
       on: {
         onShow: function () {
           let _v = webix.storage.local.get("ui_outgo_sets") || {};
+          let _kihon = webix.storage.local.get("ui_kihon_sets") || {};
+          $.extend(_v, _kihon, { date: $$("order_date").getValue() });
           $$("ui_outgo_sets").setValues(_v);
         },
         onHide: function () {
