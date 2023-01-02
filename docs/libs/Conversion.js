@@ -107,7 +107,7 @@ Conversion.toDate = function (dateA) {
   if (is("String", dateA) && dateA.length > 0) {
     var d1 = new Date(dateA.replaceAll("-", "/"));
   } else if (is("Date", dateA)) {
-    var d1 = dateA;
+    var d1 = new Date(dateA);
   } else {
     var d1 = new Date();
   }
@@ -137,7 +137,7 @@ Conversion.diffMonth = function (dateA, dateB) {
   return parseInt(Conversion.diffDay(dateA, dateB) / (365 / 12));
 };
 /**
- * 月別予定頭数
+ * 月別予定頭数集計
  *   分娩日＜現在日付 ：分娩日を月別集計
  *   上記以外：分娩予定日を月別集計
  * @param  array arr 分娩一覧
@@ -149,14 +149,43 @@ Conversion.yoteibikeisan = function (arr) {
   $.each(arr, function (indexInArray, valueOfElement) {
     var _m1 = Conversion.formatDate(valueOfElement.yoteiDate, "YYYY-MM-01");
     var _m2 = Conversion.formatDate(valueOfElement.bunbenDate, "YYYY-MM-01");
-    work[_m1] = { id: _m1, ym: _m1, C1: 0 };
-    work[_m2] = { id: _m2, ym: _m2, C1: 0 };
+    work[_m1] = { id: _m1, ym: _m1, C1: 0, C2: 0, C3: 0, C4: 0, C5: 0, C6: 0, C7: 0, C99: 0 };
+    work[_m2] = { id: _m2, ym: _m2, C1: 0, C2: 0, C3: 0, C4: 0, C5: 0, C6: 0, C7: 0, C99: 0 };
   });
   $.each(arr, function (indexInArray, valueOfElement) {
     var _m1 = Conversion.formatDate(valueOfElement.yoteiDate, "YYYY-MM-01");
     var _m2 = Conversion.formatDate(valueOfElement.bunbenDate, "YYYY-MM-01");
-    work[_m1].C1 += 1;
-    work[_m2].C1 += 1;
+    console.log(valueOfElement.bulltype);
+    work[_m2].C99 += 1;
+    switch (valueOfElement.bulltype) {
+      case "H♀":
+        work[_m1].C1 += 1;
+        break;
+      case "H♂":
+        work[_m1].C2 += 1;
+        break;
+      case "HET":
+        work[_m1].C3 += 1;
+        break;
+      case "F1":
+        work[_m1].C4 += 1;
+        break;
+      case "IF":
+        work[_m1].C5 += 1;
+        break;
+      case "IVF":
+        work[_m1].C6 += 1;
+        break;
+      case "OPU":
+        work[_m1].C7 += 1;
+        break;
+      case "":
+        work[_m1].C99 += 1;
+        break;
+      default:
+        work[_m1].C99 += 1;
+        break;
+    }
   });
   var result = [];
   $.each(work, function (indexInArray, valueOfElement) {

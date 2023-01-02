@@ -110,7 +110,7 @@ NCC.datepicker = NCC.datepicker || {};
 // @param int addDay 加算する日付（マイナス可）
 NCC.datepicker.addDate = function (datepickerId, addDay) {
   if (!datepickerId || !addDay) return;
-  var date = new Date($$(datepickerId).getValue());
+  var date = Conversion.toDate($$(datepickerId).getValue());
   var _nd = Conversion.formatDate(date.setDate(date.getDate() + parseInt(addDay, 10)), "YYYY/MM/DD");
   $$(datepickerId).setValue(_nd);
 };
@@ -119,7 +119,7 @@ NCC.datepicker.addDate = function (datepickerId, addDay) {
 // @param int addMonth 加算する年月（マイナス可）
 NCC.datepicker.addMonth = function (datepickerId, addMonth) {
   if (!datepickerId || !addMonth) return;
-  var date = new Date($$(datepickerId).getValue());
+  var date = Conversion.toDate($$(datepickerId).getValue());
   var _nd = Conversion.formatDate(date.setMonth(date.getMonth() + parseInt(addMonth, 10)), "YYYY/MM/1");
   $$(datepickerId).setValue(_nd);
 };

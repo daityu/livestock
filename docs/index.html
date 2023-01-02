@@ -924,20 +924,20 @@
                 {
                   view: "datatable", id: "ui_cow_datatable", select: "row", scroll: "x", leftSplit: 2, math: true, css: "nikugyu_count", columns: [
                     { id: "ym", header: "年月", width: 70, format: webix.Date.dateToStr("%y-%m"), css: "center", sort: "date" },
-                    { id: "sum", header: "合計", width: 70, css: "center bg_pink", math: "[$r,C1] + [$r,C2] + [$r,C3] + [$r,C4] + [$r,C5] + [$r,C6] + [$r,C7]", sort: "int" },
+                    { id: "sum", header: "合計", width: 70, css: "center bg_pink", math: "[$r,C1] + [$r,C2] + [$r,C3] + [$r,C4] + [$r,C5] + [$r,C6] + [$r,C7]+ [$r,C99]", sort: "int" },
                     { id: "C1", header: "H♀", width: 60, css: "center" },
                     { id: "C2", header: "H♂", width: 60, css: "center" },
                     { id: "C3", header: "HET", width: 60, css: "center" },
                     { id: "C4", header: "F1", width: 60, css: "center" },
                     { id: "C5", header: "IF", width: 60, css: "center" },
                     { id: "C6", header: "IVF", width: 60, css: "center" },
-                    { id: "C7", header: "OPU", width: 60, css: "center" }
+                    { id: "C7", header: "OPU", width: 60, css: "center" },
+                    { id: "C99", header: "", width: 60, css: "center" }
                   ],
                   data: Conversion.yoteibikeisan(DATA_HANSYOKU),
                   on: {
                     onItemDblClick: function (id, e, node) {
                       var _item = this.getItem(id);
-                      console.log(_item, id);
                       $$("ui_cow_list_toolbar_date").setValue(_item.id);
                       $$("ui_cow_tabs").setValue("ui_cow_tabs_2");
                     }
@@ -1007,9 +1007,6 @@
                                   // });
                                 });
                                 $$("ui_cow_list_datatable").parse(_arr);
-                                var _d = Conversion.yoteibikeisan(_arr);
-                                $$("ui_cow_datatable").clearAll();
-                                $$("ui_cow_datatable").parse(_d);
                               };
                               reader.readAsText(file);//テキストとして読込。https://developer.mozilla.org/ja/docs/Web/API/FileReader
                               return false;
@@ -1051,6 +1048,7 @@
                         { id: "ninkanYoteiDate", header: "妊鑑予定日", width: 80, format: webix.Date.dateToStr("%y-%m-%d"), css: "center", sort: "date" },
                         { id: "kannyuYoteiDate", header: "乾乳予定日", width: 80, format: webix.Date.dateToStr("%y-%m-%d"), css: "center", sort: "date" },
                         { id: "yoteiDate", header: "分娩予定日", width: 80, format: webix.Date.dateToStr("%y-%m-%d"), css: "center", sort: "date" },
+                        { id: "bulltype", header: "種牛種類", width: 80, sort: "string" },
                         { id: "tochiku", header: "と畜日", width: 80, format: webix.Date.dateToStr("%y-%m-%d"), css: "center", sort: "date" },
                         { id: "trash", header: "", width: 50, template: "{common.trashIcon()}" }
                       ],
@@ -1062,6 +1060,10 @@
                         },
                         onAfterRender: function () {
                           NCC.datatable.rowCount("ui_cow_list_datatable", "ui_cow_list_counter");
+                          var _arr = NCC.datatable.getItemAll("ui_cow_list_datatable");
+                          var _d = Conversion.yoteibikeisan(_arr);
+                          $$("ui_cow_datatable").clearAll();
+                          $$("ui_cow_datatable").parse(_d);
                         }
                       }
                     }
@@ -1113,6 +1115,7 @@
               { view: "ndatepicker", name: "jyuseiDateE", label: "最終授精日" },
               { view: "numtext", name: "jyuseiNo", label: "授精" },
               { view: "text", name: "bull", label: "種牛" },
+              { view: "select", name: "bulltype", label: "種牛種類", options: ["", "H♀", "H♂", "HET", "F1", "IF", "IVF", "OPU"] },//新規
               // { view: "numtext", name: "moonage", label: "月齢" },//計算式
               { view: "ndatepicker", name: "kannyuDate", label: "乾乳日" },
               { view: "ndatepicker", name: "ninkanYoteiDate", label: "妊鑑予定日" },
