@@ -542,8 +542,8 @@
             view: "form", id: "ui_income_sets", nameWidth: 150, scroll: "y", elements: [
               {
                 cols: [
+                  { view: "ndatepicker", name: "date", format: "%Y年%m月", icon: "", readonly: true, width: 180 },
                   { view: "text", name: "corp", readonly: true },
-                  { view: "ndatepicker", name: "date", format: "%Y年%m月", icon: "", readonly: true, width: 180 }
                 ]
               },
               { view: "label", label: "出荷乳量", css: "fusen_bl" },
@@ -603,8 +603,8 @@
             view: "form", id: "ui_outgo_sets", nameWidth: 150, scroll: "y", elements: [
               {
                 cols: [
+                  { view: "ndatepicker", name: "date", format: "%Y年%m月", icon: "", readonly: true, width: 180 },
                   { view: "text", name: "corp", readonly: true },
-                  { view: "ndatepicker", name: "date", format: "%Y年%m月", icon: "", readonly: true, width: 180 }
                 ]
               },
               { view: "yen", label: "支出（円）", name: "o1" },
