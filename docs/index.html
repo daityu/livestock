@@ -417,7 +417,76 @@
                 {
                   view: "tabview", value: "winmenu_chart1", cells: [
                     { header: "収入／支出／飼料", body: { view: "template", id: "winmenu_chart1" } },
-                    { header: "頭数", body: { view: "template", id: "winmenu_chart2" } }
+                    {
+                      header: "頭数", body: {
+                        view: "chart",
+                        // width: 900,
+                        // height: 250,
+                        type: "stackedBar",
+                        barWidth: 60,
+                        radius: 2,
+                        gradient: "rising",
+                        xAxis: {
+                          template: "'#year#"
+                        },
+                        yAxis: {
+                          start: 0,
+                          step: 5,
+                          end: 50
+                        },
+                        legend: {
+                          values: [{ text: "H♀", color: "#58dccd" }, { text: "H♂", color: "#a7ee70" }, { text: "HET", color: "#36abee" }],
+                          valign: "middle",
+                          align: "right",
+                          width: 90,
+                          layout: "y"
+                        },
+                        series: [
+                          {
+                            value: "#sales#",
+                            color: "#58dccd",
+                            tooltip: {
+                              template: "#sales#"
+                            }
+                          },
+                          {
+                            value: "#sales2#",
+                            color: "#a7ee70",
+                            tooltip: {
+                              template: "#sales2#"
+                            }
+                          },
+                          {
+                            value: "#sales3#",
+                            color: "#36abee",
+                            tooltip: {
+                              template: "#sales3#"
+                            }
+                          },
+                          {   //setting for a line chart
+                            type: "line",
+                            value: "#iji#",
+                            color: "#36abee",
+                            item: {
+                              borderColor: "#b7286c",
+                              color: "#de619c",
+                              type: "s"
+                            },
+                            line: {
+                              color: "#de619c",
+                              width: 2
+                            }
+                          }],
+                        data: [
+                          { iji: "6", sales: "8", sales2: "7", sales3: "8", year: "22-10" },
+                          { iji: "6", sales: "7", sales2: "2", sales3: "12", year: "22-11" },
+                          { iji: "6", sales: "6", sales2: "0", sales3: "10", year: "22-12" },
+                          { iji: "6", sales: "6", sales2: "1", sales3: "13", year: "23-01" },
+                          { iji: "6", sales: "3", sales2: "1", sales3: "1", year: "23-02" },
+                          { iji: "6", sales: "1", sales2: "0", sales3: "2", year: "23-03" },
+                        ]
+                      }
+                    }
                   ], gravity: 5
                 },
                 {
