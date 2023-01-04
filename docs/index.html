@@ -252,11 +252,13 @@
           //chart1
           var data1 = google.visualization.arrayToDataTable([
             ['年月', '収入', '支出', '飼料'],
-            ['2022/05', 965, 938, 522],
-            ['2022/06', 1135, 1120, 599],
-            ['2022/07', 1157, 1167, 587],
-            ['2022/08', 1119, 1110, 615],
-            ['2022/09', 536, 691, 629]
+            ['22-10', 965, 938, 522],
+            ['22-11', 1135, 1120, 599],
+            ['22-12', 1157, 1167, 587],
+            ['23-01', 1119, 1110, 615],
+            ['23-02', 536, 691, 629],
+            ['23-03', 576, 691, 629],
+            ['23-04', 636, 691, 629]
           ]);
           var options1 = {
             // title: '収入／支出／飼料／頭数',
@@ -268,26 +270,6 @@
           // var chart1 = new google.visualization.ComboChart(box1);
           var chart1 = new google.visualization.ColumnChart(box1);
           chart1.draw(data1, options1);
-          //chart2(TODO サイズ)
-          var data2 = google.visualization.arrayToDataTable([
-            ['年月', 'H♀', 'H', 'HET', 'F1', 'IF', 'IVF', 'OPU'],
-            ['2022/10', 8, 7, 0, 8, 0, 1, 0],
-            ['2022/11', 7, 2, 0, 12, 0, 4, 0],
-            ['2022/12', 6, 7, 0, 10, 0, 0, 0],
-            ['2023/01', 6, 1, 0, 13, 0, 2, 0],
-            ['2023/02', 3, 1, 0, 1, 0, 1, 1],
-            ['2023/03', 1, 0, 0, 2, 2, 2, 3],
-            ['2023/04', 0, 0, 0, 4, 0, 0, 1],
-          ]);
-          var options2 = {
-            // title: '収入／支出／飼料／頭数',
-            // vAxis: { title: '金額' },
-            seriesType: 'bars',
-            // series: { 5: { type: 'line' } }
-          };
-          var box2 = $$("winmenu_chart2").$view;
-          var chart2 = new google.visualization.ColumnChart(box2);
-          chart2.draw(data2, options2);
         });
         //メニューボタン名変更
         let _p = {
