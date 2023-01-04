@@ -432,10 +432,11 @@
                         yAxis: {
                           start: 0,
                           step: 5,
-                          end: 50
+                          end: 30
                         },
                         legend: {
-                          values: [{ text: "H♀", color: "#58dccd" }, { text: "H♂", color: "#a7ee70" }, { text: "HET", color: "#36abee" }],
+                          values: [{ text: "H♀", color: "#58dccd" }, { text: "H", color: "#a7ee70" }, { text: "F1", color: "#36abee" },
+                          { text: "IF", color: "#FFCCCC" }, { text: "IVF", color: "#FFCC32" }, { text: "OPU", color: "#FF00FF" }],
                           valign: "middle",
                           align: "right",
                           width: 90,
@@ -463,6 +464,27 @@
                               template: "#sales3#"
                             }
                           },
+                          {
+                            value: "#sales4#",
+                            color: "#FFCCCC",
+                            tooltip: {
+                              template: "#sales4#"
+                            }
+                          },
+                          {
+                            value: "#sales5#",
+                            color: "#FFCC32",
+                            tooltip: {
+                              template: "#sales5#"
+                            }
+                          },
+                          {
+                            value: "#sales6#",
+                            color: "#FF00FF",
+                            tooltip: {
+                              template: "#sales6#"
+                            }
+                          },
                           {   //setting for a line chart
                             type: "line",
                             value: "#iji#",
@@ -478,12 +500,13 @@
                             }
                           }],
                         data: [
-                          { iji: "6", sales: "8", sales2: "7", sales3: "8", year: "22-10" },
-                          { iji: "6", sales: "7", sales2: "2", sales3: "12", year: "22-11" },
-                          { iji: "6", sales: "6", sales2: "0", sales3: "10", year: "22-12" },
-                          { iji: "6", sales: "6", sales2: "1", sales3: "13", year: "23-01" },
-                          { iji: "6", sales: "3", sales2: "1", sales3: "1", year: "23-02" },
-                          { iji: "6", sales: "1", sales2: "0", sales3: "2", year: "23-03" },
+                          { iji: "5", sales: "8", sales2: "7", sales3: "8", sales4: "0", sales5: "1", sales6: "0", year: "22-10" },
+                          { iji: "5", sales: "7", sales2: "2", sales3: "12", sales4: "0", sales5: "4", sales6: "0", year: "22-11" },
+                          { iji: "5", sales: "6", sales2: "0", sales3: "10", sales4: "0", sales5: "0", sales6: "0", year: "22-12" },
+                          { iji: "5", sales: "6", sales2: "1", sales3: "13", sales4: "0", sales5: "2", sales6: "0", year: "23-01" },
+                          { iji: "5", sales: "3", sales2: "1", sales3: "1", sales4: "0", sales5: "1", sales6: "1", year: "23-02" },
+                          { iji: "5", sales: "1", sales2: "0", sales3: "2", sales4: "2", sales5: "2", sales6: "3", year: "23-03" },
+                          { iji: "5", sales: "0", sales2: "0", sales3: "4", sales4: "0", sales5: "0", sales6: "1", year: "23-04" },
                         ]
                       }
                     }
