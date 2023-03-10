@@ -597,12 +597,13 @@
       },
       on: {
         onShow: function () {
-          let _v = webix.storage.local.get("ui_kihon_sets") || {};
+          let _v = COMMON_JSON.data.kihon;
           $$("ui_kihon_sets").setValues(_v);
         },
         onHide: function () {
           let _v = $$("ui_kihon_sets").getValues();
           webix.storage.local.put("ui_kihon_sets", _v);
+          //TODO POST
         }
       }
     };
@@ -656,14 +657,14 @@
       },
       on: {
         onShow: function () {
-          let _v = webix.storage.local.get("ui_income_sets") || {};
-          let _kihon = webix.storage.local.get("ui_kihon_sets") || {};
-          $.extend(_v, _kihon, { date: $$("order_date").getValue() });
+          let _v = COMMON_JSON.data.income;
+          console.log(_v);
           $$("ui_income_sets").setValues(_v);
         },
         onHide: function () {
           let _v = $$("ui_income_sets").getValues();
           webix.storage.local.put("ui_income_sets", _v);
+          //TODO POST
         }
       }
     };
@@ -727,14 +728,14 @@
       },
       on: {
         onShow: function () {
-          let _v = webix.storage.local.get("ui_outgo_sets") || {};
-          let _kihon = webix.storage.local.get("ui_kihon_sets") || {};
-          $.extend(_v, _kihon, { date: $$("order_date").getValue() });
+          let _v = COMMON_JSON.data.outgo;
+          console.log(_v);
           $$("ui_outgo_sets").setValues(_v);
         },
         onHide: function () {
           let _v = $$("ui_outgo_sets").getValues();
           webix.storage.local.put("ui_outgo_sets", _v);
+          //TODO POST
         }
       }
     };
@@ -1249,9 +1250,9 @@
           type: "top"
         });
         let _pc = webix.storage.local.get("PC_{0}".format([API_KEY]));
-        let _touroku_date = Conversion.formatDate($$("order_date").getValue(), 'YYYY-MM-01');
+        let _current_date = Conversion.formatDate($$("order_date").getValue(), 'YYYY-MM-01');
         let _url = "https://script.google.com/macros/s/{0}/exec".format(API_KEY);
-        webix.ajax().get(_url, { pc: _pc, touroku_date: _touroku_date }).then(function (data) {
+        webix.ajax().get(_url, { pc: _pc, current_date: _current_date }).then(function (data) {
           COMMON_JSON = data.json();
           webix.storage.session.put("COMMON_JSON", COMMON_JSON);
           if (!COMMON_JSON.config) {
