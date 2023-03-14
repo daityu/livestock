@@ -1127,7 +1127,6 @@
                         { id: "tochiku", header: "と畜日", width: 80, format: webix.Date.dateToStr("%y-%m-%d"), css: "center", sort: "date" },
                         { id: "trash", header: "", width: 50, template: "{common.trashIcon()}" }
                       ],
-                      data: DATA_HANSYOKU,
                       on: {
                         onItemDblClick: function (id, e, node) {
                           $$("ui_cow_info").show();
@@ -1161,9 +1160,8 @@
       },
       on: {
         onShow: function () {
-          console.log(Conversion.yoteibikeisan(DATA_HANSYOKU));
-          // let _v = webix.storage.local.get("ui_cow_sets") || {};
-          // $$("ui_cow_sets").setValues(_v);
+          $$("ui_cow_list_datatable").parse(COMMON_JSON.data.cows);
+          $$("ui_cow_datatable").parse(Conversion.yoteibikeisan(COMMON_JSON.data.cows));
         },
         onHide: function () {
           // let _v = $$("ui_cow_sets").getValues();
