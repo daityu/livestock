@@ -604,8 +604,13 @@
           let _v = $.extend(true, $$("ui_kihon_sets").getValues(), { action: "kihon", current_date: "9999-99-99" });
           let _url = "https://script.google.com/macros/s/{0}/exec".format(API_KEY);
           COMMON_JSON.data.kihon = _v;
+          $$("app").showProgress({
+            type: "top"
+          });
           webix.ajax().post(_url, _v).then(function (data) {
             console.log(data);
+          }).finally(function () {
+            $$("app").hideProgress();
           });
         }
       }
@@ -662,9 +667,13 @@
           let _v = $.extend(true, $$("ui_income_sets").getValues(), { action: "income", current_date: _current_date });
           let _url = "https://script.google.com/macros/s/{0}/exec".format(API_KEY);
           COMMON_JSON.data.income = _v;
+          $$("app").showProgress({
+            type: "top"
+          });
           webix.ajax().post(_url, _v).then(function (data) {
-            //TODO 変更あった時のみ保存
             console.log(data);
+          }).finally(function () {
+            $$("app").hideProgress();
           });
         }
       }
@@ -732,9 +741,13 @@
           let _v = $.extend(true, $$("ui_outgo_sets").getValues(), { action: "outgo", current_date: _current_date });
           let _url = "https://script.google.com/macros/s/{0}/exec".format(API_KEY);
           COMMON_JSON.data.outgo = _v;
+          $$("app").showProgress({
+            type: "top"
+          });
           webix.ajax().post(_url, _v).then(function (data) {
-            //TODO 変更あった時のみ保存
             console.log(data);
+          }).finally(function () {
+            $$("app").hideProgress();
           });
         }
       }
