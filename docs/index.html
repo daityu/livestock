@@ -601,9 +601,12 @@
           $$("ui_kihon_sets").setValues(_v);
         },
         onHide: function () {
-          let _v = $$("ui_kihon_sets").getValues();
-          webix.storage.local.put("ui_kihon_sets", _v);
-          //TODO POST
+          let _v = $.extend(true, $$("ui_kihon_sets").getValues(), { action: "kihon", current_date: "9999-99-99" });
+          let _url = "https://script.google.com/macros/s/{0}/exec".format(API_KEY);
+          COMMON_JSON.data.kihon = _v;
+          webix.ajax().post(_url, _v).then(function (data) {
+            console.log(data);
+          });
         }
       }
     };
@@ -615,12 +618,6 @@
         rows: [
           {
             view: "form", id: "ui_income_sets", nameWidth: 150, scroll: "y", elements: [
-              {
-                cols: [
-                  { view: "ndatepicker", name: "date", format: "%Y年%m月", icon: "", readonly: true, width: 170 },
-                  { view: "text", name: "corp", readonly: true },
-                ]
-              },
               { view: "label", label: "出荷乳量", css: "fusen_bl" },
               {
                 cols: [
@@ -658,13 +655,17 @@
       on: {
         onShow: function () {
           let _v = COMMON_JSON.data.income;
-          console.log(_v);
           $$("ui_income_sets").setValues(_v);
         },
         onHide: function () {
-          let _v = $$("ui_income_sets").getValues();
-          webix.storage.local.put("ui_income_sets", _v);
-          //TODO POST
+          let _current_date = Conversion.formatDate($$("order_date").getValue(), 'D_YYYY-MM-01');
+          let _v = $.extend(true, $$("ui_income_sets").getValues(), { action: "income", current_date: _current_date });
+          let _url = "https://script.google.com/macros/s/{0}/exec".format(API_KEY);
+          COMMON_JSON.data.income = _v;
+          webix.ajax().post(_url, _v).then(function (data) {
+            //TODO 変更あった時のみ保存
+            console.log(data);
+          });
         }
       }
     };
@@ -676,12 +677,6 @@
         rows: [
           {
             view: "form", id: "ui_outgo_sets", nameWidth: 150, scroll: "y", elements: [
-              {
-                cols: [
-                  { view: "ndatepicker", name: "date", format: "%Y年%m月", icon: "", readonly: true, width: 170 },
-                  { view: "text", name: "corp", readonly: true },
-                ]
-              },
               { view: "yen", label: "支出（円）", name: "o1" },
               { view: "label", label: "飼料代", css: "fusen_rd" },
               {
@@ -729,13 +724,18 @@
       on: {
         onShow: function () {
           let _v = COMMON_JSON.data.outgo;
-          console.log(_v);
           $$("ui_outgo_sets").setValues(_v);
         },
         onHide: function () {
-          let _v = $$("ui_outgo_sets").getValues();
-          webix.storage.local.put("ui_outgo_sets", _v);
           //TODO POST
+          let _current_date = Conversion.formatDate($$("order_date").getValue(), 'D_YYYY-MM-01');
+          let _v = $.extend(true, $$("ui_outgo_sets").getValues(), { action: "outgo", current_date: _current_date });
+          let _url = "https://script.google.com/macros/s/{0}/exec".format(API_KEY);
+          COMMON_JSON.data.outgo = _v;
+          webix.ajax().post(_url, _v).then(function (data) {
+            //TODO 変更あった時のみ保存
+            console.log(data);
+          });
         }
       }
     };
@@ -1250,7 +1250,7 @@
           type: "top"
         });
         let _pc = webix.storage.local.get("PC_{0}".format([API_KEY]));
-        let _current_date = Conversion.formatDate($$("order_date").getValue(), 'YYYY-MM-01');
+        let _current_date = Conversion.formatDate($$("order_date").getValue(), 'D_YYYY-MM-01');
         let _url = "https://script.google.com/macros/s/{0}/exec".format(API_KEY);
         webix.ajax().get(_url, { pc: _pc, current_date: _current_date }).then(function (data) {
           COMMON_JSON = data.json();
