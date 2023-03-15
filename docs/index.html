@@ -601,13 +601,14 @@
           $$("ui_kihon_sets").setValues(_v);
         },
         onHide: function () {
-          let _v = $.extend(true, $$("ui_kihon_sets").getValues(), { action: "kihon", current_date: "9999-99-99" });
-          let _url = "https://script.google.com/macros/s/{0}/exec".format(API_KEY);
+          let _v = $$("ui_kihon_sets").getValues();
+          if (!NCC.array.isChange(_v, COMMON_JSON.data.kihon)) return;
           COMMON_JSON.data.kihon = _v;
+          let _url = "https://script.google.com/macros/s/{0}/exec".format(API_KEY);
           $$("app").showProgress({
             type: "top"
           });
-          webix.ajax().post(_url, _v).then(function (data) {
+          webix.ajax().post(_url, $.extend(true, _v, { action: "kihon", current_date: "9999-99-99" })).then(function (data) {
             console.log(data);
           }).finally(function () {
             $$("app").hideProgress();
@@ -664,13 +665,14 @@
         },
         onHide: function () {
           let _current_date = Conversion.formatDate($$("order_date").getValue(), 'D_YYYY-MM-01');
-          let _v = $.extend(true, $$("ui_income_sets").getValues(), { action: "income", current_date: _current_date });
-          let _url = "https://script.google.com/macros/s/{0}/exec".format(API_KEY);
+          let _v = $$("ui_income_sets").getValues();
+          if (!NCC.array.isChange(_v, COMMON_JSON.data.income)) return;
           COMMON_JSON.data.income = _v;
+          let _url = "https://script.google.com/macros/s/{0}/exec".format(API_KEY);
           $$("app").showProgress({
             type: "top"
           });
-          webix.ajax().post(_url, _v).then(function (data) {
+          webix.ajax().post(_url, $.extend(true, _v, { action: "income", current_date: _current_date })).then(function (data) {
             console.log(data);
           }).finally(function () {
             $$("app").hideProgress();
@@ -738,13 +740,14 @@
         onHide: function () {
           //TODO POST
           let _current_date = Conversion.formatDate($$("order_date").getValue(), 'D_YYYY-MM-01');
-          let _v = $.extend(true, $$("ui_outgo_sets").getValues(), { action: "outgo", current_date: _current_date });
-          let _url = "https://script.google.com/macros/s/{0}/exec".format(API_KEY);
+          let _v = $$("ui_outgo_sets").getValues();
+          if (!NCC.array.isChange(_v, COMMON_JSON.data.outgo)) return;
           COMMON_JSON.data.outgo = _v;
+          let _url = "https://script.google.com/macros/s/{0}/exec".format(API_KEY);
           $$("app").showProgress({
             type: "top"
           });
-          webix.ajax().post(_url, _v).then(function (data) {
+          webix.ajax().post(_url, $.extend(true, _v, { action: "outgo", current_date: _current_date })).then(function (data) {
             console.log(data);
           }).finally(function () {
             $$("app").hideProgress();

@@ -147,3 +147,18 @@ NCC.datepicker.monthLayout = function (_id, _label, _param) {
   };
   return _obj;
 };
+NCC.array = NCC.array || {};
+//変更前後のオブジェクト内容を比較する
+//@param array/object nv 変更後オブジェクト
+//@param array/object ov 変更前オブジェクト
+//@return true:変更あり false：変更なし
+NCC.array.isChange = function (nv, ov) {
+  var result = false;
+  $.each(nv, function (indexInArray, valueOfElement) {
+    if ((ov[indexInArray] || "") != valueOfElement) {
+      result = true;
+      return false;
+    }
+  });
+  return result;
+}
