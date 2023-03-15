@@ -1214,7 +1214,21 @@
             ],
             elementsConfig: { labelWidth: 120 }
           },
-          { view: "button", css: "webix_danger", height: 60, label: "保存" },
+          {
+            view: "button", css: "webix_danger", height: 60, label: "保存", click: function () {
+              // let _v = $$("ui_cow_info_form").getValues();
+              // let _url = "https://script.google.com/macros/s/{0}/exec".format(API_KEY);
+              // $$("app").showProgress({
+              //   type: "top"
+              // });
+              // webix.ajax().post(_url, $.extend(true, _v, { action: "cow" })).then(function (data) {
+              //   console.log(data);
+              // }).finally(function () {
+              //   $$("app").hideProgress();
+              // });
+              $$("ui_cow_info_form").save();
+            }
+          },
           { view: "button", height: 60, label: "閉じる", click: function (id, event) { this.getTopParentView().hide(); } }
         ]
       },
@@ -1222,7 +1236,6 @@
         onShow: function () {
         },
         onHide: function () {
-          $$("ui_cow_info_form").save();
         }
       }
     };

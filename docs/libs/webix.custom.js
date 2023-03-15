@@ -3,7 +3,16 @@ webix.protoUI({
     $cssName: "datepicker",
     defaults: {
         // stringResult: true
-        css:"fsL"
+        css: "fsL"
+    },
+    getValue: function () {//日付を返す
+        var v = this.config.value;
+        if (!v || 0 == v.length || "" === v[0]) return false;
+        if (this.config.type == "month") {
+            return Conversion.formatDate(v, "YYYY-MM-01");
+        } else {//日付
+            return Conversion.formatDate(v, "YYYY-MM-DD");
+        }
     },
 }, webix.ui.datepicker);
 // webix.protoUI({
