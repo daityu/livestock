@@ -212,9 +212,9 @@
     const ui_menu_data = [
       { id: "b3", value: "", color: "#266233", icon: "mdi-printer", width: 1, height: 2, x: 1, y: 1 },
       { id: "b1", value: "", color: "#266233", icon: "mdi-information", width: 1, height: 2, x: 2, y: 1 },
-      { id: "b5", value: "", color: "#7E2A6C", icon: "mdi-cow", width: 1, height: 2, x: 4, y: 1 },
+      { id: "b5", value: "", color: "#7E2A6C", icon: "mdi-cow", width: 2, height: 2, x: 3, y: 1 },
       { id: "b4", value: "", color: "#A4005B", icon: "mdi-minus-circle-outline", width: 2, height: 2, x: 1, y: 3 },
-      { id: "b6", value: "", color: "#8D712B", icon: "mdi-grass", width: 1, height: 2, x: 3, y: 1 },
+      // { id: "b6", value: "", color: "#8D712B", icon: "mdi-grass", width: 1, height: 2, x: 3, y: 1 },
       { id: "b2", value: "", color: "#283D70", icon: "mdi-plus-circle-outline", width: 2, height: 2, x: 3, y: 3 },
     ];
     document.querySelector('#my-app-titile').textContent = APP_NAME;
@@ -278,7 +278,7 @@
           b3: COMMON_JSON.config.b3 || "ボタン３",
           b4: COMMON_JSON.config.b4 || "ボタン４",
           b5: COMMON_JSON.config.b5 || "ボタン５",
-          b6: COMMON_JSON.config.b6 || "飼料",
+          // b6: COMMON_JSON.config.b6 || "飼料",
         };
         Object.keys(_p).forEach(function (key) {
           // console.log(key);
@@ -1110,9 +1110,9 @@
                     {
                       view: "datatable", id: "ui_cow_list_datatable", select: "row", scroll: true, sort: true, css: "stripe",
                       scheme: {
-                        $init: function (obj) {
-                          obj.kannyuYoteiDate = Conversion.addDays(obj.jyuseiDateE, 220),
-                            obj.yoteiDate = Conversion.addDays(obj.jyuseiDateE, 280)
+                        $change: function (obj) {
+                          obj.kannyuYoteiDate = Conversion.addDays(obj.jyuseiDateE, 220);
+                          obj.yoteiDate = Conversion.addDays(obj.jyuseiDateE, 280);
                         }
                       },
                       columns: [
@@ -1229,17 +1229,18 @@
           },
           {
             view: "button", css: "webix_danger", height: 60, label: "保存", click: function () {
-              // let _v = $$("ui_cow_info_form").getValues();
-              // let _url = "https://script.google.com/macros/s/{0}/exec".format(API_KEY);
-              // $$("app").showProgress({
-              //   type: "top"
-              // });
-              // webix.ajax().post(_url, $.extend(true, _v, { action: "cow" })).then(function (data) {
-              //   console.log(data);
-              // }).finally(function () {
-              //   $$("app").hideProgress();
-              // });
+              let _v = $$("ui_cow_info_form").getValues();
+              let _url = "https://script.google.com/macros/s/{0}/exec".format(API_KEY);
+              $$("app").showProgress({
+                type: "top"
+              });
+              webix.ajax().post(_url, $.extend(true, _v, { action: "cow" })).then(function (data) {
+                console.log(data);
+              }).finally(function () {
+                $$("app").hideProgress();
+              });
               $$("ui_cow_info_form").save();
+              this.getTopParentView().hide();
             }
           },
           { view: "button", height: 60, label: "閉じる", click: function (id, event) { this.getTopParentView().hide(); } }
