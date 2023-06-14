@@ -37,6 +37,7 @@ Conversion.formatDate = function (inDate, format) {
   });
   if (!format) format = 'YYYY/MM/DD hh:mm:ss';
   format = format.replace(/YYYY/g, date.getFullYear());
+  format = format.replace(/YY/g, ('' + date.getFullYear()).slice(-2));
   format = format.replace(/JK/g, arrGengo.name + (date.getFullYear() - tDate.getFullYear() + 1));
   format = format.replace(/jK/g, arrGengo.name_short_k + (date.getFullYear() - tDate.getFullYear() + 1));
   format = format.replace(/bK/g, arrGengo.name_short + (date.getFullYear() - tDate.getFullYear() + 1));
@@ -137,6 +138,19 @@ Conversion.diffMonth = function (dateA, dateB) {
   return parseInt(Conversion.diffDay(dateA, dateB) / (365 / 12));
 };
 /**
+ * 日付を加算する
+ * @param  string/date date 対象日付
+ * @param  string/date days 加算したい日数
+ * @return dateオブジェクト
+ */
+Conversion.addDays = function (date, days) {
+  if(!date) return "";
+  var result = Conversion.toDate(date);
+  result.setDate(result.getDate() + days);
+  return result;
+}
+
+/**
  * 月別予定頭数集計
  *   分娩日＜現在日付 ：分娩日を月別集計
  *   上記以外：分娩予定日を月別集計
@@ -159,10 +173,10 @@ Conversion.yoteibikeisan = function (arr) {
     work[_m2].C99 += 1;
     switch (valueOfElement.bulltype) {
       case "H♀":
-        work[_m1].C1 += 1;
+        work[_m1].C1 += 0.5;
         break;
       case "H♂":
-        work[_m1].C2 += 1;
+        work[_m1].C2 += 0.5;
         break;
       case "HET":
         work[_m1].C3 += 1;
